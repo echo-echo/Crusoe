@@ -1,12 +1,29 @@
 <head>
   <title>Crusoe</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!--mapbox.js is an implementation of leaflet: https://www.mapbox.com/mapbox.js/api/v2.1.9/ -->
+<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>  
+<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
 </head>
 
 <body>
-	{{>loginButtons}}
-  <h1>Welcome to Crusoe!</h1>
+<div id="map"></div>
+  <div class="container">
+    <header>
+      <h1>Messages</h1>
+      <form class="new-message">
+        <input type="text" name="text" placeholder="Type to send a new message" />
+      </form>
+    </header>
 
-  {{> hello}}
+    <ul>
+      {{#each tasks}}
+        {{> task}}
+      {{/each}}
+    </ul>
+  </div>
 </body>
 
 <template name="hello">
