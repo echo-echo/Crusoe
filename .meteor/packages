@@ -10,3 +10,4 @@ insecure
 accounts-ui
 accounts-password
 reactjs:react
+iron:router
