@@ -9,3 +9,6 @@ Router.map(function(){
   this.route('feed')
 })
 
+Accounts.ui.config({
+  passwordSignupFields: "USERNAME_ONLY"
+});
