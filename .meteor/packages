@@ -10,3 +10,5 @@ insecure
 accounts-ui
 accounts-password
 reactjs:react
+sanjo:jasmine
+velocity:html-reporter
