@@ -12,3 +12,4 @@ accounts-password
 reactjs:react
 sanjo:jasmine
 velocity:html-reporter
+iron:router
