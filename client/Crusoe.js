@@ -13,3 +13,6 @@ Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
 });
 
+Template.main.rendered = function () { 
+   $(".button-collapse").sideNav();
+};
