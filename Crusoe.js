@@ -58,29 +58,30 @@ map.on('locationerror', function() {
     geolocate.innerHTML = 'Position could not be found';
 });
 
-});
+  Template.body.events({
+    "submit .new-message": function (event) {
+      map.locate();
+      // This function is called when the new task form is submitted
+      var text = event.target.text.value;
+      console.log('entered new message');
+      Tasks.insert({
+        text: text,
+        createdAt: new Date() // current time
+      });
 
-  Session.setDefault('counter', 0);
+      // Clear form
+      event.target.text.value = "";
 
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
+      // Prevent default form submit
+      return false;
     }
   });
-
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
-    }
-  });
-
 
   Accounts.ui.config({
     passwordSignupFields: "USERNAME_ONLY"
   });
+});
 }
-
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
