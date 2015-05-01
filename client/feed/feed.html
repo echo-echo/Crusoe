@@ -1,3 +1,22 @@
 <template name = "feed">
 	<h2>Feed!</h2>
+
+	<ul>
+		{{#each messages}}
+      {{> message}}
+    {{/each}}
+	</ul>
+
+  <button class="waves-effect waves-light btn">Write Message</button>
+ 	{{#if showBox}}
+	  <form class="compose">
+	  	<textarea name="text"></textarea>
+	  	<input type="submit">
+	  </form>
+	{{/if}}
+
+</template>
+
+<template name="message">
+	<li>{{username}} - {{text}}</li>
 </template>
