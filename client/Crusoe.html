@@ -3,11 +3,29 @@
   <title>Crusoe</title>
 </head>
 
+  <nav class="light-blue lighten-1">
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo">Crusoe</a>
+      <div class = "right">{{>loginButtons}}</div>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/feed">Messages</a></li>
+        <li><a href="/">Map</a></li>
+       <!--  <li><div>{{>loginButtons}}</div></li> -->
+    
+      </ul>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+      <ul class="side-nav" id="mobile-demo">
+        <li><a href="/feed">Send a message</a></li>
+        <li><a href="/">Map</a></li>
+       
+      </ul> 
+    </div>
+  </nav> 
+        
 <body>
-	<h1>Welcome to Crusoe</h1>
-	<div>{{>loginButtons}}</div>
-	
+
 	<div>{{>yield}}</div>
 
 </body>
+
 </template>
