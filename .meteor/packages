@@ -14,3 +14,4 @@ sanjo:jasmine
 velocity:html-reporter
 iron:router
 materialize:materialize
+pauloborges:mapbox@2.1.4_3
