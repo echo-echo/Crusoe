@@ -18,6 +18,9 @@ Template.feed.events({
 		createdAt: new Date(),
 		username: Meteor.user().username
 	})
+
+	event.target.text.value=""
+	return false;
 },
 
 "click .btn": function(){
