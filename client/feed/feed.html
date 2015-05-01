@@ -3,20 +3,26 @@
 
 	<ul>
 		{{#each messages}}
-      {{> message}}
-    {{/each}}
+	    {{> message}}
+	  {{/each}}
 	</ul>
 
   <button class="waves-effect waves-light btn">Write Message</button>
- 	{{#if showBox}}
-	  <form class="compose">
-	  	<textarea name="text"></textarea>
-	  	<input type="submit">
-	  </form>
-	{{/if}}
+<!--  	{{#if showBox}} -->
+	
+<!-- 	{{/if}} -->
 
 </template>
 
 <template name="message">
 	<li>{{username}} - {{text}}</li>
+</template>
+
+<template name="writeModal">
+	<div class="modalBox">
+	  <form class="compose">
+	  	<textarea name="text"></textarea>
+	  	<input type="submit">
+	  </form>
+	</div>
 </template>

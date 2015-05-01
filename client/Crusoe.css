@@ -1,5 +1,6 @@
 /* CSS declarations go here */
 .compose {
+.compose{
 	height:50px;
 	width:400px;
 }
@@ -7,8 +8,16 @@
         height: 100%;
         width: 100%;
 }
+
 #login-dropdown-list {
   position: absolute;
   top: 50px;
   left: -195px;
+}
+
+.modalBox{
+	background-color: white;
+	height:50px;
+	width:400px;
+	text-align: center;
 }
