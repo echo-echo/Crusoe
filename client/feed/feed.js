@@ -1,4 +1,4 @@
-var Msg = new Mongo.Collection("messages")
+var Messages = new Mongo.Collection("messages")
 
 Template.feed.helpers({
 	showBox: function(){
@@ -12,7 +12,7 @@ Template.feed.helpers({
 Template.feed.events({
 	"submit .compose": function(event){
 		var text = event.target.text.value;
-		
+
 		Msg.insert({
 			text:text,
 			createdAt: new Date(),
