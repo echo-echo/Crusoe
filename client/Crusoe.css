@@ -33,20 +33,26 @@
   font-size: 2em;
 }
 
-.modalBox{
+.modal-box{
 	background: white;
-  position: fixed;
-  top: 35%;
-  left: 35%;
-  height:250px;
-  width:600px;
-  border-radius: 10px
+  border-radius: 10px;
+  margin: 30px auto;
+  max-height: 90%;
+  max-width: 60%;
+  min-height: 300px;
+  min-width: 100px;
+  overflow: scroll;
+  padding: 25px;
 }
 
 #content{
-        text-align:left;
-        font-size:14px;
-        overflow: auto;
-        height: 500px;
-        width: 700px;
+  text-align: left;
+  font-size: 14px;
+  overflow: auto;
+  height: 500px;
+  width: 700px;
+}
+
+li:hover {
+  cursor: pointer;
 }

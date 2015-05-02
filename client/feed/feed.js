@@ -1,4 +1,4 @@
-Messages = new Mongo.Collection("messages")
+Messages = new Mongo.Collection("messages");
 
 Meteor.subscribe("messages");
 
@@ -7,28 +7,41 @@ Template.feed.helpers({
 	// 	return Session.get("show");
 	// },
 	messages: function(){
-		return Messages.find({},{sort: {createdAt: -1}})
+		return Messages.find({},{sort: {createdAt: -1}});
 	}
 })
 
 Template.feed.events({
 	"click .btn": function(){
-		AntiModals.overlay('writeModal')
+		AntiModals.overlay('writeModal');
+	},
+	"click li": function(event){
+		var message = event.currentTarget.lastElementChild.textContent;
+		Session.set('clicked-message', message);
+		AntiModals.overlay('messageModal');
 	}
-})
+});
+
+Template.messageModal.helpers({
+	message: function() {
+		var message = Session.get('clicked-message');
+		console.log("Session.get worked?: ", message);
+		return message;
+	}
+});
 
 Template.writeModal.events({
 		"submit .compose": function(event){
 		var text = event.target.text.value;
     // test data
     var location = {
-          "type": "Point",
-          "coordinates": [-97.75, 30.25]
-        }
+      "type": "Point",
+      "coordinates": [-97.75, 30.25]
+    };
 
-    Meteor.call("addMessage", text, location)
+    Meteor.call("addMessage", text, location);
 
-		event.target.text.value=""
+		event.target.text.value="";
 		return false;
 	}
-})
+});

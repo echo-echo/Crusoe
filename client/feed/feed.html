@@ -1,5 +1,5 @@
 <template name = "feed">
-	<h2>Feed!</h2>
+  <h2>Feed!</h2>
 
 	<div id = "content">
 		<ul class="collection">
@@ -23,10 +23,20 @@
 </template>
 
 <template name="writeModal">
-	<div class="modalBox">
-	  <form class="compose">
-	  	<textarea name="text"></textarea>
-	  	<input type="submit" class="btn-flat">
-	  </form>
-	</div>
+  <div class="modal-box">
+    <form class="compose">
+      <textarea name="text"></textarea>
+      <input type="submit" class="btn-flat">
+    </form>
+  </div>
+</template>
+
+<template name="messageModal">
+  <div class="modal-box">
+    <li class="collection-item avatar">
+      <!-- the avatars can be changed to <img> -->
+      <i class="mdi-action-assessment circle green"></i>
+      <p>{{message}}</p>
+    </li>
+  </div>
 </template>
