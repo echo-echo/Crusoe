@@ -1,8 +1,12 @@
 /* CSS declarations go here */
-.compose {
-	height:50px;
-	width:400px;
+.compose{
+	position: relative;
+	top:40%;
+	left:-4%;
+	text-align: right;
+	margin-left: 0px
 }
+
 #map { 
  /* overflow:visible;*/ 
   position:absolute;  
@@ -16,9 +20,33 @@
 .side-nav{
 
 }
+.compose >textarea{
+	height:100px;
+	width:550px;
+
+}
+#map {  
+	position:absolute;  
+  height: 100%;
+  width: 100%;
+}
+
 #login-dropdown-list {
   position: absolute;
   top: 50px;
   left: -195px;
   font-size: 2em;
 }
+
+}
+
+.modalBox{
+	background: white;
+  position: fixed;
+  top: 35%;
+  left: 35%;
+  height:250px;
+  width:600px;
+  border-radius: 10px
+}
+

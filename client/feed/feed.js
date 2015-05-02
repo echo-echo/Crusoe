@@ -3,16 +3,22 @@ Messages = new Mongo.Collection("messages")
 Meteor.subscribe("messages");
 
 Template.feed.helpers({
-	showBox: function(){
-		return Session.get("show");
-	},
+	// showBox: function(){
+	// 	return Session.get("show");
+	// },
 	messages: function(){
-		return Messages.find({})
+		return Messages.find({},{sort: {createdAt: -1}})
 	}
 })
 
 Template.feed.events({
-	"submit .compose": function(event){
+	"click .btn": function(){
+		AntiModals.overlay('writeModal')
+	}
+})
+
+Template.writeModal.events({
+		"submit .compose": function(event){
 		var text = event.target.text.value;
     // test data
     var location = {
@@ -24,10 +30,5 @@ Template.feed.events({
 
 		event.target.text.value=""
 		return false;
-	},
-
-	"click .btn": function(){
-		var showHide = !Session.get("show")
-		Session.set("show", showHide);
 	}
 })
