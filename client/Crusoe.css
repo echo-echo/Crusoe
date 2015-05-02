@@ -3,12 +3,22 @@
 	height:50px;
 	width:400px;
 }
-#map {  position:absolute;  
-        height: 100%;
-        width: 100%;
+#map { 
+ /* overflow:visible;*/ 
+  position:absolute;  
+  height: 100%;
+  width: 100%;
+}
+.leaflet-container {
+  background:none;
+}
+
+.side-nav{
+
 }
 #login-dropdown-list {
   position: absolute;
   top: 50px;
   left: -195px;
+  font-size: 2em;
 }

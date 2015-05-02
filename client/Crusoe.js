@@ -15,4 +15,5 @@ Accounts.ui.config({
 
 Template.main.rendered = function () { 
    $(".button-collapse").sideNav();
+
 };
