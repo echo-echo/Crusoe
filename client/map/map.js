@@ -2,6 +2,8 @@ Meteor.startup(function(){
     Mapbox.load();
 });
 
+Meteor.subscribe("messages");
+
 Template.Map.rendered = function () {
   this.autorun(function () {
     if (Mapbox.loaded()) {

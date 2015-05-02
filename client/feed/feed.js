@@ -1,4 +1,6 @@
-var Messages = new Mongo.Collection("messages")
+Messages = new Mongo.Collection("messages")
+
+Meteor.subscribe("messages");
 
 Template.feed.helpers({
 	showBox: function(){
