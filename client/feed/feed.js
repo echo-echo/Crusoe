@@ -35,9 +35,11 @@ Template.writeModal.events({
 		var text = event.target.text.value;
     // test data
     var location = {
-      "type": "Point",
-      "coordinates": [-97.75, 30.25]
+
+          "type": "Point",
+          "coordinates": [-97.74, 30.25]
     };
+
 
     Meteor.call("addMessage", text, location);
 
