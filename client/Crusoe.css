@@ -37,9 +37,12 @@
 	background: white;
   border-radius: 10px;
   margin: 30px auto;
+  max-height: 90%;
+  max-width: 60%;
   min-height: 300px;
   min-width: 100px;
-  max-width: 60%;
+  overflow: scroll;
+  padding: 25px;
 }
 
 #content{

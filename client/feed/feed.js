@@ -16,15 +16,16 @@ Template.feed.events({
 		AntiModals.overlay('writeModal');
 	},
 	"click li": function(event){
-		var message = event.target;
-		console.log("this is event.target: ", message);
-		AntiModals.overlay('messageModal', message);
+		var message = event.currentTarget.lastElementChild.textContent;
+		Session.set('clicked-message', message);
+		AntiModals.overlay('messageModal');
 	}
 });
 
 Template.messageModal.helpers({
-	showMessage: function(message) {
-		console.log("The message made it past the event listener?: ", message);
+	message: function() {
+		var message = Session.get('clicked-message');
+		console.log("Session.get worked?: ", message);
 		return message;
 	}
 });
