@@ -43,3 +43,17 @@
   border-radius: 10px
 }
 
+/*  ~~~ Map css  ~~~*/
+
+#map { 
+ /* overflow:visible;*/ 
+  position:absolute;  
+  width: 100%;
+  z-index: 1;
+}
+#panButton {
+  position: fixed;
+  top:100px;
+  left:15px;
+  z-index:99;
+}
