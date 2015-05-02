@@ -9,4 +9,6 @@ Template.Map.rendered = function () {
   //     var map = L.mapbox.map('map',  'joshuabenson.68d254d5');
   //   }
   // });
+
+
 };
