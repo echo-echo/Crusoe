@@ -10,3 +10,5 @@ insecure
 accounts-ui
 accounts-password
 reactjs:react
+mdg:geolocation
+pauloborges:mapbox@2.1.4_3

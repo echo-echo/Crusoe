@@ -1,0 +1,33 @@
+<head>
+  <title>Crusoe</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!--mapbox.js is an implementation of leaflet: https://www.mapbox.com/mapbox.js/api/v2.1.9/ -->
+<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>  
+<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
+<!-- 
+  <script src='leaflet.js'></script>
+  <link rel='stylesheet' href='leaflet.css'> -->
+</head>
+
+<body>
+<div class = 'coords' style="z-index: 99; background-color: white; padding: 5px">LOADED: {{load}}</div>
+  <div id = "map"></div>
+  <div class="container">
+  </div>
+
+ <!--  <script>
+    var map = L.map('map', {
+      touchZoom: false,
+      scrollWheelZoom: false
+    });
+
+    L.tileLayer('http://a.tiles.mapbox.com/v3/snapdemos.map-l2vbhlkj/{z}/{x}/{y}.png', {
+      attribution: 'Mapbox',
+      key: '8db088f2c08348c29c0c1443a46654ca'
+    }).addTo(map);
+
+    map.setView([30.272920898023475, -97.74438629799988], 14);
+  </script> -->
+</body>
