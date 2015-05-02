@@ -8,11 +8,10 @@ meteor-platform
 accounts-ui
 accounts-password
 reactjs:react
-sanjo:jasmine
-velocity:html-reporter
 iron:router
 materialize:materialize
 pauloborges:mapbox@2.1.4_3
 mdg:geolocation
 anti:modals
+mike:mocha
 
