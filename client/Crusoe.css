@@ -35,12 +35,11 @@
 
 .modal-box{
 	background: white;
-  position: fixed;
-  top: 35%;
-  left: 35%;
-  height:250px;
-  width:600px;
-  border-radius: 10px
+  border-radius: 10px;
+  margin: 30px auto;
+  min-height: 300px;
+  min-width: 100px;
+  max-width: 60%;
 }
 
 #content{
