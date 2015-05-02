@@ -6,8 +6,8 @@ Meteor.methods({
     Messages.insert({
       text: text,
       createdAt: new Date(),
-      username: username
-      // location: location
+      username: username,
+      location: location
     });
   }
 });
