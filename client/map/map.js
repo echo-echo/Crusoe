@@ -1,6 +1,6 @@
-Meteor.startup(function(){
-    Mapbox.load();
-});
+// Meteor.startup(function(){
+//     Mapbox.load();
+// });
 
 
 Template.Map.rendered = function () {
