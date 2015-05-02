@@ -22,6 +22,6 @@ Tracker.autorun(function(){
   if(local && marker){
     console.log(local)
     marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
-    Session.set('loc', local)
+    Session.set('loc', local) 
   }
 })
