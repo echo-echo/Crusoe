@@ -1,23 +1,25 @@
 <template name = "feed">
 	<h2>Feed!</h2>
 
-	<ul class="collection">
-		{{#each messages}}
-	    {{> message}}
-	  {{/each}}
-	</ul>
+	<div id = "content">
+		<ul class="collection">
+			{{#each messages}}
+		    {{> message}}
+		  {{/each}}
+		</ul>
+	</div>
 
   <button class="waves-effect waves-light btn">Write Message</button>
 
 </template>
 
 <template name="message">
-	<li class="collection-item avatar">
-		<!-- the avatars can be changed to <img> -->
-		<i class="mdi-action-assessment circle green"></i>
-		<span class="title">{{username}}</span>
-		<p>{{text}}</p>
-	</li>
+		<li class="collection-item avatar">
+			<!-- the avatars can be changed to <img> -->
+			<i class="mdi-action-assessment circle green"></i>
+			<span class="title">{{username}}</span>
+			<p>{{text}}</p>
+		</li>
 </template>
 
 <template name="writeModal">
