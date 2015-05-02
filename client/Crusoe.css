@@ -43,9 +43,13 @@
 }
 
 #content{
-        text-align:left;
-        font-size:14px;
-        overflow: auto;
-        height: 500px;
-        width: 700px;
+  text-align: left;
+  font-size: 14px;
+  overflow: auto;
+  height: 500px;
+  width: 700px;
+}
+
+li:hover {
+  cursor: pointer;
 }
