@@ -1,28 +1,30 @@
 <template name = "feed">
 	<h2>Feed!</h2>
 
-	<ul>
+	<ul class="collection">
 		{{#each messages}}
 	    {{> message}}
 	  {{/each}}
 	</ul>
 
   <button class="waves-effect waves-light btn">Write Message</button>
-<!--  	{{#if showBox}} -->
-	
-<!-- 	{{/if}} -->
 
 </template>
 
 <template name="message">
-	<li>{{username}} - {{text}}</li>
+	<li class="collection-item avatar">
+		<!-- the avatars can be changed to <img> -->
+		<i class="mdi-action-assessment circle green"></i>
+		<span class="title">{{username}}</span>
+		<p>{{text}}</p>
+	</li>
 </template>
 
 <template name="writeModal">
 	<div class="modalBox">
 	  <form class="compose">
 	  	<textarea name="text"></textarea>
-	  	<input type="submit">
+	  	<input type="submit" class="btn-flat">
 	  </form>
 	</div>
 </template>
