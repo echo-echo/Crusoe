@@ -2,9 +2,9 @@ Meteor.startup(function(){
     Mapbox.load();
 });
 
-Meteor.subscribe("messages");
 
-// Template.Map.rendered = function () {
+Template.Map.rendered = function () {
+  Meteor.subscribe("messages");
 
   Deps.autorun(function () {
     if (Mapbox.loaded()) {
@@ -16,4 +16,4 @@ Meteor.subscribe("messages");
 
     }
   });
-// };
+};
