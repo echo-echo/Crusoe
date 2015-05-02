@@ -1,2 +1,7 @@
+# Meteor
 .meteor/local
 .meteor/meteorite
+
+# Tests
+tests/jasmine/server/unit/packageMocksSpec.js
+tests/jasmine/server/unit/package-stubs.js
