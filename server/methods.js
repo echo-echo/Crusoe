@@ -13,10 +13,10 @@ Meteor.methods({
 
   }
 
-  updateProx: function(location){
-    var proximity = 
-    Messages.update({}, 
-      {$set:{proximity: proximity}}
-    )
-  }
+//   updateProx: function(location){
+//     var proximity = 
+//     Messages.update({}, 
+//       {$set:{proximity: proximity}}
+//     )
+//   }
 });
