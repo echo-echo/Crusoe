@@ -5,24 +5,20 @@ Template.feed.helpers({
 		return Session.get("show");
 	},
 	messages: function(){
-		return Msg.find({})
+		return Messages.find({})
 	}
 })
 
 Template.feed.events({
 	"submit .compose": function(event){
 		var text = event.target.text.value;
+    // test data
+    var location = {
+          "type": "Point",
+          "coordinates": [-97.75, 30.25]
+        }
 
-		Msg.insert({
-			text:text,
-			createdAt: new Date(),
-			username: Meteor.user().username,
-			// //test data for map view to use
-			location: {
-					"type": "Point",
-					"coordinates": [-97.75, 30.25]
-				}
-		})
+    Meteor.call("addMessage", text, location)
 
 		event.target.text.value=""
 		return false;
