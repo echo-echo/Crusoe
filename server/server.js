@@ -1,2 +1,2 @@
 //need this on both client and server side
-var Msg = new Mongo.Collection("messages")
+var Messages = new Mongo.Collection("messages")
