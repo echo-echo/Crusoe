@@ -23,12 +23,11 @@ Template.Map.rendered = function () {
       //pull messages from db:
  var allMess = Messages.find({},{sort: {createdAt: -1}}).fetch();
   //iterate through each and create marker:
+  var geoJsons = [];
   allMess.forEach(function(object, index){
-    if (object['location']) {
+    // if (object['location']) {
 
-    console.log('message added!')
-
-      var geoJson =   {
+      geoJsons.push({
     "type": "Feature",
     "geometry": {
       "type": "Point",
@@ -42,13 +41,14 @@ Template.Map.rendered = function () {
       "marker-symbol": "monument"
     }
   
- 
-      };
-       map.featureLayer.setGeoJSON(geoJson)
+      });
       // marker = L.marker([object['location']['coordinates'][1], object['location']['coordinates'][0]]).addTo(map)
 
-    }
-  })
+    })
+
+       console.log(geoJsons)
+       map.featureLayer.setGeoJSON(geoJsons)
+  
     }
   });
 
