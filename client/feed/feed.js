@@ -37,9 +37,9 @@ Template.writeModal.events({
     // test data
     var location = {
 
-          "type": "Point",
+      "type": "Point",
 
-          "coordinates": [local.coords.longitude, local.coords.latitude]
+      "coordinates": [local.coords.longitude, local.coords.latitude]
     };
 
 

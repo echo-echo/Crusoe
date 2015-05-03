@@ -7,14 +7,10 @@
 	margin-left: 0px
 }
 
-#map { 
- /* overflow:visible;*/ 
-  position:absolute;  
+#map {
+  position:absolute;
   height: 100%;
   width: 100%;
-}
-.leaflet-container {
-  background:none;
 }
 
 .side-nav{

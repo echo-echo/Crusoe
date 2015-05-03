@@ -21,45 +21,37 @@ Template.Map.rendered = function () {
       map.setZoom(14)
 
       //pull messages from db:
- var allMess = Messages.find({},{sort: {createdAt: -1}}).fetch();
-  //iterate through each and create marker:
-  var geoJsons = [];
-  allMess.forEach(function(object, index){
-    // if (object['location']) {
+      var allMess = Messages.find({},{sort: {createdAt: -1}}).fetch();
+      //iterate through each and create marker:
+      var geoJsons = [];
+      allMess.forEach(function(object, index){
 
-      geoJsons.push({
-    "type": "Feature",
-    "geometry": {
-      "type": "Point",
-      "coordinates": [object['location']['coordinates'][0], object['location']['coordinates'][1]]
-    },
-    "properties": {
-      "title": object['text'],
-      "description": object['createdAt'],
-      "marker-color": "#fc4353",
-      "marker-size": "large",
-      "marker-symbol": "monument"
-    }
-  
-      });
-      // marker = L.marker([object['location']['coordinates'][1], object['location']['coordinates'][0]]).addTo(map)
-
-    })
-
-       console.log(geoJsons)
-       map.featureLayer.setGeoJSON(geoJsons)
-  
+        geoJsons.push({
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [object['location']['coordinates'][0], object['location']['coordinates'][1]]
+          },
+          "properties": {
+            "title": object['text'],
+            "description": object['createdAt'],
+            "marker-color": "#fc4353",
+            "marker-size": "large",
+            "marker-symbol": "monument"
+          }
+        });
+      })
+      //add array of geoJson objects to map layer:
+      map.featureLayer.setGeoJSON(geoJsons);
     }
   });
-
-    Tracker.autorun(function(){
+  Tracker.autorun(function(){
     var local = Geolocation.currentLocation()
     if(local && marker){
       console.log(local)
       marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
       Session.set('loc', local) 
-      map.panTo([local.coords.latitude, local.coords.longitude])
+      // map.panTo([local.coords.latitude, local.coords.longitude])
     }
   })
-
 };
