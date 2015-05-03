@@ -3,7 +3,7 @@ Meteor.startup(function(){
 });
 
 
-// Template.Map.rendered = function () {
+Template.Map.rendered = function () {
   Meteor.subscribe("messages");
   var marker;
   Deps.autorun(function () {
@@ -54,4 +54,4 @@ Meteor.startup(function(){
       // map.panTo([local.coords.latitude, local.coords.longitude])
     }
   })
-// };
+};
