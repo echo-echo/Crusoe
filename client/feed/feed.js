@@ -32,12 +32,16 @@ Template.messageModal.helpers({
 
 Template.writeModal.events({
 		"submit .compose": function(event){
+    var local = Geolocation.currentLocation();
 		var text = event.target.text.value;
     // test data
     var location = {
+
       "type": "Point",
-      "coordinates": [-97.75, 30.25]
+
+      "coordinates": [local.coords.longitude, local.coords.latitude]
     };
+
 
     Meteor.call("addMessage", text, location);
 
