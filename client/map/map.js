@@ -15,10 +15,10 @@ Template.Map.rendered = function () {
         zoomControl :false,
 
       })
-      //default marker location
-      marker = L.marker([30.272920898023475, -97.74438629799988]).addTo(map)
-      map.panTo([30.272920898023475, -97.74438629799988])
-      map.setZoom(14)
+   
+      // marker = L.marker([30.272920898023475, -97.74438629799988]).addTo(map)
+      // map.panTo([30.272920898023475, -97.74438629799988])
+      // map.setZoom(14)
 
       //pull messages from db:
       var allMess = Messages.find({},{sort: {createdAt: -1}}).fetch();
@@ -43,6 +43,10 @@ Template.Map.rendered = function () {
       })
       //add array of geoJson objects to map layer:
       map.featureLayer.setGeoJSON(geoJsons);
+      //default marker location
+      marker = L.marker([30.272920898023475, -97.74438629799988]).addTo(map)
+      map.panTo([30.272920898023475, -97.74438629799988])
+      map.setZoom(14)
     }
   });
   Tracker.autorun(function(){
