@@ -32,12 +32,13 @@ Template.feed.helpers({
 	    var userLat = userLoc.coords.latitude
 	    var userLong = userLoc.coords.longitude
 	    var proximity = getProx(msgLat,msgLong,userLat,userLong)
-	    if (proximity<10){
+	    console.log(proximity)
+	    if (proximity<5){
 		    result.push(messages[i])
 	    }
 		}
 
-		return messages
+		return result
 	}
 })
 
