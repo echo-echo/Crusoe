@@ -14,10 +14,13 @@ SyncedCron.add({
     return parse.cron('* * * * * *', true);
   },
   job: function () {
-    // var messages = Messages.find({});
-    console.log("once a second?");
+    var message = Messages.findOne({});
+    console.log(message.location.coordinates[0]);
+
     // for ( var i = 0; i < messages.length; i++ ) {
-    //   console.log(messages[i]);
+      var newLat = message.location.coordinates[0] += .000001;
+      var newLng = message.location.coordinates[1] += .000001;
+      Messages.update({_id: message._id}, {$set: {"location.coordinates": [newLat, newLng]} });
     // }
   }
 });
