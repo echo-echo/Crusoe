@@ -18,8 +18,8 @@ SyncedCron.add({
     console.log(message.location.coordinates[0]);
 
     // for ( var i = 0; i < messages.length; i++ ) {
-      var newLat = message.location.coordinates[0] += .000001;
-      var newLng = message.location.coordinates[1] += .000001;
+      var newLat = message.location.coordinates[0] += .0001;
+      var newLng = message.location.coordinates[1] += .0001;
       Messages.update({_id: message._id}, {$set: {"location.coordinates": [newLat, newLng]} });
     // }
   }
