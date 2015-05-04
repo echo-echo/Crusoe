@@ -6,6 +6,8 @@ Template.feed.helpers({
 	messages: function(){
 		var messages = Messages.find({},{sort: {createdAt: -1}}).fetch()
 		var userLoc = Session.get("loc")
+		var userLat = userLoc.coords.latitude
+	  var userLong = userLoc.coords.longitude
 		var result =[]
 
 ///////////////////////////////////////////////////////////////
@@ -32,12 +34,10 @@ Template.feed.helpers({
 		for (var i = 0; i<messages.length; i++){
 	    var msgLat = messages[i].location.coordinates[1]
 			var msgLong = messages[i].location.coordinates[0]
-	    var userLat = userLoc.coords.latitude
-	    var userLong = userLoc.coords.longitude
 	    var proximity = getProx(msgLat,msgLong,userLat,userLong)
       messages[i].proximity = proximity.toFixed(6)
 	    console.log(proximity)
-	    if (proximity<2){
+	    if (proximity<5){
 		    result.push(messages[i])
 	    }
 		}
