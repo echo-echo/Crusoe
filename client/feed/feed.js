@@ -36,7 +36,7 @@ Template.feed.helpers({
 	    var userLong = userLoc.coords.longitude
 	    var proximity = getProx(msgLat,msgLong,userLat,userLong)
 	    console.log(proximity)
-	    if (proximity<5){
+	    if (proximity<2){
 		    result.push(messages[i])
 	    }
 		}
