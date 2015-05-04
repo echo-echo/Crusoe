@@ -39,10 +39,18 @@ Template.feed.helpers({
 	    console.log(proximity)
 	    if (proximity<2){
 		    result.visible.push(messages[i])
-	    }else{
+	    } else{
 	    	result.hidden.push(messages[i])
 	    }
 		}
+
+    result.visible.sort(function(a, b) {
+      return a.proximity - b.proximity;
+    });
+
+    result.hidden.sort(function(a, b) {
+      return a.proximity - b.proximity;
+    });
 
 		return result
 	}
