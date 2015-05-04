@@ -8,7 +8,7 @@ Template.feed.helpers({
 		var userLoc = Session.get("loc")
 		var userLat = userLoc.coords.latitude
 	  var userLong = userLoc.coords.longitude
-		var result =[]
+		var result ={visible:[],hidden:[]}
 
 ///////////////////////////////////////////////////////////////
 //Haversine Formula - find distance btwn two points on sphere//
@@ -37,8 +37,10 @@ Template.feed.helpers({
 	    var proximity = getProx(msgLat,msgLong,userLat,userLong)
       messages[i].proximity = proximity.toFixed(6)
 	    console.log(proximity)
-	    if (proximity<5){
-		    result.push(messages[i])
+	    if (proximity<2){
+		    result.visible.push(messages[i])
+	    }else{
+	    	result.hidden.push(messages[i])
 	    }
 		}
 
