@@ -8,9 +8,11 @@ Template.feed.helpers({
 		var userLoc = Session.get("loc")
 		var result =[]
 
+///////////////////////////////////////////////////////////////
+//Haversine Formula - find distance btwn two points on sphere//
 		var getProx = function(lat1,lon1,lat2,lon2) {
-	      var R = 6371; // Radius of the earth in km
-	      var dLat = deg2rad(lat2-lat1);  // deg2rad below
+	      var R = 6371;
+	      var dLat = deg2rad(lat2-lat1);
 	      var dLon = deg2rad(lon2-lon1); 
 	      var a = 
 	        Math.sin(dLat/2) * Math.sin(dLat/2) +
@@ -25,7 +27,8 @@ Template.feed.helpers({
 	    var deg2rad = function(deg) {
 	      return deg * (Math.PI/180)
 	    }
-
+///////////////////////////////////////////////////////////////
+/////filter by proximity between message and user location/////
 		for (var i = 0; i<messages.length; i++){
 	    var msgLat = messages[i].location.coordinates[1]
 			var msgLong = messages[i].location.coordinates[0]
