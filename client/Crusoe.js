@@ -1,3 +1,7 @@
+Messages = new Mongo.Collection("messages");
+
+Meteor.subscribe("messages");
+
 Router.configure({
 	layoutTemplate:'main'
 })
