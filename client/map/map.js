@@ -57,6 +57,7 @@ Template.Map.rendered = function () {
       	var msgLat = object.location.coordinates[1]
 				var msgLong = object.location.coordinates[0]
 				var proximity = getProx(msgLat,msgLong,userLat,userLong)
+				console.log(proximity)
 				if (proximity<2){
 	        geoJsons.push({
 	          "type": "Feature",
