@@ -7,16 +7,9 @@ Meteor.methods({
       text: text,
       createdAt: new Date(),
       username: username,
-      location: location,
-      proximity: 0
+      location: {"type": "Point","coordinates": [location.coords.longitude, location.coords.latitude]}
     });
-
   }
+})
 
-//   updateProx: function(location){
-//     var proximity = 
-//     Messages.update({}, 
-//       {$set:{proximity: proximity}}
-//     )
-//   }
-});
+   

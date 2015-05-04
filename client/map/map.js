@@ -1,7 +1,11 @@
 Meteor.startup(function(){
-    Mapbox.load();
+  Mapbox.load();
+  //set location when app starts instead of when Map renders
+  Tracker.autorun(function(){
+    var local = Geolocation.currentLocation()
+	  Session.set('loc', local) 
+	})
 });
-
 
 Template.Map.rendered = function () {
   Meteor.subscribe("messages");
@@ -47,11 +51,10 @@ Template.Map.rendered = function () {
   });
   Tracker.autorun(function(){
     var local = Geolocation.currentLocation()
-    if(local && marker){
-      console.log(local)
-      marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
-      Session.set('loc', local) 
-      // map.panTo([local.coords.latitude, local.coords.longitude])
-    }
-  })
+	    if(local && marker){
+	      console.log(local)
+	      marker.setLatLng([local.coords.latitude, local.coords.longitude]).update(); 
+	      map.panTo([local.coords.latitude, local.coords.longitude])
+	    }
+	})
 };
