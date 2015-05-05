@@ -2,24 +2,12 @@ Messages = new Mongo.Collection("messages");
 
 Meteor.subscribe("messages");
 
-// Template.feed.rendered = function () {
-//  Tracker.autorun(function(){
-//     var local = Geolocation.currentLocation()
-// 	    if(local){
-// 	        localStorage.setItem("userLat", local.coords.latitude);
-// 	        localStorage.setItem("userLong", local.coords.longitude);
-// 	    }
-// 	})
-// }
-
 Template.feed.helpers({
 	messages: function(){
 		var messages = Messages.find({},{sort: {createdAt: -1}}).fetch()
-    // var loca;
-    // loca.coords = {};
     var userLat = Number(localStorage.getItem("userLat"));
     var userLong = Number(localStorage.getItem("userLong"));
-	var result ={visible:[],hidden:[]}
+		var result ={visible:[],hidden:[]}
 
 ///////////////////////////////////////////////////////////////
 //Haversine Formula - find distance btwn two points on sphere//
@@ -71,6 +59,8 @@ Template.feed.events({
 		AntiModals.overlay('writeModal');
 	},
 	"click li": function(event){
+		console.log(Template.parentData())
+		// Meteor.call("tag", messageId)
 		var message = event.currentTarget.lastElementChild.textContent;
 		Session.set('clicked-message', message);
 		AntiModals.overlay('messageModal');
@@ -89,7 +79,7 @@ Template.writeModal.events({
 		var text = event.target.text.value;
 		var longitude = Number(localStorage.getItem("userLong"))
 		var latitude = Number(localStorage.getItem("userLat"))
-    	var location=[longitude,latitude]
+    var location=[longitude,latitude]
 
     Meteor.call("addMessage", text, location);
 
