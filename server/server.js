@@ -14,14 +14,13 @@ SyncedCron.add({
     return parse.cron('* * * * * *', true);
   },
   job: function () {
-    var message = Messages.findOne({});
-    console.log(message.location.coordinates[0]);
+    var messages = Messages.find({});
 
-    // for ( var i = 0; i < messages.length; i++ ) {
-      var newLat = message.location.coordinates[0] += .0001;
-      var newLng = message.location.coordinates[1] += .0001;
-      Messages.update({_id: message._id}, {$set: {"location.coordinates": [newLat, newLng]} });
-    // }
+    messages.forEach(function (msg) {
+      var newLat = msg.location.coordinates[0] += .00001;
+      var newLng = msg.location.coordinates[1] += .00001;
+      Messages.update({_id: msg._id}, {$set: {"location.coordinates": [newLat, newLng]} });
+    });
   }
 });
 
