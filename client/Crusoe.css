@@ -25,10 +25,21 @@ body{
   z-index: 5;
 }
 
+.leaflet-popup-content {
+   transform-origin: bottom center;
+   position:relative;
+    -webkit-transition: -webkit-transform 0.4s ease-out;
+    -moz-transition: -moz-transform 0.4s ease-out;
+    transition: transform 0.4s ease-out;
+        -webkit-transform: rotateZ(360deg);
+    -moz-transform: rotateZ(360deg);
+    transform: rotateZ(360deg);     
+
+}
 .nav-wrapper{
 position: relative;
 z-index: 999;
-top: 0px;
+top: -45px;
 }
 
 .nav-fixed {
