@@ -1,10 +1,13 @@
 Meteor.startup(function(){
   Mapbox.load();
-  //set location when app starts instead of when Map renders
- //  Tracker.autorun(function(){
- //    var local = Geolocation.currentLocation()
-	//   Session.set('loc', local) 
-	// })
+
+  Tracker.autorun(function(){
+    var local = Geolocation.currentLocation()
+	    if(local){
+	      localStorage.setItem("userLat", local.coords.latitude);
+	      localStorage.setItem("userLong", local.coords.longitude);
+	    }
+	})
 });
 
 Template.Map.rendered = function () {
@@ -32,8 +35,8 @@ Template.Map.rendered = function () {
     if (Mapbox.loaded()) {    
       //pull messages from db:
       var allMess = Messages.find({},{sort: {createdAt: -1}}).fetch();
-      var userLat = Number(localStorage.getItem("loclat"));
-			var userLong = Number(localStorage.getItem("loclon"));
+      var userLat = Number(localStorage.getItem("userLat"));
+			var userLong = Number(localStorage.getItem("userLong"));
       var geoJsons = [];
 
 		///////////////////////////////////////////////////////////////
@@ -62,7 +65,6 @@ Template.Map.rendered = function () {
       	var msgLat = object.location.coordinates[1]
 				var msgLong = object.location.coordinates[0]
 				var proximity = getProx(msgLat,msgLong,userLat,userLong)
-				console.log(proximity)
 				if (proximity<2){
 	        geoJsons.push({
 	          "type": "Feature",
@@ -103,9 +105,6 @@ Template.Map.rendered = function () {
   Tracker.autorun(function(){
     var local = Geolocation.currentLocation()
 	    if(local && marker){
-        // Session.set('loc', local); 
-        localStorage.setItem("loclat", local.coords.latitude);
-        localStorage.setItem("loclon", local.coords.longitude);
 	      console.log(local)
 	      marker.setLatLng([local.coords.latitude, local.coords.longitude]).update(); 
 	      map.panTo([local.coords.latitude, local.coords.longitude])

@@ -2,14 +2,24 @@ Messages = new Mongo.Collection("messages");
 
 Meteor.subscribe("messages");
 
+// Template.feed.rendered = function () {
+//  Tracker.autorun(function(){
+//     var local = Geolocation.currentLocation()
+// 	    if(local){
+// 	        localStorage.setItem("userLat", local.coords.latitude);
+// 	        localStorage.setItem("userLong", local.coords.longitude);
+// 	    }
+// 	})
+// }
+
 Template.feed.helpers({
 	messages: function(){
 		var messages = Messages.find({},{sort: {createdAt: -1}}).fetch()
     // var loca;
     // loca.coords = {};
-    var userLat = Number(localStorage.getItem("loclat"));
-    var userLong = Number(localStorage.getItem("loclon"));
-		var result ={visible:[],hidden:[]}
+    var userLat = Number(localStorage.getItem("userLat"));
+    var userLong = Number(localStorage.getItem("userLong"));
+	var result ={visible:[],hidden:[]}
 
 ///////////////////////////////////////////////////////////////
 //Haversine Formula - find distance btwn two points on sphere//
@@ -37,7 +47,7 @@ Template.feed.helpers({
 			var msgLong = messages[i].location.coordinates[0];
 	    var proximity = getProx(msgLat,msgLong,userLat,userLong) * 3280.84; //  to get ft
       messages[i].proximity = Math.round(proximity);
-	    console.log(proximity);
+	    // console.log(proximity);
 	    if (proximity<1000){
 		    result.visible.push(messages[i])
 	    } else{
@@ -79,12 +89,11 @@ Template.messageModal.helpers({
 Template.writeModal.events({
 		"submit .compose": function(event){
 		var text = event.target.text.value;
-    var loca = {coords:{}};
+		var longitude = Number(localStorage.getItem("userLong"))
+		var latitude = Number(localStorage.getItem("userLat"))
+    	var location=[longitude,latitude]
 
-    loca.coords['latitude'] = Number(localStorage.getItem("loclat"));
-    loca.coords['longitude'] = Number(localStorage.getItem("loclon"));
-
-    Meteor.call("addMessage", text, loca);
+    Meteor.call("addMessage", text, location);
 
 		event.target.text.value=""
 		return false;
