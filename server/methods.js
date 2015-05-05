@@ -1,5 +1,5 @@
 Meteor.methods({
-  addMessage: function (text, loca) {
+  addMessage: function (text, location) {
 
     var username = Meteor.user() ? Meteor.user().username : "Anonymous";
 
@@ -7,7 +7,7 @@ Meteor.methods({
       text: text,
       createdAt: new Date(),
       username: username,
-      location: {"type": "Point","coordinates": [loca.coords.longitude, loca.coords.latitude]}
+      location: {"type": "Point","coordinates": location}
     });
   }
 })
