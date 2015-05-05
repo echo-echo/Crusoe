@@ -41,7 +41,6 @@ Template.Map.rendered = function () {
     })
   }, 5000);  
 
-
   Deps.autorun(function () {
     if (Mapbox.loaded()) {
       var userLat = Number(localStorage.getItem("userLat"));
