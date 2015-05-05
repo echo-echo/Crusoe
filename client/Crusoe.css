@@ -3,7 +3,11 @@
 body{
     padding-top: 45px;
 }
-
+path{
+  position:absolute;
+  overflow:visible;
+  z-index:10;
+}
 .compose{
 	position: relative;
 	top:40%;
@@ -17,13 +21,20 @@ body{
 #map {
   -webkit-transform-style: preserve-3d;
   -webkit-transition: 5s;
-  -webkit-transform: rotateX(75deg);
+  -webkit-transform: rotateX(45deg);
   overflow: visible;
   position:absolute;
   height: 100%;
   width: 100%;
   z-index: 5;
   -webkit-transition: 10s;
+}
+.user-icon {
+  width: 0;
+  height: 0;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-left: 30px solid #ff8888;
 }
 
 .leaflet-popup-content {
