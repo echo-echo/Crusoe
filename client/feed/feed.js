@@ -5,9 +5,10 @@ Meteor.subscribe("messages");
 Template.feed.helpers({
 	messages: function(){
 		var messages = Messages.find({},{sort: {createdAt: -1}}).fetch()
-		var userLoc = Session.get("loc")
-		var userLat = userLoc.coords.latitude
-	  var userLong = userLoc.coords.longitude
+    // var loca;
+    // loca.coords = {};
+    var userLat = Number(localStorage.getItem("loclat"));
+    var userLong = Number(localStorage.getItem("loclon"));
 		var result ={visible:[],hidden:[]}
 
 ///////////////////////////////////////////////////////////////
@@ -78,10 +79,12 @@ Template.messageModal.helpers({
 Template.writeModal.events({
 		"submit .compose": function(event){
 		var text = event.target.text.value;
-    var location = Session.get("loc")
-    console.log(location)
+    var loca = {coords:{}};
 
-    Meteor.call("addMessage", text, location)
+    loca.coords['latitude'] = Number(localStorage.getItem("loclat"));
+    loca.coords['longitude'] = Number(localStorage.getItem("loclon"));
+
+    Meteor.call("addMessage", text, loca);
 
 		event.target.text.value=""
 		return false;

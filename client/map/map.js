@@ -1,34 +1,39 @@
 Meteor.startup(function(){
   Mapbox.load();
   //set location when app starts instead of when Map renders
-  Tracker.autorun(function(){
-    var local = Geolocation.currentLocation()
-	  Session.set('loc', local) 
-	})
+ //  Tracker.autorun(function(){
+ //    var local = Geolocation.currentLocation()
+	//   Session.set('loc', local) 
+	// })
 });
 
 Template.Map.rendered = function () {
-  Meteor.subscribe("messages");
+  var color = "#FF0000";
+  var currMess = [];
   var marker;
+  var map;
+
   Deps.autorun(function () {
     if (Mapbox.loaded()) {
-      L.mapbox.accessToken = "pk.eyJ1Ijoiam9zaHVhYmVuc29uIiwiYSI6Im1sT3BqRWcifQ.W7h8nMmj_oI1p4RzChElsQ";
-      var map = L.mapbox.map('map', 'joshuabenson.68d254d5', { 
-        //map options
-        attributionControl: false,
-        zoomControl :false,
-
-      })
-      //default marker location
-      marker = L.marker([30.272920898023475, -97.74438629799988]).addTo(map)
-      map.panTo([30.272920898023475, -97.74438629799988])
-      map.setZoom(14)
-
+      if (!map) {//if map hasn't been loaded, load a map
+        L.mapbox.accessToken = "pk.eyJ1Ijoiam9zaHVhYmVuc29uIiwiYSI6Im1sT3BqRWcifQ.W7h8nMmj_oI1p4RzChElsQ";
+        map = L.mapbox.map('map', 'joshuabenson.68d254d5', { 
+          //map options
+          attributionControl: false,
+          zoomControl :false
+        });
+      marker = L.marker([30.272920898023475, -97.74438629799988]).addTo(map); //adds default marker location, that will be reset to user Geolocation
+      map.panTo([30.272920898023475, -97.74438629799988]);
+      map.setZoom(14);
+      }
+    }
+  });  
+  Deps.autorun(function () {
+    if (Mapbox.loaded()) {    
       //pull messages from db:
       var allMess = Messages.find({},{sort: {createdAt: -1}}).fetch();
-      var userLoc = Session.get("loc")
-      var userLat = userLoc.coords.latitude
-			var userLong = userLoc.coords.longitude
+      var userLat = Number(localStorage.getItem("loclat"));
+			var userLong = Number(localStorage.getItem("loclon"));
       var geoJsons = [];
 
 		///////////////////////////////////////////////////////////////
@@ -92,11 +97,15 @@ Template.Map.rendered = function () {
       })
       //add array of geoJson objects to map layer:
       map.featureLayer.setGeoJSON(geoJsons);
+      //default marker location
     }
   });
   Tracker.autorun(function(){
     var local = Geolocation.currentLocation()
 	    if(local && marker){
+        // Session.set('loc', local); 
+        localStorage.setItem("loclat", local.coords.latitude);
+        localStorage.setItem("loclon", local.coords.longitude);
 	      console.log(local)
 	      marker.setLatLng([local.coords.latitude, local.coords.longitude]).update(); 
 	      map.panTo([local.coords.latitude, local.coords.longitude])
