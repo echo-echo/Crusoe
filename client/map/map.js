@@ -22,6 +22,16 @@ Template.Map.rendered = function () {
           attributionControl: false,
           zoomControl :false
         });
+      var getPxBounds = map.getPixelBounds;
+      map.getPixelBounds = function () {
+        var bounds = getPxBounds.call(this);
+        // ... extend the bounds
+        bounds.min.x=bounds.min.x-1000;
+        bounds.min.y=bounds.min.y-1000;
+        bounds.max.x=bounds.max.x+1000;
+        bounds.max.y=bounds.max.y+1000;
+        return bounds;
+      };  
       marker = L.marker([30.272920898023475, -97.74438629799988]).addTo(map); //adds default marker location, that will be reset to user Geolocation
       map.panTo([30.272920898023475, -97.74438629799988]);
       map.setZoom(14);

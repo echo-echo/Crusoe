@@ -1,4 +1,9 @@
 /* CSS declarations go here */
+
+body{
+    padding-top: 45px;
+}
+
 .compose{
 	position: relative;
 	top:40%;
@@ -6,11 +11,29 @@
 	text-align: right;
 	margin-left: 0px
 }
-
+.yield{
+  perspective: 900px;
+}
 #map {
-  position:absolute;
+  transform-style: preserve-3d;
+  transition: 5s;
+  transform: rotateX(70deg);
+  overflow: visible;
+  position:relative;
   height: 100%;
   width: 100%;
+  z-index: 5;
+}
+
+.nav-wrapper{
+position: relative;
+z-index: 999;
+top: 0px;
+}
+
+.nav-fixed {
+
+z-index: 999;
 }
 
 .side-nav{
