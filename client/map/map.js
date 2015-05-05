@@ -41,8 +41,19 @@ Template.Map.rendered = function () {
           attributionControl: false,
           zoomControl :false
         });
-   
-      marker = L.marker([userLat, userLong]).addTo(map);
+      var getPxBounds = map.getPixelBounds;
+      map.getPixelBounds = function () {
+        var bounds = getPxBounds.call(this);
+        // ... extend the bounds
+        bounds.min.x=bounds.min.x-1000;
+        bounds.min.y=bounds.min.y-1000;
+        bounds.max.x=bounds.max.x+1000;
+        bounds.max.y=bounds.max.y+1000;
+        return bounds;
+      };  
+        var imageUrl = '/radius.gif',
+      imageBounds = calcBounds(userLat, userLong);  
+      marker = L.marker([30.272920898023475, -97.74438629799988]).addTo(map);
       // L.circle([userLat,userLong], 304.8).addTo(map);
       map.panTo([30.272920898023475, -97.74438629799988]);
       map.setZoom(14);
