@@ -33,17 +33,25 @@ Template.feed.helpers({
 ///////////////////////////////////////////////////////////////
 /////filter by proximity between message and user location/////
 		for (var i = 0; i<messages.length; i++){
-	    var msgLat = messages[i].location.coordinates[1]
-			var msgLong = messages[i].location.coordinates[0]
-	    var proximity = getProx(msgLat,msgLong,userLat,userLong)
-      messages[i].proximity = proximity.toFixed(6)
-	    console.log(proximity)
-	    if (proximity<2){
+	    var msgLat = messages[i].location.coordinates[1];
+			var msgLong = messages[i].location.coordinates[0];
+	    var proximity = getProx(msgLat,msgLong,userLat,userLong) * 3280.84; //  to get ft
+      messages[i].proximity = Math.round(proximity);
+	    console.log(proximity);
+	    if (proximity<1000){
 		    result.visible.push(messages[i])
-	    }else{
+	    } else{
 	    	result.hidden.push(messages[i])
 	    }
 		}
+
+    result.visible.sort(function(a, b) {
+      return a.proximity - b.proximity;
+    });
+
+    result.hidden.sort(function(a, b) {
+      return a.proximity - b.proximity;
+    });
 
 		return result
 	}
