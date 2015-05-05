@@ -12,17 +12,18 @@ body{
 	margin-left: 0px
 }
 .yield{
-  perspective: 900px;
+  -webkit-perspective: 900px;
 }
 #map {
-  transform-style: preserve-3d;
-  transition: 5s;
-  transform: rotateX(70deg);
+  -webkit-transform-style: preserve-3d;
+  -webkit-transition: 5s;
+  -webkit-transform: rotateX(75deg);
   overflow: visible;
-  position:relative;
+  position:absolute;
   height: 100%;
   width: 100%;
   z-index: 5;
+  -webkit-transition: 10s;
 }
 
 .leaflet-popup-content {

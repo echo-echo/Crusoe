@@ -29,6 +29,18 @@ Template.Map.rendered = function () {
     var lon1 = (userLong + (.00075 * lonDiff));
     return [[lat0, lon0], [lat1, lon1]]; 
   }
+  var rotateVal = 0;
+  $('html, body').css({ //disable map overflowing page/scrolling
+    'overflow': 'hidden',
+    'height': '100%'
+  });
+  setInterval(function(){
+    rotateVal += 45;
+    $('#map').css({ 
+      transform: 'rotateX(75deg) rotateZ(' + rotateVal + 'deg)'
+    })
+  }, 5000);  
+
 
   Deps.autorun(function () {
     if (Mapbox.loaded()) {
