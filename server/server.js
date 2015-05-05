@@ -28,4 +28,58 @@ SyncedCron.add({
   }
 });
 
+SyncedCron.add({
+  name: 'Update weight10s of each message',
+  schedule: function(parser) {
+    return parser.text('every 10 seconds');
+  },
+  job: function(){
+    var messages = Messages.find({});
+
+    messages.forEach(function(msg) {
+      Messages.update({_id: msg._id}, {$set: {
+        "latWeight10s": Math.random() - 0.5,
+        "lngWeight10s": Math.random() - 0.5
+        }
+      })
+    });
+  }
+});
+
+SyncedCron.add({
+  name: 'Update weight30s of each message',
+  schedule: function(parser) {
+    return parser.text('every 30 seconds');
+  },
+  job: function(){
+    var messages = Messages.find({});
+
+    messages.forEach(function(msg) {
+      Messages.update({_id: msg._id}, {$set: {
+        "latWeight30s": Math.random() * (0.6) - 0.3,
+        "lngWeight30s": Math.random() * (0.6) - 0.3
+        }
+      })
+    });
+  }
+});
+
+SyncedCron.add({
+  name: 'Update weight1m of each message',
+  schedule: function(parser) {
+    return parser.text('every 1 minute');
+  },
+  job: function(){
+    var messages = Messages.find({});
+
+    messages.forEach(function(msg) {
+      Messages.update({_id: msg._id}, {$set: {
+        "latWeight1m": Math.random() * (0.2) - 0.1,
+        "lngWeight1m": Math.random() * (0.2) - 0.1
+        }
+      })
+    });
+  }
+});
+
 SyncedCron.start();
