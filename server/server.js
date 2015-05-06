@@ -49,35 +49,17 @@ SyncedCron.add({
 });
 
 SyncedCron.add({
-  name: 'Update weight10s of each message',
+  name: 'Update weight15s of each message',
   schedule: function(parser) {
-    return parser.text('every 10 seconds');
+    return parser.text('every 15 seconds');
   },
   job: function(){
     var messages = Messages.find({});
 
     messages.forEach(function(msg) {
       Messages.update({_id: msg._id}, {$set: {
-        "latWeight10s": Math.random() - 0.5,
-        "lngWeight10s": Math.random() - 0.5
-        }
-      })
-    });
-  }
-});
-
-SyncedCron.add({
-  name: 'Update weight30s of each message',
-  schedule: function(parser) {
-    return parser.text('every 30 seconds');
-  },
-  job: function(){
-    var messages = Messages.find({});
-
-    messages.forEach(function(msg) {
-      Messages.update({_id: msg._id}, {$set: {
-        "latWeight30s": Math.random() * (0.6) - 0.3,
-        "lngWeight30s": Math.random() * (0.6) - 0.3
+        "latWeight15s": Math.random() - 0.5,
+        "lngWeight15s": Math.random() - 0.5
         }
       })
     });
@@ -94,8 +76,62 @@ SyncedCron.add({
 
     messages.forEach(function(msg) {
       Messages.update({_id: msg._id}, {$set: {
-        "latWeight1m": Math.random() * (0.2) - 0.1,
-        "lngWeight1m": Math.random() * (0.2) - 0.1
+        "latWeight1m": Math.random() - 0.5,
+        "lngWeight1m": Math.random() - 0.5
+        }
+      })
+    });
+  }
+});
+
+SyncedCron.add({
+  name: 'Update weight15m of each message',
+  schedule: function(parser) {
+    return parser.text('every 15 minutes');
+  },
+  job: function(){
+    var messages = Messages.find({});
+
+    messages.forEach(function(msg) {
+      Messages.update({_id: msg._id}, {$set: {
+        "latWeight15m": Math.random() - 0.5,
+        "lngWeight15m": Math.random() - 0.5
+        }
+      })
+    });
+  }
+});
+
+SyncedCron.add({
+  name: 'Update weight1hr of each message',
+  schedule: function(parser) {
+    return parser.text('every 1 hour');
+  },
+  job: function(){
+    var messages = Messages.find({});
+
+    messages.forEach(function(msg) {
+      Messages.update({_id: msg._id}, {$set: {
+        "latWeight1hr": Math.random() - 0.5,
+        "lngWeight1hr": Math.random() - 0.5
+        }
+      })
+    });
+  }
+});
+
+SyncedCron.add({
+  name: 'Update weight6hr of each message',
+  schedule: function(parser) {
+    return parser.text('every 6 hours');
+  },
+  job: function(){
+    var messages = Messages.find({});
+
+    messages.forEach(function(msg) {
+      Messages.update({_id: msg._id}, {$set: {
+        "latWeight6hr": Math.random() - 0.5,
+        "lngWeight6hr": Math.random() - 0.5
         }
       })
     });
