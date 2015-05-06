@@ -20,7 +20,7 @@ Template.Map.rendered = function () {
     if (Mapbox.loaded()) {
       if (!map) {//if map hasn't been loaded, load a map
         L.mapbox.accessToken = "pk.eyJ1Ijoiam9zaHVhYmVuc29uIiwiYSI6Im1sT3BqRWcifQ.W7h8nMmj_oI1p4RzChElsQ";
-        map = L.mapbox.map('map', 'joshuabenson.68d254d5', { 
+        map = L.mapbox.map('map', 'joshuabenson.68d254d5', {
           //map options
           attributionControl: false,
           zoomControl :false
@@ -30,9 +30,9 @@ Template.Map.rendered = function () {
       map.setZoom(14);
       }
     }
-  });  
+  });
   Deps.autorun(function () {
-    if (Mapbox.loaded()) {    
+    if (Mapbox.loaded()) {
       //pull messages from db:
       var allMess = Messages.find({},{sort: {createdAt: -1}}).fetch();
       var userLat = Number(localStorage.getItem("userLat"));
@@ -44,13 +44,13 @@ Template.Map.rendered = function () {
         var getProx = function(lat1,lon1,lat2,lon2) {
             var R = 6371;
             var dLat = deg2rad(lat2-lat1);
-            var dLon = deg2rad(lon2-lon1); 
-            var a = 
+            var dLon = deg2rad(lon2-lon1);
+            var a =
               Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+              Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
               Math.sin(dLon/2) * Math.sin(dLon/2)
-              ; 
-            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+              ;
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
             var d = R * c; // Distance in km
             return d;
           }
@@ -115,8 +115,7 @@ Template.Map.rendered = function () {
   Tracker.autorun(function(){
     var local = Geolocation.currentLocation()
 	    if(local && marker){
-	      console.log(local)
-	      marker.setLatLng([local.coords.latitude, local.coords.longitude]).update(); 
+	      marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
 	      map.panTo([local.coords.latitude, local.coords.longitude])
 	    }
 	})

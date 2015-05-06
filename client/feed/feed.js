@@ -47,7 +47,6 @@ Template.feed.helpers({
 			var msgLong = messages[i].location.coordinates[0];
 	    var proximity = getProx(msgLat,msgLong,userLat,userLong) * 3280.84; //  to get ft
       messages[i].proximity = Math.round(proximity);
-	    // console.log(proximity);
 	    if (proximity<1000){
 		    result.visible.push(messages[i])
 	    } else{
@@ -81,7 +80,6 @@ Template.feed.events({
 Template.messageModal.helpers({
 	message: function() {
 		var message = Session.get('clicked-message');
-		console.log("Session.get worked?: ", message);
 		return message;
 	}
 });
