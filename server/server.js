@@ -1,8 +1,14 @@
 //need this on both client and server side
 Messages = new Mongo.Collection("messages")
+Users = new Mongo.Collection("userData")
 
 Meteor.publish("messages", function() {
   return Messages.find();
+})
+
+//allows client side to access "tagged" property of user
+Meteor.publish("userData", function(){
+    return Meteor.users.find({_id: this.userId}, {fields:{tagged:1}});    
 })
 
 // percolate:synced-cron methods--adds a cron job

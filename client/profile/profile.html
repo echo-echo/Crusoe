@@ -1,12 +1,24 @@
+
+
 <template name = "profile">
 	<h1>profile</h1>
 
-	<div id = "content">
+	<div class = "content tagged">
+		<h5>saved messages</h5>
 		<ul class="collection">
-			{{#each messages}}
-		    {{> visible}}
+			{{#each taggedMessages}}
+		    {{> tagged}}
 		  {{/each}}
+		 
+		</ul>
+	</div>
 
+	<div class = "content created">
+		<h5>user messages</h5>
+		<ul class="collection">
+			{{#each userCreated}}
+		    {{> tagged}}
+		  {{/each}}
 		 
 		</ul>
 	</div>
@@ -14,5 +26,8 @@
 </template>
 
 <template name = "tagged">
-	
+	<li class="collection-item avatar">
+			<i class="mdi-communication-email circle red lighten-2"></i>
+      <p class="proximity">{{text}}</p>
+		</li>
 </template>

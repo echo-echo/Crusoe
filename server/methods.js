@@ -6,14 +6,12 @@ Meteor.methods({
       text: text,
       createdAt: new Date(),
       username: username,
-      location: {"type": "Point","coordinates": location},
-      latWeight10s: Math.random() - 0.5,
-      lngWeight10s: Math.random() - 0.5,
-      latWeight30s: Math.random() * (0.6) - 0.3,
-      lngWeight30s: Math.random() * (0.6) - 0.3,
-      latWeight1m: Math.random() * (0.2) - 0.1,
-      lngWeight1m: Math.random() * (0.2) - 0.1
+      location: {"type": "Point","coordinates": location}
+    }, function(err,result){
+    	console.log(result)
     });
+
+
   },
 
   tagMessage: function(messageId){

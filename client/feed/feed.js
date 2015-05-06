@@ -36,8 +36,10 @@ Template.feed.helpers({
 	    var proximity = getProx(msgLat,msgLong,userLat,userLong) * 3280.84; //  to get ft
       messages[i].proximity = Math.round(proximity);
 	    if (proximity<1000){
+	    	messages[i].visible=true
 		    result.visible.push(messages[i])
 	    } else{
+	    	messages[i].visible=false
 	    	result.hidden.push(messages[i])
 	    }
 		}
@@ -55,15 +57,17 @@ Template.feed.helpers({
 })
 
 Template.feed.events({
-	"click .btn": function(){
+	"click .btn.write": function(){
 		AntiModals.overlay('writeModal');
 	},
 	"click li": function(event){
-		console.log(Template.parentData())
-		// Meteor.call("tag", messageId)
-		var message = event.currentTarget.lastElementChild.textContent;
-		Session.set('clicked-message', message);
-		AntiModals.overlay('messageModal');
+		var message = Blaze.getData(event.currentTarget)
+		if (message.visible){
+			Session.set("tag", message._id)
+			//display message in a modal
+			Session.set('clicked-message', message.text);
+			AntiModals.overlay('messageModal');
+		}
 	}
 });
 
@@ -73,6 +77,13 @@ Template.messageModal.helpers({
 		return message;
 	}
 });
+
+Template.messageModal.events({
+	"click .save": function(){
+		messageId = Session.get("tag")
+		Meteor.call("tagMessage", messageId)
+	}
+})
 
 Template.writeModal.events({
 		"submit .compose": function(event){

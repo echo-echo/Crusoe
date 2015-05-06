@@ -1,7 +1,7 @@
 <template name = "feed">
   <h5>messages</h5>
 
-	<div id = "content">
+	<div class = "content">
 		<ul class="collection">
 			{{#each messages.visible}}
 		    {{> visible}}
@@ -13,16 +13,15 @@
 		</ul>
 	</div>
 
-  <button class="waves-effect waves-light btn">Write Message</button>
+  <button class="waves-effect waves-light btn write">Write Message</button>
 
 </template>
 
 <template name="visible">
-		<li class="collection-item avatar">
+		<li class="collection-item avatar visible">
 			<i class="mdi-communication-email circle red lighten-2"></i>
       <p class="proximity">{{proximity}} ft</p>
 			<p class="text">{{text}}</p>
-			<p>{{_id}}</p>
 		</li>
 </template>
 
@@ -46,5 +45,8 @@
 <template name="messageModal">
   <div class="modal-box">
     <p>{{message}}</p>
+    <button class ="btn-flat save">
+  		<i class ="mdi-content-add-box"> save message</i>
+    </button>
   </div>
 </template>
