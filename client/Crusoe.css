@@ -41,7 +41,7 @@
   padding: 25px;
 }
 
-#content{
+.content{
   text-align: left;
   font-size: 14px;
   overflow: auto;
@@ -55,4 +55,8 @@ li:hover {
 
 .nav-wrapper{
   background-color:#213556;
+}
+
+.tagged{
+  float:right;
 }
