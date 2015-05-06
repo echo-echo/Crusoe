@@ -35,7 +35,7 @@ Template.feed.helpers({
 			var msgLong = messages[i].location.coordinates[0];
 	    var proximity = getProx(msgLat,msgLong,userLat,userLong) * 3280.84; //  to get ft
       messages[i].proximity = Math.round(proximity);
-	    if (proximity<1000){
+	    if (proximity<500){
 	    	messages[i].visible=true
 		    result.visible.push(messages[i])
 	    } else{

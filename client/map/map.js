@@ -52,7 +52,7 @@ Template.Map.rendered = function () {
               ;
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
             var d = R * c; // Distance in km
-            return d * 3280.84;
+            return d * 3280.84; // to get ft
           }
 
           var deg2rad = function(deg) {
@@ -65,7 +65,7 @@ Template.Map.rendered = function () {
         var msgLat = object.location.coordinates[1]
         var msgLong = object.location.coordinates[0]
         var proximity = getProx(msgLat,msgLong,userLat,userLong)
-        if (proximity<10){
+        if (proximity<500){
           geoJsons.push({
             "type": "Feature",
             "geometry": {
