@@ -44,9 +44,12 @@
 
 <template name="messageModal">
   <div class="modal-box">
-    <p>{{message}}</p>
+    <p>{{message.text}}</p>
     <button class ="btn-flat save">
   		<i class ="mdi-content-add-box"> save message</i>
+    </button>
+    <button class ="btn-flat like">
+  		<i class ="mdi-action-thumb-up"> {{message.likes}}</i>
     </button>
   </div>
 </template>
