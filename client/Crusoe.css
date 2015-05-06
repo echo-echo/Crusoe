@@ -41,7 +41,7 @@
   padding: 25px;
 }
 
-.content{
+#content{
   text-align: left;
   font-size: 14px;
   overflow: auto;
@@ -59,8 +59,5 @@ li:hover {
   bottom:0;
   width:100%;
   z-index: 99;
-}
 
-.tagged{
-  float:right;
 }
