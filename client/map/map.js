@@ -152,7 +152,7 @@ Template.Map.rendered = function () {
 
 Template.mapMessageModal.events({
   "click .back": function () {
-    AntiModals.dismissOverlay();
+    AntiModals.dismissOverlay($('.anti-modal-box'));
   }
 });
 
