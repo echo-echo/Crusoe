@@ -2,8 +2,12 @@
 <head>
   <title>Crusoe</title>
 </head>
-<nav>
-  <div class="nav-wrapper">
+<body>
+	<div>{{>yield}}</div>
+</body>
+
+<nav class="nav-wrapper">
+  <div>
     <a href="#!" class="brand-logo">Crusoe</a>
     <div class = "right">{{>loginButtons}}</div>
     <ul class="right hide-on-med-and-down">
@@ -14,12 +18,8 @@
     <ul class="side-nav" id="mobile-demo">
       <li><a href="/feed">Send a message</a></li>
       <li><a href="/">Go to Map</a></li>
-    </ul> 
+    </ul>
   </div>
-</nav>     
-<body>
-  
-	<div>{{>yield}}</div>
+</nav>
 
-</body>
 </template>

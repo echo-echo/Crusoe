@@ -22,12 +22,12 @@
 
 }
 
-#login-dropdown-list {
+/*#login-dropdown-list {
   position: absolute;
   top: 50px;
   left: -195px;
   font-size: 2em;
-}
+}*/
 
 .modal-box{
 	background: white;
@@ -55,4 +55,8 @@ li:hover {
 
 .nav-wrapper{
   background-color:#213556;
+  position:fixed;
+  bottom:0;
+  width:100%;
+  z-index: 99;
 }
