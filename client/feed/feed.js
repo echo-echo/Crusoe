@@ -5,9 +5,8 @@ Meteor.subscribe("messages");
 Template.feed.helpers({
 	messages: function(){
 		var messages = Messages.find({},{sort: {createdAt: -1}}).fetch()
-		var userLoc = Session.get("loc")
-		var userLat = userLoc.coords.latitude
-	  var userLong = userLoc.coords.longitude
+    var userLat = Number(localStorage.getItem("userLat"));
+    var userLong = Number(localStorage.getItem("userLong"));
 		var result ={visible:[],hidden:[]}
 
 ///////////////////////////////////////////////////////////////
@@ -36,10 +35,11 @@ Template.feed.helpers({
 			var msgLong = messages[i].location.coordinates[0];
 	    var proximity = getProx(msgLat,msgLong,userLat,userLong) * 3280.84; //  to get ft
       messages[i].proximity = Math.round(proximity);
-	    console.log(proximity);
 	    if (proximity<1000){
+	    	messages[i].visible=true
 		    result.visible.push(messages[i])
 	    } else{
+	    	messages[i].visible=false
 	    	result.hidden.push(messages[i])
 	    }
 		}
@@ -57,31 +57,42 @@ Template.feed.helpers({
 })
 
 Template.feed.events({
-	"click .btn": function(){
+	"click .btn.write": function(){
 		AntiModals.overlay('writeModal');
 	},
 	"click li": function(event){
-		var message = event.currentTarget.lastElementChild.textContent;
-		Session.set('clicked-message', message);
-		AntiModals.overlay('messageModal');
+		var message = Blaze.getData(event.currentTarget)
+		if (message.visible){
+			Session.set("tag", message._id)
+			//display message in a modal
+			Session.set('clicked-message', message.text);
+			AntiModals.overlay('messageModal');
+		}
 	}
 });
 
 Template.messageModal.helpers({
 	message: function() {
 		var message = Session.get('clicked-message');
-		console.log("Session.get worked?: ", message);
 		return message;
 	}
 });
 
+Template.messageModal.events({
+	"click .save": function(){
+		messageId = Session.get("tag")
+		Meteor.call("tagMessage", messageId)
+	}
+})
+
 Template.writeModal.events({
 		"submit .compose": function(event){
 		var text = event.target.text.value;
-    var location = Session.get("loc")
-    console.log(location)
+		var longitude = Number(localStorage.getItem("userLong"))
+		var latitude = Number(localStorage.getItem("userLat"))
+    var location=[longitude,latitude]
 
-    Meteor.call("addMessage", text, location)
+    Meteor.call("addMessage", text, location);
 
 		event.target.text.value=""
 		return false;

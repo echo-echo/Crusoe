@@ -7,11 +7,14 @@ Router.map(function(){
     path:'/'
   });
   this.route('feed')
+  this.route('profile')
 })
 
 Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
 });
+
+
 
 Template.main.rendered = function () { 
    $(".button-collapse").sideNav();
