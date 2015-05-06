@@ -133,7 +133,10 @@ Template.Map.rendered = function () {
 
       map.featureLayer.on('click', function (e) {
         Session.set("marker", e.layer.feature.properties.title);
-        AntiModals.overlay('mapMessageModal');
+        AntiModals.overlay('mapMessageModal', {
+          modal: true,
+          overlayClass: 'nautical'
+        });
       });
 
       //add array of geoJson objects to map layer:

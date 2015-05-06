@@ -60,3 +60,21 @@ li:hover {
 .tagged{
   float:right;
 }
+
+/*
+* Modal styling
+*/
+
+.nautical {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.anti-modal-overlay .anti-modal-box {
+  border: 1px solid #0A536E;
+  box-shadow: 0px 0px 5px rgba(10,83,110,1);
+}
+
+.back {
+  display: block;
+  margin: 0 auto;
+}
