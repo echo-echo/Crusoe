@@ -9,12 +9,20 @@
 <nav class="nav-wrapper">
   <div>
     <a href="#!" class="brand-logo">Crusoe</a>
-    <div class = "right">{{>loginButtons}}</div>
     <ul class="right hide-on-med-and-down">
       <li><a href="/feed">Messages</a></li>
       <li><a href="/">Map</a></li>
       <li><a href="/profile">Profile</a></li>
+      <li><a href="#">
+        {{#if currentUser}}
+          {{>user_loggedin}}
+        {{else}}
+          {{>user_loggedout}}
+        {{/if}}
+
+      </a></li>
     </ul>
+    {{>loginButtons}}
     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
     <ul class="side-nav" id="mobile-demo">
       <li><a href="/feed">Send a message</a></li>

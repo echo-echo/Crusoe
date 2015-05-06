@@ -22,12 +22,12 @@
 
 }
 
-/*#login-dropdown-list {
+#login-dropdown-list {
   position: absolute;
   top: 50px;
   left: -195px;
   font-size: 2em;
-}*/
+}
 
 .modal-box{
 	background: white;
