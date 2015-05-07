@@ -8,16 +8,15 @@ Meteor.publish("messages", function() {
 
 //allows client side to access "tagged" property of user
 Meteor.publish("userData", function(){
-    return Meteor.users.find({_id: this.userId}, {fields:{tagged:1}});    
+    return Meteor.users.find({_id: this.userId}, {fields:{tagged:1}});
 })
 
-// percolate:synced-cron methods--adds a cron job
 SyncedCron.add({
-  name: 'Update messages worldwide',
+  name: 'Update messages locations every 15 seconds',
   // parse is a later.parse object
   //  percolate:synced-cron is built on top of Later.js
-  schedule: function(parse) {
-    return parse.cron('* * * * * *', true);
+  schedule: function(parser) {
+    return parser.text('every 15 seconds');
   },
   job: function () {
     var messages = Messages.find({});
@@ -27,41 +26,21 @@ SyncedCron.add({
       // also you can still add in lat and lng weights for 1hr, 1day, 1wk, 1month, 1year
       var latChange = (
         Math.random() - 0.5 +
-        msg.latWeight15s +
         msg.latWeight1m +
         msg.latWeight15m +
         msg.latWeight1hr +
         msg.latWeight6hr
-        ) * 0.00001;
+        ) * 0.0001;
       var lngChange = (
         Math.random() - 0.5 +
-        msg.lngWeight15s +
         msg.lngWeight1m +
         msg.lngWeight15m +
         msg.lngWeight1hr +
         msg.lngWeight6hr
-        ) * 0.00001;
+        ) * 0.0001;
       var newLat = msg.location.coordinates[0] += latChange;
       var newLng = msg.location.coordinates[1] += lngChange;
       Messages.update({_id: msg._id}, {$set: {"location.coordinates": [newLat, newLng]} });
-    });
-  }
-});
-
-SyncedCron.add({
-  name: 'Update weight15s of each message',
-  schedule: function(parser) {
-    return parser.text('every 15 seconds');
-  },
-  job: function(){
-    var messages = Messages.find({});
-
-    messages.forEach(function(msg) {
-      Messages.update({_id: msg._id}, {$set: {
-        "latWeight15s": Math.random() - 0.5,
-        "lngWeight15s": Math.random() - 0.5
-        }
-      })
     });
   }
 });

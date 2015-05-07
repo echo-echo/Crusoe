@@ -7,8 +7,6 @@ Meteor.methods({
       createdAt: new Date(),
       username: username,
       location: {"type": "Point","coordinates": location},
-      latWeight15s: Math.random() - 0.5,
-      lngWeight15s: Math.random() - 0.5,
       latWeight1m: Math.random() - 0.5,
       lngWeight1m: Math.random() - 0.5,
       latWeight15m: Math.random() - 0.5,
