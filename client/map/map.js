@@ -1,13 +1,11 @@
 Meteor.startup(function(){
   Mapbox.load();
 
-  Tracker.autorun(function(){
-    var local = Geolocation.currentLocation()
-	    if(local){
-	      localStorage.setItem("userLat", local.coords.latitude);
-	      localStorage.setItem("userLong", local.coords.longitude);
-	    }
-	})
+  var local = Geolocation.currentLocation();
+  if(local){
+    localStorage.setItem("userLat", local.coords.latitude);
+    localStorage.setItem("userLong", local.coords.longitude);
+  }
 });
 
 Template.Map.rendered = function () {
@@ -19,6 +17,7 @@ Template.Map.rendered = function () {
   var userLong;
   var map;
   var imageUrl = '/radius.gif';
+
   var calcBounds = function(userLat, userLong) { //calc bounds for view radius of 1000ft
     var lat0 = (userLat - (0.5 * 0.0027565)); //orig mul==0
     var lat1 = (userLat + (0.5 * 0.0027565));
@@ -30,7 +29,7 @@ Template.Map.rendered = function () {
     return [[lat0, lon0], [lat1, lon1]]; 
   }
 
-  Deps.autorun(function () {
+  Tracker.autorun(function () {
     if (Mapbox.loaded()) {
       var userLat = Number(localStorage.getItem("userLat"));
       var userLong = Number(localStorage.getItem("userLong"));
@@ -49,14 +48,11 @@ Template.Map.rendered = function () {
       imageBounds = calcBounds(userLat, userLong);  
       bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
       }
-    }
-  });
-  Deps.autorun(function () {
-    if (Mapbox.loaded()) {
+
       //pull messages from db:
       var allMess = Messages.find({},{sort: {createdAt: -1}}).fetch();
       var userLat = Number(localStorage.getItem("userLat"));
-			var userLong = Number(localStorage.getItem("userLong"));
+      var userLong = Number(localStorage.getItem("userLong"));
       var geoJsons = [];
 
       ///////////////////////////////////////////////////////////////
@@ -140,9 +136,7 @@ Template.Map.rendered = function () {
       //add array of geoJson objects to map layer:
       map.featureLayer.setGeoJSON(geoJsons);
     }
-  });
 
-  Tracker.autorun(function(){
     var local = Geolocation.currentLocation()
 	    if(local && marker && bounds){
 	      marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
