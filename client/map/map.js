@@ -51,6 +51,7 @@ Template.Map.rendered = function () {
       }
     }
   });
+  
   Deps.autorun(function () {
     if (Mapbox.loaded()) {
       //pull messages from db:
@@ -78,7 +79,7 @@ Template.Map.rendered = function () {
       var deg2rad = function(deg) {
         return deg * (Math.PI/180)
       };
-      
+
       ///////////////////////////////////////////////////////////////
       /////filter by proximity between message and user location/////
 
