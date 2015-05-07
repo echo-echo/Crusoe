@@ -18,17 +18,15 @@ Template.Map.rendered = function () {
   var userLat;
   var userLong;
   var map;
+  var imageUrl = '/radius.gif';
   var calcBounds = function(userLat, userLong) { //calc bounds for view radius of 1000ft
     var lat0 = (userLat - (0.5 * 0.0027565)); //orig mul==0
     var lat1 = (userLat + (0.5 * 0.0027565));
-    // var lon0 = (userLong - (0.00273805 * Math.cos(userLat)));
-    // var lon1 = (userLong + (0.00273805 * Math.cos(userLat)));
     var lonKmPerDeg = (0.11132 * Math.cos(userLat)); //get km per .001 deg lon...
     ///(0.3048 km per 1000ft) so... 
     var lonDiff = (0.3048 / lonKmPerDeg);
     var lon0 = (userLong - (.00025 * lonDiff));//why is it .0005?
     var lon1 = (userLong + (.00025 * lonDiff));
-    console.log([[lat0, lon0], [lat1, lon1]]);
     return [[lat0, lon0], [lat1, lon1]]; 
   }
 
@@ -43,12 +41,12 @@ Template.Map.rendered = function () {
           attributionControl: false,
           zoomControl :false
         });
-      var imageUrl = '/radius.gif',
-      imageBounds = calcBounds(userLat, userLong);  
-      marker = L.marker([30.272920898023475, -97.74438629799988]).addTo(map);
+   
+      marker = L.marker([userLat, userLong]).addTo(map);
       // L.circle([userLat,userLong], 304.8).addTo(map);
       map.panTo([30.272920898023475, -97.74438629799988]);
       map.setZoom(14);
+      imageBounds = calcBounds(userLat, userLong);  
       bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
       }
     }
@@ -146,9 +144,12 @@ Template.Map.rendered = function () {
 
   Tracker.autorun(function(){
     var local = Geolocation.currentLocation()
-	    if(local && marker){
+	    if(local && marker && bounds){
 	      marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
-	      map.panTo([local.coords.latitude, local.coords.longitude])
+         map.removeLayer(bounds);
+         imageBounds = calcBounds(local.coords.latitude, local.coords.longitude);  
+         bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
+	       map.panTo([local.coords.latitude, local.coords.longitude])
 	    }
 	});
 };
