@@ -17,7 +17,8 @@ Meteor.methods({
       lngWeight1hr: Math.random() - 0.5,
       latWeight6hr: Math.random() - 0.5,
       lngWeight6hr: Math.random() - 0.5,
-      likes:0
+      likes:[],
+      opens:[]
     });
   },
 
@@ -26,7 +27,11 @@ Meteor.methods({
   },
 
   likeMessage: function(messageId){
-  	Messages.update({_id:messageId}, {$inc:{likes:+1}})
+  	Messages.update({_id:messageId}, {$addToSet:{likes:Meteor.user().username}})
+  },
+
+  openMessage: function(messageId){
+  	Messages.update({_id:messageId}, {$addToSet:{opens:Meteor.user().username}})
   }
 
 })

@@ -52,6 +52,7 @@ Template.feed.helpers({
       return a.proximity - b.proximity;
     });
 
+    result.hidden = result.hidden.slice(0,5)
 		return result
 	}
 })
@@ -63,21 +64,19 @@ Template.feed.events({
 	"click li": function(event){
 		var message = Blaze.getData(event.currentTarget)
 		if (message.visible){
+			Meteor.call("openMessage", message._id)
 			Session.set("messageId", message._id)
-			//Session.set('clicked-message', message);
 			AntiModals.overlay('messageModal');
 		}
 	}
 });
 
 Template.messageModal.helpers({
-	message: function() {
-		// var message = Session.get('clicked-message');
+	message: function(){
 		var messageId = Session.get("messageId")
 		var message = Messages.find({_id:messageId}).fetch()[0]
 		return message;
 	}
-
 });
 
 Template.messageModal.events({
