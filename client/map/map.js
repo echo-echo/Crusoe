@@ -8,13 +8,37 @@ Meteor.startup(function(){
 	      localStorage.setItem("userLong", local.coords.longitude);
 	    }
 	})
+
+  this.map = 0;
+  this.marker = 0;
+  this.setpan = function(){
+    var map = Template.instance().map;
+    var location = Geolocation.latLng();
+    map.panTo([location.lat, location.l])
+    Session.set("pan", !Session.get("pan"))
+  }
 });
+
+
+Template.Map.helpers({
+  getpan: function(){
+    return Session.get("pan")
+  },
+  setpan: function(){
+    Template.instance().setpan();
+  }
+})
+
+Template.Map.events({
+  "click #panButton": function(){
+    Template.instance().setpan();
+  }
+})
 
 Template.Map.rendered = function () {
   var color = "#FF0000";
   var currMess = [];
-  var marker;
-  var map;
+
 
   Deps.autorun(function () {
     if (Mapbox.loaded()) {
@@ -28,8 +52,13 @@ Template.Map.rendered = function () {
       marker = L.marker([30.272920898023475, -97.74438629799988]).addTo(map); //adds default marker location, that will be reset to user Geolocation
       map.panTo([30.272920898023475, -97.74438629799988]);
       map.setZoom(14);
+
+      //set these variables to properties of the instance
+      Template.instance().map = map;
+      Template.instance().marker = marker;
       }
     }
+
   });
   Deps.autorun(function () {
     if (Mapbox.loaded()) {
@@ -113,10 +142,13 @@ Template.Map.rendered = function () {
     }
   });
   Tracker.autorun(function(){
+
     var local = Geolocation.currentLocation()
 	    if(local && marker){
 	      marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
-	      map.panTo([local.coords.latitude, local.coords.longitude])
+        if(Session.get("pan")){
+	        map.panTo([local.coords.latitude, local.coords.longitude])
+        }
 	    }
 	})
 };

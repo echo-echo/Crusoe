@@ -22,12 +22,12 @@
 
 }
 
-#login-dropdown-list {
+/*#login-dropdown-list {
   position: absolute;
   top: 50px;
   left: -195px;
   font-size: 2em;
-}
+}*/
 
 .modal-box{
 	background: white;
@@ -60,4 +60,23 @@ li:hover {
   width:100%;
   z-index: 99;
 
+}
+
+/*~~~~~~~ MAP ~~~~~~~~~ */
+#panButton{
+  border-radius: 50%;
+  color:white;
+  left:5px;
+  height:33px;
+  width:33px;
+  margin:0;
+  padding:2px;
+  top:5px;
+  position:fixed;
+  z-index: 100;
+}
+.mdi{
+  position:relative;
+  top:-7px;
+  font-size: 2em;
 }

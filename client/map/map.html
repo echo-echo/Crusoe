@@ -1,3 +1,12 @@
 <template name = "Map">
+   <div id="panButton" style="background-color:
+     {{#if getpan}}
+      black
+     {{else}}
+      blue
+     {{/if}}
+   ">
+     <i class="mdi small mdi-action-track-changes"></i>
+   </div>
    <div id="map"></div>
 </template>
