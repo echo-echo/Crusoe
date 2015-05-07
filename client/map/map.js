@@ -94,8 +94,8 @@ Template.Map.rendered = function () {
               "coordinates": [msgLong, msgLat]
             },
             "properties": {
-              "title": object.text,
-              "description": object.createdAt,
+              "message": object.text,
+              "createdAt": object.createdAt,
               "icon": {
                 "iconUrl": "/message.png",
                 "iconSize": [50, 50]
@@ -110,12 +110,12 @@ Template.Map.rendered = function () {
               "coordinates": [msgLong, msgLat]
             },
             "properties": {
-              "title": "too far to view message",
-              "description": object.createdAt,
+              "message": "too far to view message",
+              "createdAt": object.createdAt,
               "icon": {
                 "iconUrl": "/message-off.png",
                 "iconSize": [50, 50]
-              }
+              }            
             }
           });
         }
@@ -130,7 +130,7 @@ Template.Map.rendered = function () {
       });
 
       map.featureLayer.on('click', function (e) {
-        Session.set("marker", e.layer.feature.properties.title);
+        Session.set("marker", e.layer.feature.properties.message);
         AntiModals.overlay('mapMessageModal', {
           modal: true,
           overlayClass: 'nautical'
