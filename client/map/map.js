@@ -61,27 +61,28 @@ Template.Map.rendered = function () {
 			var userLong = Number(localStorage.getItem("userLong"));
       var geoJsons = [];
 
-    ///////////////////////////////////////////////////////////////
-    //Haversine Formula - find distance btwn two points on sphere//
-        var getProx = function(lat1,lon1,lat2,lon2) {
-            var R = 6371;
-            var dLat = deg2rad(lat2-lat1);
-            var dLon = deg2rad(lon2-lon1);
-            var a =
-              Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-              Math.sin(dLon/2) * Math.sin(dLon/2)
-              ;
-            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            var d = R * c; // Distance in km
-            return d * 3280.84; // to get ft
-          }
+      ///////////////////////////////////////////////////////////////
+      //Haversine Formula - find distance btwn two points on sphere//
+      var getProx = function(lat1,lon1,lat2,lon2) {
+        var R = 6371;
+        var dLat = deg2rad(lat2-lat1);
+        var dLon = deg2rad(lon2-lon1);
+        var a =
+          Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+          Math.sin(dLon/2) * Math.sin(dLon/2)
+          ;
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = R * c; // Distance in km
+        return d * 3280.84; // to get ft
+      };
 
-          var deg2rad = function(deg) {
-            return deg * (Math.PI/180)
-          }
-    ///////////////////////////////////////////////////////////////
-    /////filter by proximity between message and user location/////
+      var deg2rad = function(deg) {
+        return deg * (Math.PI/180)
+      };
+      
+      ///////////////////////////////////////////////////////////////
+      /////filter by proximity between message and user location/////
 
       allMess.forEach(function(object){
         var msgLat = object.location.coordinates[1]
@@ -122,6 +123,7 @@ Template.Map.rendered = function () {
         }
       });
 
+      // event listeners for map
       map.featureLayer.on('layeradd', function (e) {
         var marker = e.layer;
         feature = marker.feature;
@@ -129,16 +131,37 @@ Template.Map.rendered = function () {
         marker.setIcon(L.icon(feature.properties.icon));
       });
 
+      map.featureLayer.on('click', function (e) {
+        Session.set("marker", e.layer.feature.properties.title);
+        AntiModals.overlay('mapMessageModal', {
+          modal: true,
+          overlayClass: 'nautical'
+        });
+      });
+
       //add array of geoJson objects to map layer:
       map.featureLayer.setGeoJSON(geoJsons);
-      //default marker location
     }
   });
+
   Tracker.autorun(function(){
     var local = Geolocation.currentLocation()
 	    if(local && marker){
 	      marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
 	      map.panTo([local.coords.latitude, local.coords.longitude])
 	    }
-	})
+	});
 };
+
+Template.mapMessageModal.events({
+  "click .back": function () {
+    AntiModals.dismissOverlay($('.anti-modal-box'));
+  }
+});
+
+Template.mapMessageModal.helpers({
+  message: function () {
+    var markerText = Session.get('marker');
+    return markerText;
+  }
+});
