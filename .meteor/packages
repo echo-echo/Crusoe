@@ -13,7 +13,8 @@ pauloborges:mapbox@2.1.4_3
 mdg:geolocation
 anti:modals
 mike:mocha
-
 percolate:synced-cron
 accounts-ui-unstyled
 reactive-var
+copleykj:livestamp
+

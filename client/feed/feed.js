@@ -52,6 +52,7 @@ Template.feed.helpers({
       return a.proximity - b.proximity;
     });
 
+    result.hidden = result.hidden.slice(0,5)
 		return result
 	}
 })
@@ -63,25 +64,30 @@ Template.feed.events({
 	"click li": function(event){
 		var message = Blaze.getData(event.currentTarget)
 		if (message.visible){
-			Session.set("tag", message._id)
-			//display message in a modal
-			Session.set('clicked-message', message.text);
+			Meteor.call("openMessage", message._id)
+			Session.set("messageId", message._id)
 			AntiModals.overlay('messageModal');
 		}
 	}
 });
 
 Template.messageModal.helpers({
-	message: function() {
-		var message = Session.get('clicked-message');
+	message: function(){
+		var messageId = Session.get("messageId")
+		var message = Messages.find({_id:messageId}).fetch()[0]
 		return message;
 	}
 });
 
 Template.messageModal.events({
 	"click .save": function(){
-		messageId = Session.get("tag")
+		var messageId = Session.get("messageId")
 		Meteor.call("tagMessage", messageId)
+	},
+
+	"click .like": function(){
+		var messageId = Session.get("messageId")
+		Meteor.call("likeMessage", messageId)
 	}
 })
 
