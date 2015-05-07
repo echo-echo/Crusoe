@@ -20,18 +20,15 @@ Template.Map.rendered = function () {
   var map;
   var imageUrl = '/radius.gif';
   var calcBounds = function(userLat, userLong) { //calc bounds for view radius of 1000ft
-          var lat0 = (userLat - (0.5 * 0.0027565)); //orig mul==0
-          var lat1 = (userLat + (0.5 * 0.0027565));
-          // var lon0 = (userLong - (0.00273805 * Math.cos(userLat)));
-          // var lon1 = (userLong + (0.00273805 * Math.cos(userLat)));
-          var lonKmPerDeg = (0.11132 * Math.cos(userLat)); //get km per .001 deg lon...
-          ///(0.3048 km per 1000ft) so... 
-          var lonDiff = (0.3048 / lonKmPerDeg);
-          var lon0 = (userLong - (.00025 * lonDiff));//why is it .0005?
-          var lon1 = (userLong + (.00025 * lonDiff));
-          console.log([[lat0, lon0], [lat1, lon1]]);
-          return [[lat0, lon0], [lat1, lon1]]; 
-         }
+    var lat0 = (userLat - (0.5 * 0.0027565)); //orig mul==0
+    var lat1 = (userLat + (0.5 * 0.0027565));
+    var lonKmPerDeg = (0.11132 * Math.cos(userLat)); //get km per .001 deg lon...
+    ///(0.3048 km per 1000ft) so... 
+    var lonDiff = (0.3048 / lonKmPerDeg);
+    var lon0 = (userLong - (.00025 * lonDiff));//why is it .0005?
+    var lon1 = (userLong + (.00025 * lonDiff));
+    return [[lat0, lon0], [lat1, lon1]]; 
+  }
 
   Deps.autorun(function () {
     if (Mapbox.loaded()) {
