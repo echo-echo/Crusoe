@@ -32,16 +32,6 @@ Template.Map.rendered = function () {
           console.log([[lat0, lon0], [lat1, lon1]]);
           return [[lat0, lon0], [lat1, lon1]]; 
          }
-  Deps.autorun(function() {
-        if (Mapbox.loaded() && bounds) {
-        
-      userLat = Number(localStorage.getItem("userLat"));
-      userLong = Number(localStorage.getItem("userLong"));  
-     
-      imageBounds = calcBounds(userLat, userLong);  
-      bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
-    }      
-  })
 
   Deps.autorun(function () {
     if (Mapbox.loaded()) {
@@ -55,7 +45,7 @@ Template.Map.rendered = function () {
           zoomControl :false
         });
    
-      marker = L.marker([30.272920898023475, -97.74438629799988]).addTo(map);
+      marker = L.marker([userLat, userLong]).addTo(map);
       // L.circle([userLat,userLong], 304.8).addTo(map);
       map.panTo([30.272920898023475, -97.74438629799988]);
       map.setZoom(14);
@@ -159,7 +149,7 @@ Template.Map.rendered = function () {
     var local = Geolocation.currentLocation()
 	    if(local && marker && bounds){
 	      marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
- 
+         map.removeLayer(bounds);
          imageBounds = calcBounds(local.coords.latitude, local.coords.longitude);  
          bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
 	       map.panTo([local.coords.latitude, local.coords.longitude])
