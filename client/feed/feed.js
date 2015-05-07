@@ -38,7 +38,7 @@ Template.feed.helpers({
 	    if (proximity<500){
 	    	messages[i].visible=true
 		    result.visible.push(messages[i])
-	    } else if (proximity<2000){
+	    } else{
 	    	messages[i].visible=false
 	    	result.hidden.push(messages[i])
 	    }
