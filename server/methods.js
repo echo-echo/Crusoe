@@ -17,12 +17,23 @@ Meteor.methods({
       lngWeight1hr: Math.random() - 0.5,
       latWeight6hr: Math.random() - 0.5,
       lngWeight6hr: Math.random() - 0.5,
+      likes:[],
+      opens:[]
     });
   },
 
   tagMessage: function(messageId){
   	Meteor.users.update({username: Meteor.user().username}, {$addToSet:{tagged: messageId}})
+  },
+
+  likeMessage: function(messageId){
+  	Messages.update({_id:messageId}, {$addToSet:{likes:Meteor.user().username}})
+  },
+
+  openMessage: function(messageId){
+  	Messages.update({_id:messageId}, {$addToSet:{opens:Meteor.user().username}})
   }
+
 })
 
 
