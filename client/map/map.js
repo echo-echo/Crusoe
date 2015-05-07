@@ -127,7 +127,7 @@ Template.Map.rendered = function () {
         var marker = e.layer;
         feature = marker.feature;
 
-        marker.setIcon(L.icon(feature.properties.icon));
+        marker.setIcon(L.divIcon(feature.properties.icon));
       });
 
       map.featureLayer.on('click', function (e) {
