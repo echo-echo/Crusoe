@@ -34,12 +34,11 @@ Template.feed.helpers({
 	    var msgLat = messages[i].location.coordinates[1];
 			var msgLong = messages[i].location.coordinates[0];
 	    var proximity = getProx(msgLat,msgLong,userLat,userLong) * 3280.84; //  to get ft
+
       messages[i].proximity = Math.round(proximity);
 	    if (proximity<500){
-	    	messages[i].visible=true
 		    result.visible.push(messages[i])
 	    } else{
-	    	messages[i].visible=false
 	    	result.hidden.push(messages[i])
 	    }
 		}
@@ -61,13 +60,11 @@ Template.feed.events({
 	"click .btn.write": function(){
 		AntiModals.overlay('writeModal');
 	},
-	"click li": function(event){
+	"click .visible": function(event){
 		var message = Blaze.getData(event.currentTarget)
-		if (message.visible){
 			Meteor.call("openMessage", message._id)
 			Session.set("messageId", message._id)
 			AntiModals.overlay('messageModal');
-		}
 	}
 });
 

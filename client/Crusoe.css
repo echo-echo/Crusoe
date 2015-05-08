@@ -57,10 +57,6 @@ li:hover {
   background-color:#213556;
 }
 
-.tagged{
-  float:right;
-}
-
 /*
 * Modal styling
 */
@@ -89,4 +85,12 @@ li:hover {
 
 .back {
   color: #0A536E;
+}
+
+.collection .collection-item.avatar{
+  height: 100px;
+}
+
+.profile-list{
+  padding-bottom:10px;
 }

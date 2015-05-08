@@ -3,32 +3,35 @@
 <template name = "profile">
 	<h1>profile</h1>
 
-	<div class = "content tagged">
-		<h5>saved messages</h5>
-		<ul class="collection">
-			{{#each taggedMessages}}
-		    {{> tagged}}
-		  {{/each}}
-		 
-		</ul>
-	</div>
-
-	<div class = "content created">
+	<div class = "user-messages">
 		<h5>user messages</h5>
-		<ul class="collection">
+		<ul class = "content collection">
 			{{#each userCreated}}
 		    {{> tagged}}
 		  {{/each}}
-		 
+		</ul>
+	</div>
+
+	<div class = "saved-messages">
+		<h5>saved messages</h5>
+		<ul class = "content collection">
+			{{#each taggedMessages}}
+		    {{> tagged}}
+		  {{/each}}
 		</ul>
 	</div>
 
 </template>
 
 <template name = "tagged">
-	<li class="collection-item avatar">
-			<i class="mdi-communication-email circle red lighten-2"></i>
-      <p class="text">{{text}}</p>
-      <p class="mdi-action-thumb-up"> {{likes.length}}</p>
-		</li>
+	<li class = "profile-list collection-item">
+    <span data-livestamp="{{createdAt}}"></span>
+	  <p>{{origin}}</p>
+	  <p class="text">{{text}}</p>
+	  <span class="mdi-content-drafts"> {{opens}}</span>
+	  <span class="mdi-action-thumb-up"> {{likes.length}}</span>    	
+	</li>
 </template>
+
+
+ 
