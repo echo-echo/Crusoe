@@ -5,7 +5,7 @@
 
 Crusoe is a location based messaging app where users can read messages in their area and create messages that wander around as if the world was one big ocean.
 
-![Screenshot of Crusoe](https://gist.github.com/bjmfactory/c39189a07dd31b9b4092#file-crusoe-screen-png)
+![Screenshot of Crusoe](https://gist.github.com/bjmfactory/c39189a07dd31b9b4092/raw/5cda695b54a7d1c9ed76a2dd87c35af1c54d8598/crusoe-screen.png)
 
 # Stack
 * MongoDB
