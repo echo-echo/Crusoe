@@ -87,10 +87,27 @@ li:hover {
   color: #0A536E;
 }
 
+.collection .collection-item.avatar i.circle{
+  margin-top:10px;
+}
+
 .collection .collection-item.avatar{
-  height: 100px;
+  height: 120px;
 }
 
 .profile-list{
   padding-bottom:10px;
 }
+
+.mapView{
+  margin-left:300px;
+}
+
+.panel{
+  width:300px;
+  position:fixed;
+  top:64px;
+  left:0;
+  overflow:hidden;
+}
+
