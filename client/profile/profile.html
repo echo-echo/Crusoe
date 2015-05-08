@@ -4,6 +4,7 @@
 	<h1>profile</h1>
 
 	<div class = "user-messages">
+		<h5>user messages</h5>
 		<ul class = "content collection">
 			{{#each userCreated}}
 		    {{> tagged}}
@@ -12,6 +13,7 @@
 	</div>
 
 	<div class = "saved-messages">
+		<h5>saved messages</h5>
 		<ul class = "content collection">
 			{{#each taggedMessages}}
 		    {{> tagged}}
