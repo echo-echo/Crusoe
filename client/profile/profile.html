@@ -3,19 +3,17 @@
 <template name = "profile">
 	<h1>profile</h1>
 
-	<div class = "content tagged">
-		<h5>saved messages</h5>
-		<ul>
-			{{#each taggedMessages}}
+	<div class = "user-messages">
+		<ul class = "content collection">
+			{{#each userCreated}}
 		    {{> tagged}}
 		  {{/each}}
 		</ul>
 	</div>
 
-	<div class = "content created">
-		<h5>user messages</h5>
-		<ul class="collection">
-			{{#each userCreated}}
+	<div class = "saved-messages">
+		<ul class = "content collection">
+			{{#each taggedMessages}}
 		    {{> tagged}}
 		  {{/each}}
 		</ul>
@@ -24,7 +22,7 @@
 </template>
 
 <template name = "tagged">
-	<li>
+	<li class = "profile-list collection-item">
     <span data-livestamp="{{createdAt}}"></span>
 	  <p>{{origin}}</p>
 	  <p class="text">{{text}}</p>
@@ -32,3 +30,6 @@
 	  <span class="mdi-action-thumb-up"> {{likes.length}}</span>    	
 	</li>
 </template>
+
+
+ 
