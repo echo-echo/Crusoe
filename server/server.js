@@ -30,14 +30,14 @@ SyncedCron.add({
         msg.latWeight15m +
         msg.latWeight1hr +
         msg.latWeight6hr
-        ) * 0.0001;
+        ) * 0.0005;
       var lngChange = (
         Math.random() - 0.5 +
         msg.lngWeight1m +
         msg.lngWeight15m +
         msg.lngWeight1hr +
         msg.lngWeight6hr
-        ) * 0.0001;
+        ) * 0.0005;
       var newLat = msg.location.coordinates[0] += latChange;
       var newLng = msg.location.coordinates[1] += lngChange;
       Messages.update({_id: msg._id}, {$set: {"location.coordinates": [newLat, newLng]} });
