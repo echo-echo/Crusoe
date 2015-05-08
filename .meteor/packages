@@ -18,3 +18,5 @@ mike:mocha
 percolate:synced-cron
 copleykj:livestamp
 http
+cfs:standard-packages
+cfs:s3
