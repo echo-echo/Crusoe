@@ -1,5 +1,10 @@
 Meteor.subscribe("userData")
 
+Template.profile.rendered = function(){
+	$('ul.tabs').tabs()
+	$('.modal-trigger').leanModal()
+}
+
 Template.profile.helpers({
 	taggedMessages: function(){
 		var result=[]
@@ -17,5 +22,15 @@ Template.profile.helpers({
 	userCreated: function(){
 		var created = Messages.find({username:Meteor.user().username})
 		return created
+	},
+
+	showHide: function(){
+		return Session.get("showHide")
+	}
+})
+
+Template.profile.events({
+	"click .saved-title": function(){
+		
 	}
 })

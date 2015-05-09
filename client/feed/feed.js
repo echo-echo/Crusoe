@@ -2,6 +2,10 @@ Messages = new Mongo.Collection("messages");
 
 Meteor.subscribe("messages");
 
+// Template.modal.rendered = function(){
+// 	$('.modal-trigger').leanModal()
+// }
+
 Template.feed.helpers({
 	messages: function(){
 		var messages = Messages.find({},{sort: {createdAt: -1}}).fetch()
@@ -57,7 +61,7 @@ Template.feed.helpers({
 })
 
 Template.feed.events({
-	"click .btn.write": function(){
+	"click .write": function(){
 		AntiModals.overlay('writeModal');
 	},
 	"click .visible": function(event){

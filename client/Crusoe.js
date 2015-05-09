@@ -1,9 +1,9 @@
 Router.configure({
-	layoutTemplate:'Map'
+	layoutTemplate:'main'
 })
 
 Router.map(function(){
-  this.route('feed', {
+  this.route('map', {
     path:'/'
   });
   this.route('profile')
