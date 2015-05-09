@@ -1,11 +1,14 @@
 Meteor.startup(function(){
   Mapbox.load();
 
-  var local = Geolocation.currentLocation();
-  if(local){
-    localStorage.setItem("userLat", local.coords.latitude);
-    localStorage.setItem("userLong", local.coords.longitude);
-  }
+//added this tracker back in to update user lat/long reactively when meteor starts
+  Tracker.autorun(function () {
+    var local = Geolocation.currentLocation();
+    if(local){
+      localStorage.setItem("userLat", local.coords.latitude);
+      localStorage.setItem("userLong", local.coords.longitude);
+    }
+  })
 });
 
 Template.Map.rendered = function () {
