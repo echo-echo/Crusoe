@@ -18,6 +18,7 @@ Template.Map.rendered = function () {
   var userLat;
   var userLong;
   var map;
+  var geoJsonLayer;
   var imageUrl = '/radius.gif';
   var calcBounds = function(userLat, userLong) { //calc bounds for view radius of 1000ft
     var lat0 = (userLat - (1.5 * 0.0027565)); //orig mul==0
@@ -70,6 +71,7 @@ Template.Map.rendered = function () {
       map.setZoom(14);
       imageBounds = calcBounds(userLat, userLong);  
       bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
+      geoJsonLayer = L.geoJson().addTo(map);
       }
     }
   });
@@ -102,78 +104,99 @@ Template.Map.rendered = function () {
         return deg * (Math.PI/180)
       };
 
-      ///////////////////////////////////////////////////////////////
-      /////filter by proximity between message and user location/////
+      //check to see whether a message is already on the map based on its _id:
+      var checkLayers = {};
+      geoJsonLayer.eachLayer(function(layer) {
+
+        checkLayers[layer.feature.properties.id] = layer._leaflet_id; 
+
+      });
 
       allMess.forEach(function(object){
-        var messa = (Session.get('ids')) ? Session.get('ids') : {}
-        if (messa.hasOwnProperty(object._id)) { 
-          //alter coords of guys already on map here
+        var geoJsonNew;
+        var radiusVal = 1500;
+        var msgLat = object.location.coordinates[1];
+        var msgLong = object.location.coordinates[0];
+        var proximity = getProx(msgLat,msgLong,userLat,userLong) < radiusVal;
+
+        var currStat = geoJsonLayer.getLayer( checkLayers[object._id] ) || false
+        currStat = currStat ? currStat.feature.properties.title !== "too far to view message" : currStat;
+
+        if (checkLayers.hasOwnProperty(object._id) && proximity===currStat) { 
+          geoJsonLayer.getLayer( checkLayers[object._id] )
+            .setLatLng([object.location.coordinates[1], object.location.coordinates[0]])
         } else { 
-          var msgLat = object.location.coordinates[1]
-          var msgLong = object.location.coordinates[0]
-          var proximity = getProx(msgLat,msgLong,userLat,userLong)
-          if (proximity<1500){
-            geoJsons.push({
-              "type": "Feature",
-              "geometry": {
-                "type": "Point",
-                "coordinates": [msgLong, msgLat]
-              },
-              "properties": {
-                "title": object.text,
-                "id": object._id,
-                "description": object.createdAt,
-                "icon": {
-                  "iconUrl": "/message.png",
-                  "iconSize": [50, 50]
+            // var msgLat = object.location.coordinates[1];
+            // var msgLong = object.location.coordinates[0];
+            var proximity = getProx(msgLat,msgLong,userLat,userLong);
+            if (proximity<radiusVal){
+              geoJsonNew = {
+                "type": "Feature",
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [msgLong, msgLat]
+                },
+                "properties": {
+                  "title": object.text,
+                  "id": object._id,
+                  "description": object.createdAt,
+                  "icon": {
+                    "iconUrl": "/message.png",
+                    "iconSize": [50, 50]
+                  }
                 }
-              }
-            });
-          }else{
-             geoJsons.push({
-              "type": "Feature",
-              "geometry": {
-                "type": "Point",
-                "coordinates": [msgLong, msgLat]
-              },
-              "properties": {
-                "title": "too far to view message",
-                "id": object._id,
-                "description": object.createdAt,
-                "icon": {
-                  "iconUrl": "/message-off.png",
-                  "iconSize": [50, 50]
+              };
+            }else{
+               geoJsonNew = {
+                "type": "Feature",
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [msgLong, msgLat]
+                },
+                "properties": {
+                  "title": "too far to view message",
+                  "id": object._id,
+                  "description": object.createdAt,
+                  "icon": {
+                    "iconUrl": "/message-off.png",
+                    "iconSize": [50, 50]
+                  }
                 }
-              }
-            });
-          }
-        }  
-      });
+              };
+            }
+        geoJsonLayer.addData(geoJsonNew);
 
-      // event listeners for map
-      map.featureLayer.on('layeradd', function (e) {
-        var marker = e.layer;
+        }
+    });
+
+    map.on('zoomstart', function() {
+      geoJsonLayer.setStyle({transition :'2s'}) 
+      console.log('start')
+    });
+    map.on('zoomend', function() {
+      geoJsonLayer.setStyle({transition :'15s'}) 
+      console.log('end')
+    });
+      geoJsonLayer.on('layeradd', function (e) {
+        var marker = e.layer,
         feature = marker.feature;
-
-        messIds[feature.properties.id] = L.stamp(marker);
-        marker.setIcon(L.divIcon(feature.properties.icon));
-       Session.set('ids', messIds);
+  
+  
+      marker.setIcon(L.divIcon({
+        className: 'my-bottle', // Make sure you set an icon class here, otherwise default styles will be set by Mapbox's CSS
+        html: '', // The content of your HTML marker, you can build a string based on the marker properties by using 'feature.properties.your_property'
+        iconSize: [50,50] // The bounds for your icon
+    }));
       });
+       
 
-      map.featureLayer.on('click', function (e) {
+      geoJsonLayer.on('click', function (e) {
         Session.set("marker", e.layer.feature.properties.title);
         AntiModals.overlay('mapMessageModal', {
           modal: true,
           overlayClass: 'nautical'
         });
       });
-
-      //add array of geoJson objects to map if there are any new ones:
-      // debugger;
-      // if (geoJsons.length > 0){
-       map.featureLayer.setGeoJSON(geoJsons);
-      // } 
     }
   });
 
