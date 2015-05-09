@@ -1,6 +1,21 @@
 Messages = new Mongo.Collection("messages");
 
+var mediaStore = new FS.Store.S3("userMedia");
+
+Media = new FS.Collection("media", {
+	stores: [mediaStore],
+	filter: {
+		allow: {
+			contentTypes: ['image/*', 'audio/*', 'video/*']
+		}
+	}
+});
+
+console.log("Messages: ", Messages);
+console.log("Media: ", Media);
+
 Meteor.subscribe("messages");
+Meteor.subscribe("media");
 
 //use below to open materialize modal
 // Template.modal.rendered = function(){
@@ -104,5 +119,18 @@ Template.writeModal.events({
 
 		event.target.text.value=""
 		return false;
+	},
+
+	"change .media-upload": function(event, template){
+		var files = event.target.files;
+		for ( var i = 0, len = files.length; i < len; i++ ) {
+			Media.insert(files[i], function (err, filObj) {
+				if ( err ) {
+					console.log(err);
+					throw new Error;
+				}
+				console.log("File successfully uploaded!");
+			});
+		}
 	}
 });

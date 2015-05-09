@@ -20,3 +20,4 @@ copleykj:livestamp
 http
 cfs:standard-packages
 cfs:s3
+cfs:gridfs
