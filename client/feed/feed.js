@@ -11,9 +11,6 @@ Media = new FS.Collection("media", {
 	}
 });
 
-console.log("Messages: ", Messages);
-console.log("Media: ", Media);
-
 Meteor.subscribe("messages");
 Meteor.subscribe("media");
 
@@ -111,26 +108,14 @@ Template.messageModal.events({
 Template.writeModal.events({
 		"submit .compose": function(event){
 		var text = event.target.text.value;
+    var files = event.target.files;
 		var longitude = Number(localStorage.getItem("userLong"))
 		var latitude = Number(localStorage.getItem("userLat"))
     var location=[longitude,latitude]
 
-    Meteor.call("addMessage", text, location);
+    Meteor.call("addMessage", text, location, files);
 
-		event.target.text.value=""
-		return false;
-	},
-
-	"change .media-upload": function(event, template){
-		var files = event.target.files;
-		for ( var i = 0, len = files.length; i < len; i++ ) {
-			Media.insert(files[i], function (err, filObj) {
-				if ( err ) {
-					console.log(err);
-					throw new Error;
-				}
-				console.log("File successfully uploaded!");
-			});
-		}
+		event.target.text.value="";
+		AntiModals.dismissOverlay($(".modal-box"));
 	}
 });
