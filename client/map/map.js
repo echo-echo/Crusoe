@@ -64,7 +64,7 @@ Template.Map.rendered = function () {
       };  
         var imageUrl = '/radius.gif',
       imageBounds = calcBounds(userLat, userLong);  
-      marker = L.marker([30.272920898023475, -97.74438629799988]).addTo(map);
+      marker = L.marker([userLat, userLong]).addTo(map);
       // L.circle([userLat,userLong], 304.8).addTo(map);
       map.panTo([30.272920898023475, -97.74438629799988]);
       map.setZoom(14);
@@ -81,7 +81,7 @@ Template.Map.rendered = function () {
       var userLat = Number(localStorage.getItem("userLat"));
 			var userLong = Number(localStorage.getItem("userLong"));
       var geoJsons = [];
-
+      var messIds = messIds ? messIds : {};
       ///////////////////////////////////////////////////////////////
       //Haversine Formula - find distance btwn two points on sphere//
       var getProx = function(lat1,lon1,lat2,lon2) {
@@ -106,42 +106,49 @@ Template.Map.rendered = function () {
       /////filter by proximity between message and user location/////
 
       allMess.forEach(function(object){
-        var msgLat = object.location.coordinates[1]
-        var msgLong = object.location.coordinates[0]
-        var proximity = getProx(msgLat,msgLong,userLat,userLong)
-        if (proximity<1500){
-          geoJsons.push({
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [msgLong, msgLat]
-            },
-            "properties": {
-              "title": object.text,
-              "description": object.createdAt,
-              "icon": {
-                "iconUrl": "/message.png",
-                "iconSize": [50, 50]
+        var messa = (Session.get('ids')) ? Session.get('ids') : {}
+        if (messa.hasOwnProperty(object._id)) { 
+          //alter coords of guys already on map here
+        } else { 
+          var msgLat = object.location.coordinates[1]
+          var msgLong = object.location.coordinates[0]
+          var proximity = getProx(msgLat,msgLong,userLat,userLong)
+          if (proximity<1500){
+            geoJsons.push({
+              "type": "Feature",
+              "geometry": {
+                "type": "Point",
+                "coordinates": [msgLong, msgLat]
+              },
+              "properties": {
+                "title": object.text,
+                "id": object._id,
+                "description": object.createdAt,
+                "icon": {
+                  "iconUrl": "/message.png",
+                  "iconSize": [50, 50]
+                }
               }
-            }
-          });
-        }else{
-           geoJsons.push({
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [msgLong, msgLat]
-            },
-            "properties": {
-              "title": "too far to view message",
-              "description": object.createdAt,
-              "icon": {
-                "iconUrl": "/message-off.png",
-                "iconSize": [50, 50]
+            });
+          }else{
+             geoJsons.push({
+              "type": "Feature",
+              "geometry": {
+                "type": "Point",
+                "coordinates": [msgLong, msgLat]
+              },
+              "properties": {
+                "title": "too far to view message",
+                "id": object._id,
+                "description": object.createdAt,
+                "icon": {
+                  "iconUrl": "/message-off.png",
+                  "iconSize": [50, 50]
+                }
               }
-            }
-          });
-        }
+            });
+          }
+        }  
       });
 
       // event listeners for map
@@ -149,7 +156,9 @@ Template.Map.rendered = function () {
         var marker = e.layer;
         feature = marker.feature;
 
+        messIds[feature.properties.id] = L.stamp(marker);
         marker.setIcon(L.divIcon(feature.properties.icon));
+       Session.set('ids', messIds);
       });
 
       map.featureLayer.on('click', function (e) {
@@ -160,8 +169,11 @@ Template.Map.rendered = function () {
         });
       });
 
-      //add array of geoJson objects to map layer:
-      map.featureLayer.setGeoJSON(geoJsons);
+      //add array of geoJson objects to map if there are any new ones:
+      // debugger;
+      // if (geoJsons.length > 0){
+       map.featureLayer.setGeoJSON(geoJsons);
+      // } 
     }
   });
 
