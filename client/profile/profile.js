@@ -1,5 +1,10 @@
 Meteor.subscribe("userData")
 
+Template.profile.rendered = function(){
+	$('ul.tabs').tabs()
+	$('.modal-trigger').leanModal()
+}
+
 Template.profile.helpers({
 	taggedMessages: function(){
 		var result=[]

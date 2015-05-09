@@ -7,12 +7,6 @@
 	margin-left: 0px
 }
 
-#map {
-  position:absolute;
-  height: 100%;
-  width: 100%;
-}
-
 .side-nav{
 
 }
@@ -45,8 +39,8 @@
   text-align: left;
   font-size: 14px;
   overflow: auto;
-  height: 500px;
-  width: 700px;
+  height: 600px;
+  width: 300px;
 }
 
 li:hover {
@@ -87,10 +81,41 @@ li:hover {
   color: #0A536E;
 }
 
+.collection .collection-item.avatar i.circle{
+  margin-top:24px;
+  margin-left:10px;
+}
+
 .collection .collection-item.avatar{
-  height: 100px;
+  height: 120px;
+  padding-left: 90px
 }
 
 .profile-list{
   padding-bottom:10px;
 }
+
+.panel{
+  width:300px;
+  position:fixed;
+  top:64px;
+  left:0;
+  overflow:hidden;
+  text-align: center;
+}
+
+#map {
+  position:fixed;
+  height: 100%;
+  width: 100%;
+  margin-left: 300px;
+}
+
+button.write{
+  margin-top:20px;
+}
+
+/*ul{
+  padding-left: 23px;
+}*/
+
