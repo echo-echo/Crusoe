@@ -117,4 +117,94 @@ SyncedCron.add({
   }
 });
 
+SyncedCron.add({
+  name: 'Update weight12hr of each message',
+  schedule: function(parser) {
+    return parser.text('every 12 hours');
+  },
+  job: function(){
+    var messages = Messages.find({});
+
+    messages.forEach(function(msg) {
+      Messages.update({_id: msg._id}, {$set: {
+        "latWeight12hr": Math.random() - 0.5,
+        "lngWeight12hr": Math.random() - 0.5
+        }
+      })
+    });
+  }
+});
+
+SyncedCron.add({
+  name: 'Update weight1day of each message',
+  schedule: function(parser) {
+    return parser.text('every 1 day');
+  },
+  job: function(){
+    var messages = Messages.find({});
+
+    messages.forEach(function(msg) {
+      Messages.update({_id: msg._id}, {$set: {
+        "latWeight1day": Math.random() - 0.5,
+        "lngWeight1day": Math.random() - 0.5
+        }
+      })
+    });
+  }
+});
+
+SyncedCron.add({
+  name: 'Update weight3day of each message',
+  schedule: function(parser) {
+    return parser.text('every 3 days');
+  },
+  job: function(){
+    var messages = Messages.find({});
+
+    messages.forEach(function(msg) {
+      Messages.update({_id: msg._id}, {$set: {
+        "latWeight3day": Math.random() - 0.5,
+        "lngWeight3day": Math.random() - 0.5
+        }
+      })
+    });
+  }
+});
+
+SyncedCron.add({
+  name: 'Update weight1wk of each message',
+  schedule: function(parser) {
+    return parser.text('every 1 week');
+  },
+  job: function(){
+    var messages = Messages.find({});
+
+    messages.forEach(function(msg) {
+      Messages.update({_id: msg._id}, {$set: {
+        "latWeight1wk": Math.random() - 0.5,
+        "lngWeight1wk": Math.random() - 0.5
+        }
+      })
+    });
+  }
+});
+
+SyncedCron.add({
+  name: 'Update weight1month of each message',
+  schedule: function(parser) {
+    return parser.text('every 1 month');
+  },
+  job: function(){
+    var messages = Messages.find({});
+
+    messages.forEach(function(msg) {
+      Messages.update({_id: msg._id}, {$set: {
+        "latWeight1month": Math.random() - 0.5,
+        "lngWeight1month": Math.random() - 0.5
+        }
+      })
+    });
+  }
+});
+
 SyncedCron.start();
