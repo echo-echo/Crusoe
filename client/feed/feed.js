@@ -2,6 +2,7 @@ Messages = new Mongo.Collection("messages");
 
 Meteor.subscribe("messages");
 
+//use below to open materialize modal
 // Template.modal.rendered = function(){
 // 	$('.modal-trigger').leanModal()
 // }

@@ -1,5 +1,4 @@
 <template name = "feed">
-
   <h5>messages</h5>
 	<div class = "content">
 		<ul class="collection">
@@ -18,14 +17,12 @@
 
 <template name="visible">
 		<li class="collection-item avatar visible">
-			<div>	
 			<i class="mdi-communication-email circle red lighten-2"></i>
 		      	<p class="proximity">{{proximity}} ft</p>
 		      	<p>{{origin}}</p>
 		      	<p data-livestamp="{{createdAt}}"></p>
 		      	<span class="mdi-content-drafts"> {{opens}} </span>
 		      	<span class="mdi-action-thumb-up"> {{likes.length}}</span>
-	      	</div>
 		</li>
 </template>
 
