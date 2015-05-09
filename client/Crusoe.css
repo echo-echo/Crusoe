@@ -16,6 +16,15 @@
 
 }
 
+.leaflet-marker-icon {
+  -webkit-transition: 10s;
+  position: absolute;
+
+}
+
+.my-bottle {
+  background-image: '/message.png'
+}
 #login-dropdown-list {
   position: absolute;
   top: 50px;
