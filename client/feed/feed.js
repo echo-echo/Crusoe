@@ -19,6 +19,10 @@ Meteor.subscribe("media");
 // 	$('.modal-trigger').leanModal()
 // }
 
+Template.writeMessage.onRendered(function(){
+  $('.modal-trigger').leanModal()
+});
+
 Template.feed.helpers({
 	messages: function(){
 		var messages = Messages.find({},{sort: {createdAt: -1}}).fetch()
