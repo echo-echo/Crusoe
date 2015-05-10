@@ -22,8 +22,12 @@
 
 }
 
-.my-bottle {
+.close {
   background-image: url("message.png");
+  background-size: 100% auto;
+}
+.far {
+  background-image: url("message-off.png");
   background-size: 100% auto;
 }
 #login-dropdown-list {

@@ -91,10 +91,10 @@ Template.Map.onRendered(function () {
       geoJsonLayer.on('layeradd', function (e) {
         var marker = e.layer,
         feature = marker.feature;
-        console.log('whoop')
+        console.log(marker)
   
       marker.setIcon(L.divIcon({
-        className: 'my-bottle', // Make sure you set an icon class here, otherwise default styles will be set by Mapbox's CSS
+        className: marker.feature.properties.icon.iconUrl, // Make sure you set an icon class here, otherwise default styles will be set by Mapbox's CSS
         html: '', // The content of your HTML marker, you can build a string based on the marker properties by using 'feature.properties.your_property'
         iconSize: [50,50] // The bounds for your icon
     }));
@@ -128,7 +128,7 @@ Template.Map.onRendered(function () {
                   "id": object._id,
                   "description": object.createdAt,
                   "icon": {
-                    "iconUrl": "/message.png",
+                    "iconUrl": "close",
                     "iconSize": [50, 50]
                   }
                 }
@@ -145,7 +145,7 @@ Template.Map.onRendered(function () {
                   "id": object._id,
                   "description": object.createdAt,
                   "icon": {
-                    "iconUrl": "/message-off.png",
+                    "iconUrl": "far",
                     "iconSize": [50, 50]
                   }
                 }
