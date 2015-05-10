@@ -7,6 +7,11 @@ Meteor.startup(function(){
     if(local){
       localStorage.setItem("userLat", local.coords.latitude);
       localStorage.setItem("userLong", local.coords.longitude);
+      marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
+         map.removeLayer(bounds);
+         imageBounds = calcBounds(local.coords.latitude, local.coords.longitude);
+         bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
+         map.panTo([local.coords.latitude, local.coords.longitude])
     }
   })
 });
@@ -177,14 +182,14 @@ Template.Map.onRendered(function () {
       });
     }
 
-    var local = Geolocation.currentLocation()
-	    if(local && marker && bounds){
-	      marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
-         map.removeLayer(bounds);
-         imageBounds = calcBounds(local.coords.latitude, local.coords.longitude);
-         bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
-	       map.panTo([local.coords.latitude, local.coords.longitude])
-	    }
+    // var local = Geolocation.currentLocation()
+	   //  if(local && marker && bounds){
+	   //    marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
+    //      map.removeLayer(bounds);
+    //      imageBounds = calcBounds(local.coords.latitude, local.coords.longitude);
+    //      bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
+	   //     map.panTo([local.coords.latitude, local.coords.longitude])
+	   //  }
 	});
 });
 
