@@ -101,7 +101,7 @@ Template.Map.onRendered(function () {
       });
       allMess.forEach(function(object){
         var geoJsonNew;
-        var radiusVal = 1500;
+        var radiusVal = 1000;
         var msgLat = object.location.coordinates[1];
         var msgLong = object.location.coordinates[0];
         var proximity = getProx(msgLat,msgLong,userLat,userLong) < radiusVal;
@@ -113,6 +113,7 @@ Template.Map.onRendered(function () {
           geoJsonLayer.getLayer( checkLayers[object._id] )
             .setLatLng([object.location.coordinates[1], object.location.coordinates[0]])
         } else { 
+          if (currStat) { geoJsonLayer.removeLayer( checkLayers[object._id] )}
             // var msgLat = object.location.coordinates[1];
             // var msgLong = object.location.coordinates[0];
             var proximity = getProx(msgLat,msgLong,userLat,userLong);
