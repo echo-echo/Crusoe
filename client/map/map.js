@@ -1,13 +1,14 @@
 Meteor.startup(function(){
   Mapbox.load();
 
-  Tracker.autorun(function(){
-    var local = Geolocation.currentLocation()
-	    if(local){
-	      localStorage.setItem("userLat", local.coords.latitude);
-	      localStorage.setItem("userLong", local.coords.longitude);
-	    }
-	})
+//added this tracker back in to update user lat/long reactively when meteor starts
+  Tracker.autorun(function () {
+    var local = Geolocation.currentLocation();
+    if(local){
+      localStorage.setItem("userLat", local.coords.latitude);
+      localStorage.setItem("userLong", local.coords.longitude);
+    }
+  })
 });
 
 Template.Map.rendered = function () {
@@ -19,18 +20,19 @@ Template.Map.rendered = function () {
   var userLong;
   var map;
   var imageUrl = '/radius.gif';
+
   var calcBounds = function(userLat, userLong) { //calc bounds for view radius of 1000ft
-    var lat0 = (userLat - (1.5 * 0.0027565)); //orig mul==0
-    var lat1 = (userLat + (1.5 * 0.0027565));
+    var lat0 = (userLat - (0.0027565)); //orig mul==0
+    var lat1 = (userLat + (0.0027565));
     var lonKmPerDeg = (0.11132 * Math.cos(userLat)); //get km per .001 deg lon...
-    ///(0.3048 km per 1000ft) so... 
+    ///(0.3048 km per 1000ft) so...
     var lonDiff = (0.3048 / lonKmPerDeg);
-    var lon0 = (userLong - (.00075 * lonDiff));//why is it .0005?
-    var lon1 = (userLong + (.00075 * lonDiff));
-    return [[lat0, lon0], [lat1, lon1]]; 
+    var lon0 = (userLong - (.0005 * lonDiff));//why is it .0005?
+    var lon1 = (userLong + (.0005 * lonDiff));
+    return [[lat0, lon0], [lat1, lon1]];
   }
 
-  Deps.autorun(function () {
+  Tracker.autorun(function () {
     if (Mapbox.loaded()) {
       var userLat = Number(localStorage.getItem("userLat"));
       var userLong = Number(localStorage.getItem("userLong"));
@@ -41,22 +43,19 @@ Template.Map.rendered = function () {
           attributionControl: false,
           zoomControl :false
         });
-   
+
       marker = L.marker([userLat, userLong]).addTo(map);
       // L.circle([userLat,userLong], 304.8).addTo(map);
       map.panTo([30.272920898023475, -97.74438629799988]);
       map.setZoom(14);
-      imageBounds = calcBounds(userLat, userLong);  
+      imageBounds = calcBounds(userLat, userLong);
       bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
       }
-    }
-  });
-  Deps.autorun(function () {
-    if (Mapbox.loaded()) {
+
       //pull messages from db:
       var allMess = Messages.find({},{sort: {createdAt: -1}}).fetch();
       var userLat = Number(localStorage.getItem("userLat"));
-			var userLong = Number(localStorage.getItem("userLong"));
+      var userLong = Number(localStorage.getItem("userLong"));
       var geoJsons = [];
 
       ///////////////////////////////////////////////////////////////
@@ -78,7 +77,7 @@ Template.Map.rendered = function () {
       var deg2rad = function(deg) {
         return deg * (Math.PI/180)
       };
-      
+
       ///////////////////////////////////////////////////////////////
       /////filter by proximity between message and user location/////
 
@@ -86,7 +85,7 @@ Template.Map.rendered = function () {
         var msgLat = object.location.coordinates[1]
         var msgLong = object.location.coordinates[0]
         var proximity = getProx(msgLat,msgLong,userLat,userLong)
-        if (proximity<1500){
+        if (proximity<1000){
           geoJsons.push({
             "type": "Feature",
             "geometry": {
@@ -94,8 +93,8 @@ Template.Map.rendered = function () {
               "coordinates": [msgLong, msgLat]
             },
             "properties": {
-              "title": object.text,
-              "description": object.createdAt,
+              "message": object.text,
+              "createdAt": object.createdAt,
               "icon": {
                 "iconUrl": "/message.png",
                 "iconSize": [50, 50]
@@ -110,8 +109,8 @@ Template.Map.rendered = function () {
               "coordinates": [msgLong, msgLat]
             },
             "properties": {
-              "title": "too far to view message",
-              "description": object.createdAt,
+              "message": "too far to view message",
+              "createdAt": object.createdAt,
               "icon": {
                 "iconUrl": "/message-off.png",
                 "iconSize": [50, 50]
@@ -130,7 +129,7 @@ Template.Map.rendered = function () {
       });
 
       map.featureLayer.on('click', function (e) {
-        Session.set("marker", e.layer.feature.properties.title);
+        Session.set("marker", e.layer.feature.properties.message);
         AntiModals.overlay('mapMessageModal', {
           modal: true,
           overlayClass: 'nautical'
@@ -140,14 +139,12 @@ Template.Map.rendered = function () {
       //add array of geoJson objects to map layer:
       map.featureLayer.setGeoJSON(geoJsons);
     }
-  });
 
-  Tracker.autorun(function(){
     var local = Geolocation.currentLocation()
 	    if(local && marker && bounds){
 	      marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
          map.removeLayer(bounds);
-         imageBounds = calcBounds(local.coords.latitude, local.coords.longitude);  
+         imageBounds = calcBounds(local.coords.latitude, local.coords.longitude);
          bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
 	       map.panTo([local.coords.latitude, local.coords.longitude])
 	    }

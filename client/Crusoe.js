@@ -6,7 +6,6 @@ Router.map(function(){
   this.route('map', {
     path:'/'
   });
-  this.route('feed')
   this.route('profile')
 })
 

@@ -2,6 +2,11 @@ Messages = new Mongo.Collection("messages");
 
 Meteor.subscribe("messages");
 
+//use below to open materialize modal
+// Template.modal.rendered = function(){
+// 	$('.modal-trigger').leanModal()
+// }
+
 Template.feed.helpers({
 	messages: function(){
 		var messages = Messages.find({},{sort: {createdAt: -1}}).fetch()
@@ -34,12 +39,11 @@ Template.feed.helpers({
 	    var msgLat = messages[i].location.coordinates[1];
 			var msgLong = messages[i].location.coordinates[0];
 	    var proximity = getProx(msgLat,msgLong,userLat,userLong) * 3280.84; //  to get ft
+
       messages[i].proximity = Math.round(proximity);
-	    if (proximity<1500){
-	    	messages[i].visible=true
+	    if (proximity<1000){
 		    result.visible.push(messages[i])
 	    } else{
-	    	messages[i].visible=false
 	    	result.hidden.push(messages[i])
 	    }
 		}
@@ -58,16 +62,14 @@ Template.feed.helpers({
 })
 
 Template.feed.events({
-	"click .btn.write": function(){
+	"click .write": function(){
 		AntiModals.overlay('writeModal');
 	},
-	"click li": function(event){
+	"click .visible": function(event){
 		var message = Blaze.getData(event.currentTarget)
-		if (message.visible){
 			Meteor.call("openMessage", message._id)
 			Session.set("messageId", message._id)
 			AntiModals.overlay('messageModal');
-		}
 	}
 });
 

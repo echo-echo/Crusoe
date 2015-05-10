@@ -1,6 +1,5 @@
 <template name = "feed">
   <h5>messages</h5>
-
 	<div class = "content">
 		<ul class="collection">
 			{{#each messages.visible}}
@@ -13,27 +12,29 @@
 		</ul>
 	</div>
 
-  <button class="waves-effect waves-light btn write">Write Message</button>
-
+  <button class="waves-effect waves-light btn-large write">Write Message</button>
 </template>
 
 <template name="visible">
 		<li class="collection-item avatar visible">
 			<i class="mdi-communication-email circle red lighten-2"></i>
-      <p class="proximity">{{proximity}} ft</p>
-      	<span data-livestamp="{{createdAt}}"></span><br>
-      	<span class="mdi-action-thumb-up"> {{likes.length}}</span>
-      	<span class="mdi-content-drafts"> {{opens.length}}</span>
+		      	<p class="proximity">{{proximity}} ft</p>
+		      	<p>{{origin}}</p>
+		      	<p data-livestamp="{{createdAt}}"></p>
+		      	<span class="mdi-content-drafts"> {{opens}} </span>
+		      	<span class="mdi-action-thumb-up"> {{likes.length}}</span>
 		</li>
 </template>
 
 <template name="hidden">
-		<li class="collection-item avatar">
-			<i class="mdi-action-lock circle grey darken-1"></i>
-      <p class="proximity">{{proximity}} ft</p>
-      	<span data-livestamp="{{createdAt}}"></span><br>
-      	<span class="mdi-action-thumb-up"> {{likes.length}}</span>
-      	<span class="mdi-content-drafts"> {{opens.length}}</span>
+		<li class="collection-item avatar hidden">
+		<i class="mdi-action-lock circle grey darken-1"></i>
+      		<p class="proximity">{{proximity}} ft</p>
+	      	<p>{{origin}}</p>
+	      	<p data-livestamp="{{createdAt}}"></p>
+	      	<span class="mdi-content-drafts"> {{opens}} </span>
+	      	<span class="mdi-action-thumb-up"> {{likes.length}}</span>
+	      	
 		</li>
 </template>
 
@@ -51,7 +52,7 @@
     <p>{{message.text}}</p>
     <button class ="btn-flat save">
   		<i class ="mdi-content-add-box"> save message</i>
-    </button>
+    </button><br>
     <button class ="btn-flat like">
   		<i class ="mdi-action-thumb-up"> {{message.likes.length}}</i>
     </button>

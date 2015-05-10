@@ -1,34 +1,61 @@
 
 
 <template name = "profile">
-	<h1>profile</h1>
+	 <!-- Modal Trigger -->
+  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Write Message</a>
 
-	<div class = "content tagged">
-		<h5>saved messages</h5>
-		<ul class="collection">
-			{{#each taggedMessages}}
-		    {{> tagged}}
-		  {{/each}}
-		 
-		</ul>
-	</div>
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Write Message</h4>
+      <textarea></textarea>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat submit">Submit</a>
+    </div>
+  </div>
+  
+ <div class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s3"><a href="#test1">User Messages</a></li>
+        <li class="tab col s3"><a class="active" href="#test2">Saved Messages</a></li>
+      </ul>
+    </div>
 
-	<div class = "content created">
-		<h5>user messages</h5>
-		<ul class="collection">
-			{{#each userCreated}}
-		    {{> tagged}}
-		  {{/each}}
-		 
-		</ul>
-	</div>
+    <div id="test1" class="col s12">
+	    <div class = "user-messages">
+				<h5>user messages</h5>
+					<ul class = "collection">
+						{{#each userCreated}}
+			    		{{> tagged}}
+			  		{{/each}}
+					</ul>
+			</div>
+    </div>
+    <div id="test2" class="col s12">
+    	<div class = "saved-messages">
+				<h5>saved messages</h5>
+				<ul class = "collection">
+					{{#each taggedMessages}}
+		    		{{> tagged}}
+		  		{{/each}}
+				</ul>
+			</div>
+    </div>
+ </div>
 
 </template>
 
 <template name = "tagged">
-	<li class="collection-item avatar">
-			<i class="mdi-communication-email circle red lighten-2"></i>
-      <p class="text">{{text}}</p>
-      <p class="mdi-action-thumb-up"> {{likes.length}}</p>
-		</li>
+	<li class = "profile-list collection-item">
+    <span data-livestamp="{{createdAt}}"></span>
+	  <p>{{origin}}</p>
+	  <p class="text">{{text}}</p>
+	  <span class="mdi-content-drafts"> {{opens}}</span>
+	  <span class="mdi-action-thumb-up"> {{likes.length}}</span>    	
+	</li>
 </template>
+
+
+ 
