@@ -19,7 +19,7 @@ path{
   -webkit-perspective: 900px;
 }
 #map {
-  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
   -webkit-transition: 5s;
   -webkit-transform: rotateX(45deg);
   overflow: visible;
@@ -74,13 +74,21 @@ z-index: 999;
 
 }
 
+.marker {
+   transform-style: preserve-3d;
+  transform:rotateX(90deg);
+  transform-origin: bottom center;
+  transition:5s;
+  /*transform:translateZ(5px) rotateX(85deg);*/
+}
 .close {
-  background-image: url("message.png");
-  background-size: 100% auto;
+  /*background-image: url("message.png");
+  background-size: 100% auto;*/
+
 }
 .far {
-  background-image: url("message-off.png");
-  background-size: 100% auto;
+/*  background-image: url("message-off.png");
+  background-size: 100% auto;*/
 }
 #login-dropdown-list {
   position: absolute;

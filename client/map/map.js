@@ -36,10 +36,13 @@ Template.Map.rendered = function () {
     'height': '100%'
   });
   setInterval(function(){
-    rotateVal += 45;
+    rotateVal += 15;
     $('#map').css({ 
-      transform: 'rotateX(75deg) rotateZ(' + rotateVal + 'deg)'
+      transform: 'rotateX(55deg) rotateZ(' + rotateVal + 'deg)'
+
     })
+    $('.marker').css({ transform: 'rotateX(' + rotateVal + 'deg)' })
+    
   }, 5000);  
 
 
@@ -124,7 +127,7 @@ Template.Map.rendered = function () {
   
       marker.setIcon(L.divIcon({
         className: marker.feature.properties.icon.iconUrl, // Make sure you set an icon class here, otherwise default styles will be set by Mapbox's CSS
-        html: '', // The content of your HTML marker, you can build a string based on the marker properties by using 'feature.properties.your_property'
+        html: '<div class="marker"><img src=" message.png"/></div>', // The content of your HTML marker, you can build a string based on the marker properties by using 'feature.properties.your_property'
         iconSize: [50,50] // The bounds for your icon
     }));
       });
