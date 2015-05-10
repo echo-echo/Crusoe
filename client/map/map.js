@@ -42,6 +42,7 @@ Template.Map.rendered = function () {
     })
   }, 5000);  
 
+
   Deps.autorun(function () {
     if (Mapbox.loaded()) {
       var userLat = Number(localStorage.getItem("userLat"));
@@ -109,9 +110,24 @@ Template.Map.rendered = function () {
       geoJsonLayer.eachLayer(function(layer) {
 
         checkLayers[layer.feature.properties.id] = layer._leaflet_id; 
-
+        // layer.options.icon.options.className = "my-bottle";
+        // layer.setIcon(L.divIcon({
+        // className: 'my-bottle', // Make sure you set an icon class here, otherwise default styles will be set by Mapbox's CSS
+        // html: '', // The content of your HTML marker, you can build a string based on the marker properties by using 'feature.properties.your_property'
+        // iconSize: [50,50] // The bounds for your icon
+        // }));
       });
-
+      geoJsonLayer.on('layeradd', function (e) {
+        var marker = e.layer,
+        feature = marker.feature;
+        console.log('whoop')
+  
+      marker.setIcon(L.divIcon({
+        className: 'my-bottle', // Make sure you set an icon class here, otherwise default styles will be set by Mapbox's CSS
+        html: '', // The content of your HTML marker, you can build a string based on the marker properties by using 'feature.properties.your_property'
+        iconSize: [50,50] // The bounds for your icon
+    }));
+      });
       allMess.forEach(function(object){
         var geoJsonNew;
         var radiusVal = 1500;
@@ -169,25 +185,15 @@ Template.Map.rendered = function () {
         }
     });
 
-    map.on('zoomstart', function() {
-      geoJsonLayer.setStyle({transition :'2s'}) 
-      console.log('start')
-    });
-    map.on('zoomend', function() {
-      geoJsonLayer.setStyle({transition :'15s'}) 
-      console.log('end')
-    });
-      geoJsonLayer.on('layeradd', function (e) {
-        var marker = e.layer,
-        feature = marker.feature;
-  
-  
-      marker.setIcon(L.divIcon({
-        className: 'my-bottle', // Make sure you set an icon class here, otherwise default styles will be set by Mapbox's CSS
-        html: '', // The content of your HTML marker, you can build a string based on the marker properties by using 'feature.properties.your_property'
-        iconSize: [50,50] // The bounds for your icon
-    }));
-      });
+    // map.on('zoomstart', function() {
+    //   geoJsonLayer.setStyle({transition :'2s'}) 
+    //   console.log('start')
+    // });
+    // map.on('zoomend', function() {
+    //   geoJsonLayer.setStyle({transition :'15s'}) 
+    //   console.log('end')
+    // });
+
        
 
       geoJsonLayer.on('click', function (e) {
