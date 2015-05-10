@@ -34,7 +34,8 @@ Template.Map.onRendered(function () {
     return [[lat0, lon0], [lat1, lon1]];
   }
 
-  Tracker.autorun(function () {
+
+  Deps.autorun(function () {
     if (Mapbox.loaded()) {
       var userLat = Number(localStorage.getItem("userLat"));
       var userLong = Number(localStorage.getItem("userLong"));
@@ -87,7 +88,17 @@ Template.Map.onRendered(function () {
         checkLayers[layer.feature.properties.id] = layer._leaflet_id; 
 
       });
-
+      geoJsonLayer.on('layeradd', function (e) {
+        var marker = e.layer,
+        feature = marker.feature;
+        console.log('whoop')
+  
+      marker.setIcon(L.divIcon({
+        className: 'my-bottle', // Make sure you set an icon class here, otherwise default styles will be set by Mapbox's CSS
+        html: '', // The content of your HTML marker, you can build a string based on the marker properties by using 'feature.properties.your_property'
+        iconSize: [50,50] // The bounds for your icon
+    }));
+      });
       allMess.forEach(function(object){
         var geoJsonNew;
         var radiusVal = 1500;
@@ -145,25 +156,15 @@ Template.Map.onRendered(function () {
         }
     });
 
-    map.on('zoomstart', function() {
-      geoJsonLayer.setStyle({transition :'2s'}) 
-      console.log('start')
-    });
-    map.on('zoomend', function() {
-      geoJsonLayer.setStyle({transition :'15s'}) 
-      console.log('end')
-    });
-      geoJsonLayer.on('layeradd', function (e) {
-        var marker = e.layer,
-        feature = marker.feature;
-  
-  
-      marker.setIcon(L.divIcon({
-        className: 'my-bottle', // Make sure you set an icon class here, otherwise default styles will be set by Mapbox's CSS
-        html: '', // The content of your HTML marker, you can build a string based on the marker properties by using 'feature.properties.your_property'
-        iconSize: [50,50] // The bounds for your icon
-    }));
-      });
+    // map.on('zoomstart', function() {
+    //   geoJsonLayer.setStyle({transition :'2s'}) 
+    //   console.log('start')
+    // });
+    // map.on('zoomend', function() {
+    //   geoJsonLayer.setStyle({transition :'15s'}) 
+    //   console.log('end')
+    // });
+
        
 
       geoJsonLayer.on('click', function (e) {

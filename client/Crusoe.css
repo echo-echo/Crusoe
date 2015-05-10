@@ -23,7 +23,8 @@
 }
 
 .my-bottle {
-  background-image: '/message.png'
+  background-image: url("message.png");
+  background-size: 100% auto;
 }
 #login-dropdown-list {
   position: absolute;
