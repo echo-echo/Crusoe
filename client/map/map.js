@@ -12,6 +12,7 @@ Meteor.startup(function(){
 });
 
 Template.Map.onRendered(function () {
+  
   var color = "#FF0000";
   var currMess = [];
   var marker;

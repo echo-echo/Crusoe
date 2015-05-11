@@ -14,13 +14,8 @@ Media = new FS.Collection("media", {
 Meteor.subscribe("messages");
 Meteor.subscribe("media");
 
-//use below to open materialize modal
-// Template.modal.rendered = function(){
-// 	$('.modal-trigger').leanModal()
-// }
-
-Template.writeMessage.onRendered(function(){
-  $('.modal-trigger').leanModal()
+Template.feed.onRendered(function () {
+	  $('.modal-trigger').leanModal();
 });
 
 Template.feed.helpers({

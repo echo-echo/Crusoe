@@ -1,8 +1,13 @@
 Meteor.subscribe("userData");
 
+//use below to open materialize modal
+// Template.modal.rendered = function(){
+//  $('.modal-trigger').leanModal()
+// }
+
 Template.profile.onRendered(function(){
-  $('ul.tabs').tabs()
-  $('.modal-trigger').leanModal()
+  $('ul.tabs').tabs();
+  $('.modal-trigger').leanModal();
 });
 
 Template.profile.helpers({

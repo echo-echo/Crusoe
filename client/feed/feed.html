@@ -1,6 +1,7 @@
 <template name = "feed">
 
-  {{> writeMessage}}
+  <!-- Modal Trigger -->
+  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Write Message</a>
 
   <h5>messages</h5>
 	<div class = "content">
@@ -15,7 +16,6 @@
 		</ul>
 	</div>
 
-  <button class="waves-effect waves-light btn-large write">Write Message</button>
 </template>
 
 <template name="visible">
@@ -65,9 +65,6 @@
 
 <template name="writeMessage">
   <!-- Modal Structure -->
-  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Write Message</a>
-
-  <!-- Modal Trigger -->
   <div id="modal1" class="modal">
     <div class="modal-content">
       <h4>Write Message</h4>
