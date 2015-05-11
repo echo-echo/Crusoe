@@ -77,7 +77,6 @@ Template.feed.events({
 		var message = Blaze.getData(event.currentTarget)
 			Meteor.call("openMessage", message._id)
 			Session.set("messageId", message._id)
-			AntiModals.overlay('messageModal');
 	}
 });
 

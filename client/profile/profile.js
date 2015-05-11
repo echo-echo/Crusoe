@@ -38,5 +38,7 @@ Template.writeMessage.events({
     var location=[longitude,latitude];
 
     Meteor.call("addMessage", message, location);
+
+    $('textarea').val('');
   }
 });
