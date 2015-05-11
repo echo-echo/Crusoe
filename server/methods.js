@@ -36,18 +36,6 @@ Meteor.methods({
     	});
 		});
 
-    if ( files ) {
-      for ( var i = 0, len = files.length; i < len; i++ ) {
-        Media.insert(files[i], function (err, filObj) {
-          if ( err ) {
-            console.log(err);
-            throw new Error;
-          }
-          console.log("File successfully uploaded!");
-        });
-      }
-    }
-
   },
 
   tagMessage: function(messageId){

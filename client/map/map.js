@@ -92,6 +92,7 @@ Template.Map.onRendered(function () {
       geoJsonLayer.on('layeradd', function (e) {
         var marker = e.layer,
         feature = marker.feature;
+        
         //sets each marker to a divIcon, html can be specified
         marker.setIcon(L.divIcon({
           className: marker.feature.properties.icon.iconUrl,
