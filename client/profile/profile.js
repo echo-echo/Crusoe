@@ -1,9 +1,14 @@
 Meteor.subscribe("userData");
 
-Template.profile.rendered = function(){
-  $('ul.tabs').tabs()
-  $('.modal-trigger').leanModal()
-}
+//use below to open materialize modal
+// Template.modal.rendered = function(){
+//  $('.modal-trigger').leanModal()
+// }
+
+Template.profile.onRendered(function(){
+  $('ul.tabs').tabs();
+  $('.modal-trigger').leanModal();
+});
 
 Template.profile.helpers({
   taggedMessages: function(){
@@ -25,7 +30,7 @@ Template.profile.helpers({
   }
 });
 
-Template.profile.events({
+Template.writeMessage.events({
   "click .submit": function () {
     var message = $('textarea').val();
     var longitude = Number(localStorage.getItem("userLong"));

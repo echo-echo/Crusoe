@@ -1,4 +1,8 @@
 <template name = "feed">
+
+  <!-- Modal Trigger -->
+  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Write Message</a>
+
   <h5>messages</h5>
 	<div class = "content">
 		<ul class="collection">
@@ -12,7 +16,6 @@
 		</ul>
 	</div>
 
-  <button class="waves-effect waves-light btn-large write">Write Message</button>
 </template>
 
 <template name="visible">
@@ -42,6 +45,7 @@
   <div class="modal-box">
     <form class="compose">
       <textarea name="text"></textarea>
+      <input type="file" class="media-upload">
       <input type="submit" class="btn-flat">
     </form>
   </div>
@@ -56,5 +60,19 @@
     <button class ="btn-flat like">
   		<i class ="mdi-action-thumb-up"> {{message.likes.length}}</i>
     </button>
+  </div>
+</template>
+
+<template name="writeMessage">
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Write Message</h4>
+      <textarea></textarea>
+      <input type="file" class="media-upload">
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat submit">Submit</a>
+    </div>
   </div>
 </template>

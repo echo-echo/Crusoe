@@ -1,11 +1,22 @@
 Messages = new Mongo.Collection("messages");
 
-Meteor.subscribe("messages");
+var mediaStore = new FS.Store.S3("userMedia");
 
-//use below to open materialize modal
-// Template.modal.rendered = function(){
-// 	$('.modal-trigger').leanModal()
-// }
+Media = new FS.Collection("media", {
+	stores: [mediaStore],
+	filter: {
+		allow: {
+			contentTypes: ['image/*', 'audio/*', 'video/*']
+		}
+	}
+});
+
+Meteor.subscribe("messages");
+Meteor.subscribe("media");
+
+Template.feed.onRendered(function () {
+	  $('.modal-trigger').leanModal();
+});
 
 Template.feed.helpers({
 	messages: function(){
@@ -96,13 +107,14 @@ Template.messageModal.events({
 Template.writeModal.events({
 		"submit .compose": function(event){
 		var text = event.target.text.value;
+    var files = event.target.files;
 		var longitude = Number(localStorage.getItem("userLong"))
 		var latitude = Number(localStorage.getItem("userLat"))
     var location=[longitude,latitude]
 
-    Meteor.call("addMessage", text, location);
+    Meteor.call("addMessage", text, location, files);
 
-		event.target.text.value=""
-		return false;
+		event.target.text.value="";
+		AntiModals.dismissOverlay($(".modal-box"));
 	}
 });
