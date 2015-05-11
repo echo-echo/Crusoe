@@ -30,7 +30,7 @@ Template.Map.onRendered(function () {
     var lat0 = (userLat - ((radius/1000) * 0.0027565));
     var lat1 = (userLat + ((radius/1000) * 0.0027565));
     var lonKmPerDeg = (0.11132 * Math.cos(userLat)); //get km per .001 deg lon...
-    ///(0.3048 km per 1000ft) so... 
+    ///(0.3048 km per 1000ft) so...
     var lonDiff = (0.3048 / lonKmPerDeg);
     var lon0 = (userLong - (((radius/1000) * .0005) * lonDiff));
     var lon1 = (userLong + (((radius/1000) * .0005) * lonDiff));
@@ -67,7 +67,7 @@ Template.Map.onRendered(function () {
         var R = 6371;
         var dLat = deg2rad(lat2-lat1);
         var dLon = deg2rad(lon2-lon1);
-        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * 
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) *
           Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         var d = R * c; // Distance in km
@@ -80,7 +80,7 @@ Template.Map.onRendered(function () {
       //check to see whether a message is already on the map based on its _id:
       var checkLayers = {};
       geoJsonLayer.eachLayer(function(layer) {
-        checkLayers[layer.feature.properties.id] = layer._leaflet_id; 
+        checkLayers[layer.feature.properties.id] = layer._leaflet_id;
       });
       geoJsonLayer.on('layeradd', function (e) {
         var marker = e.layer,
@@ -88,8 +88,8 @@ Template.Map.onRendered(function () {
         //sets each marker to a divIcon, html can be specified
         marker.setIcon(L.divIcon({
           className: marker.feature.properties.icon.iconUrl,
-          html: '', 
-          iconSize: [50,50] 
+          html: '',
+          iconSize: [50,50]
         }));
       });
       allMess.forEach(function(object){
@@ -100,9 +100,9 @@ Template.Map.onRendered(function () {
         var currStat = geoJsonLayer.getLayer( checkLayers[object._id] ) || false
         currStat = currStat ? currStat.feature.properties.title !== "too far to view message" : currStat;
 
-        if (checkLayers.hasOwnProperty(object._id) && proximity===currStat) { 
+        if (checkLayers.hasOwnProperty(object._id) && proximity===currStat) {
           geoJsonLayer.getLayer(checkLayers[object._id]).setLatLng([object.location.coordinates[1], object.location.coordinates[0]])
-        } else { 
+        } else {
           if (currStat) { geoJsonLayer.removeLayer( checkLayers[object._id] )}
             // var msgLat = object.location.coordinates[1];
             // var msgLong = object.location.coordinates[0];
@@ -147,20 +147,17 @@ Template.Map.onRendered(function () {
       });
 
     // map.on('zoomstart', function() {
-    //   geoJsonLayer.setStyle({transition :'2s'}) 
+    //   geoJsonLayer.setStyle({transition :'2s'})
     //   console.log('start')
     // });
     // map.on('zoomend', function() {
-    //   geoJsonLayer.setStyle({transition :'15s'}) 
+    //   geoJsonLayer.setStyle({transition :'15s'})
     //   console.log('end')
     // });
 
       geoJsonLayer.on('click', function (e) {
         Session.set("marker", e.layer.feature.properties.title);
-        AntiModals.overlay('mapMessageModal', {
-          modal: true,
-          overlayClass: 'nautical'
-        });
+
       });
     }
 	});
