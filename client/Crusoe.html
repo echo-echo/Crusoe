@@ -5,21 +5,30 @@
 <nav>
   <div class="nav-wrapper">
     <a href="#!" class="brand-logo">Crusoe</a>
-    <div class = "right">{{>loginButtons}}</div>
     <ul class="right hide-on-med-and-down">
       <li><a href="/">Map</a></li>
+      {{#if currentUser}}
       <li><a href="/profile">Profile</a></li>
+      <li><a id="signout" href="#">Sign Out</a></li>
+      {{else}}
+      <li><a id="signin" href="#">Sign In</a></li>
+      {{/if}}
     </ul>
     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
     <ul class="side-nav" id="mobile-demo">
-      <li><a href="/feed">Send a message</a></li>
-      <li><a href="/">Go to Map</a></li>
-    </ul> 
+      <li><a href="/">Map</a></li>
+      {{#if currentUser}}
+      <li><a href="/profile">Profile</a></li>
+      {{/if}}
+      <li><a class="modal-trigger" href="#modal-signin">Sign In</a></li>
+    </ul>
   </div>
-</nav>     
+</nav>
 <body>
-  
-	<div>{{>yield}}</div>
 
+	<div>{{>yield}}</div>
+  {{>signin}}
+  {{>signup}}
+  {{>confirmation}}{{>warning}}
 </body>
 </template>
