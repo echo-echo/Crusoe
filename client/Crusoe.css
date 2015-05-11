@@ -17,8 +17,9 @@
 }
 
 .leaflet-marker-icon {
-  -webkit-transition: 6s;
+  -webkit-transition: 15s;
   position: absolute;
+  -webkit-transition-timing-function: linear;
 
 }
 
