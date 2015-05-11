@@ -4,7 +4,7 @@
   <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Write Message</a>
 
   <h5>messages</h5>
-	<div class = "content">
+	<div class= "content modal-trigger" href="#message-modal">
 		<ul class="collection">
 			{{#each messages.visible}}
 		    {{> visible}}
@@ -41,25 +41,19 @@
 		</li>
 </template>
 
-<template name="writeModal">
-  <div class="modal-box">
-    <form class="compose">
-      <textarea name="text"></textarea>
-      <input type="file" class="media-upload">
-      <input type="submit" class="btn-flat">
-    </form>
-  </div>
-</template>
-
 <template name="messageModal">
-  <div class="modal-box">
-    <p>{{message.text}}</p>
-    <button class ="btn-flat save">
-  		<i class ="mdi-content-add-box"> save message</i>
-    </button><br>
-    <button class ="btn-flat like">
-  		<i class ="mdi-action-thumb-up"> {{message.likes.length}}</i>
-    </button>
+  <div id="message-modal" class="modal">
+    <div class="modal-content">
+      <p>{{message.text}}</p>
+      <button class ="btn-flat save"></button>
+    </div>
+
+    <div class="modal-footer">
+      <i class ="mdi-content-add-box"> save message</i>
+      <button class ="btn-flat like">
+    		<i class ="mdi-action-thumb-up"> {{message.likes.length}}</i>
+      </button>
+    </div>
   </div>
 </template>
 
