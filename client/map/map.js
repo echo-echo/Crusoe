@@ -11,7 +11,8 @@ Meteor.startup(function(){
   })
 });
 
-Template.Map.rendered = function () {
+Template.Map.onRendered(function () {
+  
   var color = "#FF0000";
   var currMess = [];
   var marker;
@@ -149,7 +150,7 @@ Template.Map.rendered = function () {
 	       map.panTo([local.coords.latitude, local.coords.longitude])
 	    }
 	});
-};
+});
 
 Template.mapMessageModal.events({
   "click .back": function () {
