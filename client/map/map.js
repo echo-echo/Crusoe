@@ -36,15 +36,14 @@ Template.Map.rendered = function () {
     'height': '100%'
   });
   setInterval(function(){
-    rotateVal += 15;
-    $('#map').css({ 
-      transform: 'rotateX(55deg) rotateZ(' + rotateVal + 'deg)'
+    rotateVal += 100;
+    // $('#map').css({ 
+    //   transform: 'rotateX(55deg) rotateZ(' + rotateVal + 'deg)'
 
-    })
-    $('.marker').css({ transform: 'rotateX(' + rotateVal + 'deg)' })
+    // })
+    $('.shape').css({ transform: 'rotateY(' + (rotateVal) + 'deg) rotateY(' + (rotateVal / 10) + 'deg)' })
     
   }, 5000);  
-
 
   Deps.autorun(function () {
     if (Mapbox.loaded()) {
@@ -127,7 +126,7 @@ Template.Map.rendered = function () {
   
       marker.setIcon(L.divIcon({
         className: marker.feature.properties.icon.iconUrl, // Make sure you set an icon class here, otherwise default styles will be set by Mapbox's CSS
-        html: '<div class="marker"><img src=" message.png"/></div>', // The content of your HTML marker, you can build a string based on the marker properties by using 'feature.properties.your_property'
+        html: '<div id="tridiv"><div class="scene" style="-webkit-transform:rotateX(-48deg) rotateY(1079deg); -moz-transform:rotateX(-48deg) rotateY(1079deg); -ms-transform:rotateX(-48deg) rotateY(1079deg); transform:rotateX(-48deg) rotateY(1079deg); "><div class="shape cylinder-2 cyl-2"><div class="face bm"><div class="photon-shader" style="background-color: rgba(255, 255, 255, 0.258824);"></div></div><div class="face tp"><div class="photon-shader" style="background-color: rgba(255, 255, 255, 0.258824);"></div></div><div class="face side s0"><div class="photon-shader" style="background-color: rgba(255, 255, 255, 0.247059);"></div></div><div class="face side s1"><div class="photon-shader" style="background-color: rgba(255, 255, 255, 0.152941);"></div></div><div class="face side s2"><div class="photon-shader" style="background-color: rgba(255, 255, 255, 0.00392157);"></div></div><div class="face side s3"><div class="photon-shader" style="background-color: rgba(0, 0, 0, 0.152941);"></div></div><div class="face side s4"><div class="photon-shader" style="background-color: rgba(0, 0, 0, 0.301961);"></div></div><div class="face side s5"><div class="photon-shader" style="background-color: rgba(0, 0, 0, 0.403922);"></div></div><div class="face side s6"><div class="photon-shader" style="background-color: rgba(0, 0, 0, 0.407843);"></div></div><div class="face side s7"><div class="photon-shader" style="background-color: rgba(0, 0, 0, 0.313726);"></div></div><div class="face side s8"><div class="photon-shader" style="background-color: rgba(0, 0, 0, 0.164706);"></div></div><div class="face side s9"><div class="photon-shader" style="background-color: rgba(0, 0, 0, 0.00392157);"></div></div><div class="face side s10"><div class="photon-shader" style="background-color: rgba(255, 255, 255, 0.145098);"></div></div><div class="face side s11"><div class="photon-shader" style="background-color: rgba(255, 255, 255, 0.243137);"></div></div></div><div class="shape cylinder-1 cyl-1"><div class="face bm"><div class="photon-shader" style="background-color: rgba(255, 255, 255, 0.258824);"></div></div><div class="face tp"><div class="photon-shader" style="background-color: rgba(255, 255, 255, 0.258824);"></div></div><div class="face side s0"><div class="photon-shader" style="background-color: rgba(255, 255, 255, 0.247059);"></div></div><div class="face side s1"><div class="photon-shader" style="background-color: rgba(255, 255, 255, 0.152941);"></div></div><div class="face side s2"><div class="photon-shader" style="background-color: rgba(255, 255, 255, 0.00392157);"></div></div><div class="face side s3"><div class="photon-shader" style="background-color: rgba(0, 0, 0, 0.152941);"></div></div><div class="face side s4"><div class="photon-shader" style="background-color: rgba(0, 0, 0, 0.301961);"></div></div><div class="face side s5"><div class="photon-shader" style="background-color: rgba(0, 0, 0, 0.403922);"></div></div><div class="face side s6"><div class="photon-shader" style="background-color: rgba(0, 0, 0, 0.407843);"></div></div><div class="face side s7"><div class="photon-shader" style="background-color: rgba(0, 0, 0, 0.313726);"></div></div><div class="face side s8"><div class="photon-shader" style="background-color: rgba(0, 0, 0, 0.164706);"></div></div><div class="face side s9"><div class="photon-shader" style="background-color: rgba(0, 0, 0, 0.00392157);"></div></div><div class="face side s10"><div class="photon-shader" style="background-color: rgba(255, 255, 255, 0.145098);"></div></div><div class="face side s11"><div class="photon-shader" style="background-color: rgba(255, 255, 255, 0.243137);"></div></div></div></div></div>', // The content of your HTML marker, you can build a string based on the marker properties by using 'feature.properties.your_property'
         iconSize: [50,50] // The bounds for your icon
     }));
       });
