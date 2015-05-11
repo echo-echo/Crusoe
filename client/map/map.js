@@ -88,8 +88,8 @@ Template.Map.onRendered(function () {
         //sets each marker to a divIcon, html can be specified
         marker.setIcon(L.divIcon({
           className: marker.feature.properties.icon.iconUrl,
-          html: '', 
-          iconSize: [50,50] 
+          html: '<div class="modal-trigger" href="#message-modal">Test</div>',
+          iconSize: [50,50]
         }));
       });
       allMess.forEach(function(object){
@@ -155,26 +155,6 @@ Template.Map.onRendered(function () {
     //   console.log('end')
     // });
 
-      geoJsonLayer.on('click', function (e) {
-        Session.set("marker", e.layer.feature.properties.title);
-        AntiModals.overlay('mapMessageModal', {
-          modal: true,
-          overlayClass: 'nautical'
-        });
-      });
     }
 	});
-});
-
-Template.mapMessageModal.events({
-  "click .back": function () {
-    AntiModals.dismissOverlay($('.anti-modal-box'));
-  }
-});
-
-Template.mapMessageModal.helpers({
-  message: function () {
-    var markerText = Session.get('marker');
-    return markerText;
-  }
 });

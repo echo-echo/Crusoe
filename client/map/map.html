@@ -3,16 +3,23 @@
 
     {{> writeMessage}}
 
+    {{> messageModal}}
+    
   	<div id="map"></div>
 </template>
 
-<template name="mapMessageModal">
-  <div class="anti-modal-box">
-    <div class="anti-modal-body">
-      <div class="background">
-        <p>{{message}}</p>
-        <a class="btn brown lighten-5 back">Back</a>
-      </div>
+<template name="messageModal">
+  <div id="message-modal" class="modal">
+    <div class="modal-content">
+      <p>{{message.text}}</p>
+      <button class ="btn-flat save"></button>
+    </div>
+
+    <div class="modal-footer">
+      <i class ="mdi-content-add-box"> save message</i>
+      <button class ="btn-flat like">
+        <i class ="mdi-action-thumb-up"> {{message.likes.length}}</i>
+      </button>
     </div>
   </div>
 </template>
