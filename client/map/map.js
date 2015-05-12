@@ -42,8 +42,8 @@ Template.Map.onRendered(function () {
       var userLat = Number(localStorage.getItem("userLat"));
       var userLong = Number(localStorage.getItem("userLong"));
       if (!map) {//if map hasn't been loaded, load a map
-        L.mapbox.accessToken = "pk.eyJ1Ijoiam9zaHVhYmVuc29uIiwiYSI6Im1sT3BqRWcifQ.W7h8nMmj_oI1p4RzChElsQ";
-        map = L.mapbox.map('map', 'joshuabenson.68d254d5', {
+        L.mapbox.accessToken = "pk.eyJ1Ijoic2tpbm5lcjUyMCIsImEiOiJHOXRJeUlFIn0.ZVhoykCRgo8-_KQl2-x9MQ";
+        map = L.mapbox.map('map', 'skinner520.fbb71f90', {
           attributionControl: false,
           zoomControl :false
         });
