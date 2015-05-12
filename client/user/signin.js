@@ -26,7 +26,7 @@ Template.signin.events({
   },
 
   "click #signup": function(){
-    //$('#modal-signin').closeModal();
+    $('#modal-signin').closeModal();
     $("#modal-signup").openModal()
   }
 })
