@@ -15,7 +15,7 @@ Meteor.subscribe("messages");
 Meteor.subscribe("media");
 
 Template.feed.onRendered(function () {
-	  $('.modal-trigger').leanModal();
+  $('.modal-trigger').leanModal();
 });
 
 Template.feed.helpers({
@@ -77,6 +77,9 @@ Template.feed.events({
 		var message = Blaze.getData(event.currentTarget)
 			Meteor.call("openMessage", message._id)
 			Session.set("messageId", message._id)
+	},
+	"click .hidden": function(event){
+		Session.set("messageId", "");
 	}
 });
 
