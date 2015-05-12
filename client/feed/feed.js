@@ -1,18 +1,6 @@
 Messages = new Mongo.Collection("messages");
 
-var mediaStore = new FS.Store.S3("userMedia");
-
-Media = new FS.Collection("media", {
-	stores: [mediaStore],
-	filter: {
-		allow: {
-			contentTypes: ['image/*', 'audio/*', 'video/*']
-		}
-	}
-});
-
 Meteor.subscribe("messages");
-Meteor.subscribe("media");
 
 Template.feed.helpers({
 	messages: function(){

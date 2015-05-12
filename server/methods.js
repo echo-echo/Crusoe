@@ -35,22 +35,6 @@ Meteor.methods({
 	      opens:0
     	});
 		});
-
-    var date = new Date().toUTCString();
-    var signature = "";
-    HTTP.get(url, {
-      headers: {
-        Authorization: "AWS4-HMAC-SHA256 Credential=AKIAI2F3SLSN7OELQHJQ/" + date + "/us-east-1/s3/aws4_request, SignedHeaders=x-amz-date, Signature=" + signature,
-        'x-amz-date': date
-      }
-    }, function(err, resp){
-      if ( err ) {
-        console.log(err);
-        throw new Error;
-      }
-
-      console.log(resp);
-    });
   },
 
   tagMessage: function(messageId){
