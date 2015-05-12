@@ -69,7 +69,7 @@ Template.writeMessage.events({
             console.log(err);
             throw new Error;
           }
-          var url = "http://s3.amazonaws.com/crusoe-media/media/" + filObj._id + "-" + filObj.name + "." + filObj.extension;
+          var url = "http://s3.amazonaws.com/crusoe-media/media/" + filObj._id + "-" + filObj.name();
           Meteor.call("addMessage", message, location, url);
         });
       }

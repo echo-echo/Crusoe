@@ -1,5 +1,5 @@
 Meteor.methods({
-  addMessage: function (text, location, files) {
+  addMessage: function (text, location, url) {
     var username = Meteor.user() ? Meteor.user().username : "Anonymous";
 
     Meteor.http.get('http://api.tiles.mapbox.com/v4/geocode/mapbox.places/'+location[0]+','+location[1]+'.json?access_token=pk.eyJ1Ijoiam9zaHVhYmVuc29uIiwiYSI6Im1sT3BqRWcifQ.W7h8nMmj_oI1p4RzChElsQ', function (err, res) {
@@ -36,6 +36,21 @@ Meteor.methods({
     	});
 		});
 
+    var date = new Date().toUTCString();
+    var signature = "";
+    HTTP.get(url, {
+      headers: {
+        Authorization: "AWS4-HMAC-SHA256 Credential=AKIAI2F3SLSN7OELQHJQ/" + date + "/us-east-1/s3/aws4_request, SignedHeaders=x-amz-date, Signature=" + signature,
+        'x-amz-date': date
+      }
+    }, function(err, resp){
+      if ( err ) {
+        console.log(err);
+        throw new Error;
+      }
+
+      console.log(resp);
+    });
   },
 
   tagMessage: function(messageId){
