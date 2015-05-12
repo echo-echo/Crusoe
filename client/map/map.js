@@ -167,3 +167,13 @@ Template.Map.onRendered(function () {
 	});
 });
 
+
+//needed the same method for a different template.
+Template.toofar.helpers({
+  message: function(){
+    var messageId = Session.get("messageId")
+    var message = Messages.find({_id:messageId}).fetch()[0]
+    console.log('message',message)
+    return message;
+  }
+});

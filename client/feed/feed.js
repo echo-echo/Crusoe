@@ -93,6 +93,7 @@ Template.messageModal.helpers({
 	}
 });
 
+
 Template.messageModal.events({
 	"click .save": function(){
 		var messageId = Session.get("messageId")
