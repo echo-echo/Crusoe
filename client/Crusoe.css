@@ -134,3 +134,19 @@ button.write{
   padding-left: 23px;
 }*/
 
+/* ~~~~~~~~~~~~~~~~
+   PHONE STYLING
+~~~~~~~~~~~~~~~~~~*/
+@media(max-width:700px){
+  .modal-box{
+    max-width:100%;
+    border-radius:0;
+    padding:3px;
+  }
+  .c-modal{
+    width:100%;
+    top:0 !important;
+  }
+
+}
+

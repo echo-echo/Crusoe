@@ -77,9 +77,11 @@ Template.feed.events({
 		var message = Blaze.getData(event.currentTarget)
 			Meteor.call("openMessage", message._id)
 			Session.set("messageId", message._id)
+			$("#map-message-modal").openModal();
 	},
 	"click .hidden": function(event){
 		Session.set("messageId", "");
+			$("#too-far").openModal();
 	}
 });
 
