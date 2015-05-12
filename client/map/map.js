@@ -156,16 +156,20 @@ Template.Map.onRendered(function () {
     // });
 
       geoJsonLayer.on('click', function (e) {
+        if(e.layer.feature.properties.title === "too far to view message"){
+          $("#too-far").openModal();
+        } else {
         var message = Messages.find({_id: e.layer.feature.properties.id}).fetch()[0]
         Session.set('message', message)
         console.log(message)
-        $('#mapMessageModal2').openModal();
+        $('#map-message-modal').openModal();
+      }
       });
     }
 	});
 });
 
-Template.mapMessageModal2.helpers({
+Template.messageModal.helpers({
   message: function () {
     console.log("callled message")
     var marker = Session.get('message')

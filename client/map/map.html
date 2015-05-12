@@ -2,21 +2,38 @@
   	<div class="panel">{{>feed}}</div>
 
     {{> writeMessage}}
-    {{> mapMessageModal2}}
+    {{> messageModal}}
+    {{> toofar}}
 
   	<div id="map"></div>
 </template>
 
-<template name="mapMessageModal2">
-  <div class="modal modal-box" id="mapMessageModal2">
+
+
+<template name="messageModal">
+  <div id="map-message-modal" class="modal modal-box">
+    <div class="modal-content">
+      <a href="#" class="right modal-close">close</a>
+        <h4>Message:</h4>
+        <p>{{message.text}}</p>
+        <h6>Origin:</h6>
+        <p>{{message.origin}}</p>
+        <h6>Opens:</h6>
+        <p>{{message.opens}}</p>
+    </div>
+
+    <div class="modal-footer">
+      <i class ="mdi-content-add-box"> save message</i>
+      <button class ="btn-flat like">
+        <i class ="mdi-action-thumb-up"> {{message.likes.length}}</i>
+      </button>
+    </div>
+  </div>
+</template>
+
+<template name='toofar'>
+  <div id = "too-far" class="modal modal-box">
     <a href="#" class="right modal-close">close</a>
-    <h4>Message:</h4>
-    <p>{{message.text}}</p>
-    <h6>Likes:</h6>
-    <p>{{message.likes.length}}</p>
-    <h6>Origin:</h6>
-    <p>{{message.origin}}</p>
-    <h6>Opens:</h6>
-    <p>{{message.opens}}</p>
+    <h3>Message is too far away to view</h3>
   </div>
 </template>

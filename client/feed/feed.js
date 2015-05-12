@@ -15,7 +15,7 @@ Meteor.subscribe("messages");
 Meteor.subscribe("media");
 
 Template.feed.onRendered(function () {
-	  $('.modal-trigger').leanModal();
+  $('.modal-trigger').leanModal();
 });
 
 Template.feed.helpers({
@@ -73,14 +73,15 @@ Template.feed.helpers({
 })
 
 Template.feed.events({
-	"click .write": function(){
-		AntiModals.overlay('writeModal');
-	},
 	"click .visible": function(event){
 		var message = Blaze.getData(event.currentTarget)
 			Meteor.call("openMessage", message._id)
 			Session.set("messageId", message._id)
-			AntiModals.overlay('messageModal');
+			$("#map-message-modal").openModal();
+	},
+	"click .hidden": function(event){
+		Session.set("messageId", "");
+			$("#too-far").openModal();
 	}
 });
 
@@ -101,20 +102,5 @@ Template.messageModal.events({
 	"click .like": function(){
 		var messageId = Session.get("messageId")
 		Meteor.call("likeMessage", messageId)
-	}
-})
-
-Template.writeModal.events({
-		"submit .compose": function(event){
-		var text = event.target.text.value;
-    var files = event.target.files;
-		var longitude = Number(localStorage.getItem("userLong"))
-		var latitude = Number(localStorage.getItem("userLat"))
-    var location=[longitude,latitude]
-
-    Meteor.call("addMessage", text, location, files);
-
-		event.target.text.value="";
-		AntiModals.dismissOverlay($(".modal-box"));
 	}
 });

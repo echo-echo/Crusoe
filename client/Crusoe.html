@@ -9,8 +9,10 @@
       <li><a href="/">Map</a></li>
       {{#if currentUser}}
       <li><a href="/profile">Profile</a></li>
+      <li><a id="signout" href="#">Sign Out</a></li>
+      {{else}}
+      <li><a id="signin" href="#">Sign In</a></li>
       {{/if}}
-      <li><a class="modal-trigger" href="#modal-signin">Sign In</a></li>
     </ul>
     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
     <ul class="side-nav" id="mobile-demo">
