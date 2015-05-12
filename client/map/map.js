@@ -159,9 +159,7 @@ Template.Map.onRendered(function () {
         if(e.layer.feature.properties.title === "too far to view message"){
           $("#too-far").openModal();
         } else {
-        var message = Messages.find({_id: e.layer.feature.properties.id}).fetch()[0]
-        Session.set('message', message)
-        console.log(message)
+        Session.set('messageId', e.layer.feature.properties.id)
         $('#map-message-modal').openModal();
       }
       });
@@ -169,10 +167,3 @@ Template.Map.onRendered(function () {
 	});
 });
 
-Template.messageModal.helpers({
-  message: function () {
-    console.log("callled message")
-    var marker = Session.get('message')
-    return marker;
-  }
-});

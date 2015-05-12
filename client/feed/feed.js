@@ -14,10 +14,6 @@ Media = new FS.Collection("media", {
 Meteor.subscribe("messages");
 Meteor.subscribe("media");
 
-Template.feed.onRendered(function () {
-  $('.modal-trigger').leanModal();
-});
-
 Template.feed.helpers({
 	messages: function(){
 		var messages = Messages.find({},{sort: {createdAt: -1}}).fetch()

@@ -8,8 +8,6 @@
   	<div id="map"></div>
 </template>
 
-
-
 <template name="messageModal">
   <div id="map-message-modal" class="modal modal-box">
     <div class="modal-content">
@@ -23,7 +21,9 @@
     </div>
 
     <div class="modal-footer">
-      <i class ="mdi-content-add-box"> save message</i>
+      <button class ="save btn-flat">
+        <i class ="mdi-content-add-box"> save message</i>
+      </button>
       <button class ="btn-flat like">
         <i class ="mdi-action-thumb-up"> {{message.likes.length}}</i>
       </button>

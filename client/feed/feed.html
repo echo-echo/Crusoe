@@ -4,7 +4,6 @@
   <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Write Message</a>
 
   <h5>messages</h5>
-	<!-- <div class= "content modal-trigger" href="#map-message-modal"> -->
   <div class = "content">
 		<ul class="collection">
 			{{#each messages.visible}}
@@ -20,7 +19,6 @@
 </template>
 
 <template name="visible">
-  <div class= "modal-trigger" href="#map-message-modal">
 		<li class="collection-item avatar visible">
 			<i class="mdi-communication-email circle red lighten-2"></i>
 		      	<p class="proximity">{{proximity}} ft</p>
@@ -29,7 +27,6 @@
 		      	<span class="mdi-content-drafts"> {{opens}} </span>
 		      	<span class="mdi-action-thumb-up"> {{likes.length}}</span>
 		</li>
-  </div>
 </template>
 
 <template name="hidden">
