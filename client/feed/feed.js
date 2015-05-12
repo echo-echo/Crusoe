@@ -75,9 +75,13 @@ Template.feed.events({
 			Session.set("messageId", message._id)
 			$("#map-message-modal").openModal();
 	},
-	"click .hidden": function(event){
+	"click .hidden": function(){
 		Session.set("messageId", "");
 			$("#too-far").openModal();
+	},
+
+	"click .write": function(){
+		$("#write").openModal();
 	}
 });
 
