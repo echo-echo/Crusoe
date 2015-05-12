@@ -2,17 +2,21 @@
   	<div class="panel">{{>feed}}</div>
 
     {{> writeMessage}}
+    {{> mapMessageModal2}}
 
   	<div id="map"></div>
 </template>
 
-<template name="mapMessageModal">
-  <div class="anti-modal-box">
-    <div class="anti-modal-body">
-      <div class="background">
-        <p>{{message}}</p>
-        <a class="btn brown lighten-5 back">Back</a>
-      </div>
-    </div>
+<template name="mapMessageModal2">
+  <div class="modal modal-box" id="mapMessageModal2">
+    <a href="#" class="right modal-close">close</a>
+    <h4>Message:</h4>
+    <p>{{message.text}}</p>
+    <h6>Likes:</h6>
+    <p>{{message.likes.length}}</p>
+    <h6>Origin:</h6>
+    <p>{{message.origin}}</p>
+    <h6>Opens:</h6>
+    <p>{{message.opens}}</p>
   </div>
 </template>

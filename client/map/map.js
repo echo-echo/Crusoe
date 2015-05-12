@@ -156,22 +156,19 @@ Template.Map.onRendered(function () {
     // });
 
       geoJsonLayer.on('click', function (e) {
-        Session.set("marker", e.layer.feature.properties.title);
-
+        var message = Messages.find({_id: e.layer.feature.properties.id}).fetch()[0]
+        Session.set('message', message)
+        console.log(message)
+        $('#mapMessageModal2').openModal();
       });
     }
 	});
 });
 
-Template.mapMessageModal.events({
-  "click .back": function () {
-    AntiModals.dismissOverlay($('.anti-modal-box'));
-  }
-});
-
-Template.mapMessageModal.helpers({
+Template.mapMessageModal2.helpers({
   message: function () {
-    var markerText = Session.get('marker');
-    return markerText;
+    console.log("callled message")
+    var marker = Session.get('message')
+    return marker;
   }
 });
