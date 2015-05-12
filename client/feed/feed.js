@@ -14,10 +14,6 @@ Media = new FS.Collection("media", {
 Meteor.subscribe("messages");
 Meteor.subscribe("media");
 
-Template.feed.onRendered(function () {
-  $('.modal-trigger').leanModal();
-});
-
 Template.feed.helpers({
 	messages: function(){
 		var messages = Messages.find({},{sort: {createdAt: -1}}).fetch()
@@ -79,9 +75,13 @@ Template.feed.events({
 			Session.set("messageId", message._id)
 			$("#map-message-modal").openModal();
 	},
-	"click .hidden": function(event){
+	"click .hidden": function(){
 		Session.set("messageId", "");
 			$("#too-far").openModal();
+	},
+
+	"click .write": function(){
+		$("#write").openModal();
 	}
 });
 
