@@ -1,0 +1,21 @@
+<template name= "signup">
+  <div id="modal-signup" class="modal-box modal c-modal">
+  <a href="#" class="modal-close right">close</a>
+    <form id="register-form signup">
+      <div>
+       <h2>Sign Up</h2>
+       Username: <br>
+       <input type="text" id="username-signup" placeholder="MyCoolUsername"/><br>
+       Password: <br>
+       <input type="password" id="account-password2"/><br>
+       Repeat Password:<br>
+       <input type="password" id="account-password1"  /><br>
+<<<<<<< HEAD
+       <button class = "btn-flat">Submit</button>
+=======
+       <button>Submit</button>
+>>>>>>> signup fixed
+      </div>
+   </form>
+  </div>
+</template>
