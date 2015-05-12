@@ -1,8 +1,3 @@
-// Meteor.startup(function(){
-  
-// });
-
-// AWS.config.update({region: 'us-east-1'});
 
 //need this on both client and server side
 Messages = new Mongo.Collection("messages");

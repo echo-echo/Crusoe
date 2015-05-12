@@ -35,6 +35,12 @@ Meteor.methods({
 	      opens:0
     	});
 		});
+
+    // get photo stored in AWS S3 using key
+    var s3 = new AWS.S3();
+    s3.getObject({Bucket: 'crusoe-media', Key: key}, function (err, data) {
+      console.log(err, data);
+    });
   },
 
   tagMessage: function(messageId){
