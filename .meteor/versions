@@ -79,6 +79,8 @@ observe-sequence@1.0.6
 ordered-dict@1.0.3
 package-version-parser@3.0.3
 pauloborges:mapbox@2.1.4_3
+peerlibrary:aws-sdk@2.1.17_1
+peerlibrary:blocking@0.5.2
 percolate:synced-cron@1.2.1
 practicalmeteor:chai@1.9.2_3
 practicalmeteor:loglevel@1.1.0_3

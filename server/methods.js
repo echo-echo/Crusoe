@@ -1,5 +1,5 @@
 Meteor.methods({
-  addMessage: function (text, location, url) {
+  addMessage: function (text, location, key) {
     var username = Meteor.user() ? Meteor.user().username : "Anonymous";
 
     Meteor.http.get('http://api.tiles.mapbox.com/v4/geocode/mapbox.places/'+location[0]+','+location[1]+'.json?access_token=pk.eyJ1Ijoiam9zaHVhYmVuc29uIiwiYSI6Im1sT3BqRWcifQ.W7h8nMmj_oI1p4RzChElsQ', function (err, res) {
@@ -35,6 +35,12 @@ Meteor.methods({
 	      opens:0
     	});
 		});
+
+    // get photo stored in AWS S3 using key
+    var s3 = new AWS.S3();
+    s3.getObject({Bucket: 'crusoe-media', Key: key}, function (err, data) {
+      console.log(err, data);
+    });
   },
 
   tagMessage: function(messageId){
