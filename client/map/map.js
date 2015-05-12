@@ -88,7 +88,7 @@ Template.Map.onRendered(function () {
         //sets each marker to a divIcon, html can be specified
         marker.setIcon(L.divIcon({
           className: marker.feature.properties.icon.iconUrl,
-          html: '<div class="modal-trigger" href="#message-modal">Test</div>',
+          html: '',
           iconSize: [50,50]
         }));
       });
