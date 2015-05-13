@@ -25,8 +25,15 @@ Template.signin.events({
   "click #facebook" : function(){
     Meteor.loginWithFacebook({}, function(err){
       if (err) console.log(err.reason)
+      else{
+        $('#modal-confirmation').openModal();
+         Meteor.setTimeout(function(){
+           $('#modal-confirmation').closeModal();
+           $('#modal-signin').closeModal();
+          },1000)
+      }
     })
-  },
+  } ,
 
   "click #create-account" : function(){
     $('#modal-signin').closeModal();
