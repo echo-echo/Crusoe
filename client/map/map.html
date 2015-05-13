@@ -5,7 +5,16 @@
     {{> messageModal}}
     {{> toofar}}
 
-  	<div id="map"></div>
+  	<div id="map">
+      <div id="autopan">
+      {{#if pan}}
+      <i class ="mdi-action-explore small icon" style = "background-color: #E6E4E3"></i>
+      {{else}}
+      <i class ="mdi-action-explore small icon" style = "background-color: #white"></i>
+      {{/if}}
+      </div>
+
+    </div>
 </template>
 
 <template name="messageModal">
