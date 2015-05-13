@@ -50,7 +50,8 @@ Template.profile.helpers({
 Template.writeMessage.events({
   "click .submit": function () {
     var message = $('textarea').val();
-    var files = $('input.media-upload')[0].files;
+    var file = $('input.media-upload')[0].files;
+    console.log("file: ", file);
     var longitude = Number(localStorage.getItem("userLong"));
     var latitude = Number(localStorage.getItem("userLat"));
     var location=[longitude,latitude];
@@ -59,19 +60,24 @@ Template.writeMessage.events({
     // collectionFS meteor package. when the fsFile is passed to addMessage, only
     // // the file info is sent and not the data.
 
-    // if ( files.length ) {
-    //   for ( var i = 0, len = files.length; i < len; i++ ) {
-    //     Media.insert(files[i], function (err, filObj) {
-    //       if ( err ) {
-    //         console.log(err);
-    //         throw new Error;
-    //       }
-    //       var url = "http://s3.amazonaws.com/crusoe-media/media/" + filObj._id + "-" + filObj.name();
-    //       Meteor.call("addMessage", message, location, url);
-    //     });
-    //   }
+    if ( file ) {
+      var s3 = new AWS.S3();
 
-    Meteor.call("addMessage", message, location, files);
+      // store photo in AWS S3 using key
+      s3.upload({
+        Bucket: 'crusoe-media',
+        Key: file[0].name,
+        Body: new Blob(file)
+      }, function(err, data){
+        if ( err ) {
+          console.log(err);
+          throw new Error;
+        }
+        console.log('successfully uploaded woo');
+      });
+    }
+
+    Meteor.call("addMessage", message, location, file);
 
     $('textarea').val('');
   }

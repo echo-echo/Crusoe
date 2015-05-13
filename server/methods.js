@@ -36,23 +36,6 @@ Meteor.methods({
     	});
 		});
 
-    if ( files ) {
-      var s3 = new AWS.S3({
-        params: {
-          Bucket: 'crusoe-media',
-          Key: key
-        }
-      });
-
-      // store photo in AWS S3 using key
-      s3.upload({Body: files}, function(err, data){
-        if ( err ) {
-          console.log(err);
-          throw new Error;
-        }
-        console.log('successfully uploaded woo');
-      });
-    }
   },
 
   getMedia: function(key){
@@ -62,7 +45,7 @@ Meteor.methods({
       secretAccessKey: SECRET
     });
 
-    s3.getObject({Bucket: 'crusoe-media', Key: key}, function (err, data) {
+    s3.getObject({Bucket: 'crusoe-media', Key: file.name}, function (err, data) {
       console.log(err, data);
       if ( err ) throw new Error;
       return data;
