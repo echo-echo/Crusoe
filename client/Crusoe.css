@@ -1,21 +1,3 @@
-/* CSS declarations go here */
-.compose{
-	position: relative;
-	top:40%;
-	left:-4%;
-	text-align: right;
-	margin-left: 0px
-}
-
-.side-nav{
-
-}
-.compose >textarea{
-	height:100px;
-	width:550px;
-
-}
-
 .leaflet-marker-icon {
   -webkit-transition: 15s;
   position: absolute;
@@ -96,6 +78,10 @@ li:hover {
   color: #0A536E;
 }
 
+.collection{
+  margin-top: 0;
+}
+
 .collection .collection-item.avatar i.circle{
   margin-top:24px;
   margin-left:10px;
@@ -126,8 +112,11 @@ li:hover {
   margin-left: 300px;
 }
 
-button.write{
-  margin-top:20px;
+.write{
+  margin-top:10px;
+  margin-bottom: 10px;
+  width:290px;
+  border-radius: 8px;
 }
 
 /*ul{
@@ -149,4 +138,5 @@ button.write{
   }
 
 }
+
 

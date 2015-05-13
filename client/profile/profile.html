@@ -1,20 +1,18 @@
 <template name = "profile">
   <!-- Modal Trigger -->
-  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Write Message</a>
-
-  {{> writeMessage}}
+<!--   <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Write Message</a>
+{{> writeMessage}} -->
   
  <div class="row">
     <div class="col s12">
       <ul class="tabs">
-        <li class="tab col s3"><a href="#test1">User Messages</a></li>
-        <li class="tab col s3"><a class="active" href="#test2">Saved Messages</a></li>
+        <li class="tab col s3"><a href="#test1" class="active"><h5>My Messages</h5></a></li>
+        <li class="tab col s3"><a href="#test2"><h5>Saved Messages</h5></a></li>
       </ul>
     </div>
 
     <div id="test1" class="col s12">
 	    <div class = "user-messages">
-				<h5>user messages</h5>
 					<ul class = "collection">
 						{{#each userCreated}}
 			    		{{> tagged}}
@@ -24,7 +22,6 @@
     </div>
     <div id="test2" class="col s12">
     	<div class = "saved-messages">
-				<h5>saved messages</h5>
 				<ul class = "collection">
 					{{#each taggedMessages}}
 		    		{{> tagged}}

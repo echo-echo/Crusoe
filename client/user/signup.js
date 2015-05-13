@@ -11,9 +11,6 @@ Template.signup.events({
        Accounts.createUser({
          username : username,
          password : password1
-         // profile : {
-         //   description: description
-         // }
        })
 
        $('#modal-confirmation').openModal();
