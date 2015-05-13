@@ -23,5 +23,10 @@ Template.signin.events({
   },
   "click #create-account" : function(){
     $('#modal-signin').closeModal();
+  },
+
+  "click #signup": function(){
+    $('#modal-signin').closeModal();
+    $("#modal-signup").openModal()
   }
 })

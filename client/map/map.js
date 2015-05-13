@@ -161,7 +161,8 @@ Template.Map.onRendered(function () {
         } else {
         Session.set('messageId', e.layer.feature.properties.id)
         $('#map-message-modal').openModal();
-      }
+        // Meteor.call("openMessage", e.layer.feature.properties.id)
+        }
       });
     }
 	});
