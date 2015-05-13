@@ -57,9 +57,8 @@ Template.writeMessage.events({
 
     // necessary to call collection.insert on the client side, was recommended by
     // collectionFS meteor package. when the fsFile is passed to addMessage, only
-
     // // the file info is sent and not the data.
-    
+
     // if ( files.length ) {
     //   for ( var i = 0, len = files.length; i < len; i++ ) {
     //     Media.insert(files[i], function (err, filObj) {
