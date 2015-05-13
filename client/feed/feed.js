@@ -75,8 +75,10 @@ Template.feed.events({
 			Session.set("messageId", message._id)
 			$("#map-message-modal").openModal();
 	},
-	"click .hidden": function(){
-		Session.set("messageId", "");
+	"click .hidden": function(event){
+		var message = Blaze.getData(event.currentTarget)
+		console.log(message)
+		Session.set("messageId", message._id)
 			$("#too-far").openModal();
 	},
 
@@ -92,7 +94,6 @@ Template.messageModal.helpers({
 		return message;
 	}
 });
-
 
 Template.messageModal.events({
 	"click .save": function(){

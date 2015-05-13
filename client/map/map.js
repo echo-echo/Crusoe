@@ -157,13 +157,14 @@ Template.Map.onRendered(function () {
        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
       geoJsonLayer.on('click', function (e) {
-        if(e.layer.feature.properties.title === "too far to view message"){
-          $("#too-far").openModal();
-        } else {
-        Session.set('messageId', e.layer.feature.properties.id)
-        $('#map-message-modal').openModal();
-        // Meteor.call("openMessage", e.layer.feature.properties.id)
-        }
+          Session.set('messageId', e.layer.feature.properties.id)
+          if(e.layer.feature.properties.title === "too far to view message"){
+            $("#too-far").openModal();
+          } else {
+            $('#map-message-modal').openModal({
+              //complete:Meteor.call("openMessage", e.layer.feature.properties.id)
+            });
+          }
       });
     }
 	});
@@ -195,7 +196,6 @@ Template.toofar.helpers({
   message: function(){
     var messageId = Session.get("messageId")
     var message = Messages.find({_id:messageId}).fetch()[0]
-    console.log('message',message)
     return message;
   }
 });
