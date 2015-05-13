@@ -1,5 +1,5 @@
 Template.signin.events({
-  "submit": function(e, t){
+  "click .submit": function(e, t){
     console.log(e)
      e.preventDefault();
     var username = t.find('#username').value
@@ -21,6 +21,13 @@ Template.signin.events({
      })
      return false;
   },
+
+  "click #facebook" : function(){
+    Meteor.loginWithFacebook({}, function(err){
+      if (err) console.log(err.reason)
+    })
+  },
+
   "click #create-account" : function(){
     $('#modal-signin').closeModal();
   },
