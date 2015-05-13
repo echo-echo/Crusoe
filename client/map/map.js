@@ -4,7 +4,6 @@ Meteor.startup(function(){
 // calculates map width
 //~~~~~~~~~~~~~~~~~~~~
 
-
   $(window).resize(function(evt) {
     if ($(window).width() > 480) {
       $('#map').width($(window).width()-300);

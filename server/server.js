@@ -1,9 +1,8 @@
-Meteor.startup(function(){
-  process.env.AWS_ACCESS_KEY_ID = "AKIAI2F3SLSN7OELQHJQ";
-  process.env.AWS_SECRET_ACCESS_KEY = "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";
-});
+// Meteor.startup(function(){
+  
+// });
 
-AWS.config.update({region: 'us-east-1'});
+// AWS.config.update({region: 'us-east-1'});
 
 //need this on both client and server side
 Messages = new Mongo.Collection("messages");
