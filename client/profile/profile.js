@@ -61,21 +61,20 @@ Template.writeMessage.events({
 
     // necessary to call collection.insert on the client side, was recommended by
     // collectionFS meteor package. when the fsFile is passed to addMessage, only
-    // the file info is sent and not the data.
-    if ( files.length ) {
-      for ( var i = 0, len = files.length; i < len; i++ ) {
-        Media.insert(files[i], function (err, filObj) {
-          if ( err ) {
-            console.log(err);
-            throw new Error;
-          }
-          var url = "http://s3.amazonaws.com/crusoe-media/media/" + filObj._id + "-" + filObj.name();
-          Meteor.call("addMessage", message, location, url);
-        });
-      }
-    } else {
-      Meteor.call("addMessage", message, location);
-    }
+    // // the file info is sent and not the data.
+    // if ( files.length ) {
+    //   for ( var i = 0, len = files.length; i < len; i++ ) {
+    //     Media.insert(files[i], function (err, filObj) {
+    //       if ( err ) {
+    //         console.log(err);
+    //         throw new Error;
+    //       }
+    //       var url = "http://s3.amazonaws.com/crusoe-media/media/" + filObj._id + "-" + filObj.name();
+    //       Meteor.call("addMessage", message, location, url);
+    //     });
+    //   }
+
+    Meteor.call("addMessage", message, location);
 
     $('textarea').val('');
   }
