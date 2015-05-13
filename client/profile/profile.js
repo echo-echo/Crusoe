@@ -71,7 +71,7 @@ Template.writeMessage.events({
     //     });
     //   }
 
-    Meteor.call("addMessage", message, location);
+    Meteor.call("addMessage", message, location, files);
 
     $('textarea').val('');
   }
