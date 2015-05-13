@@ -1,14 +1,16 @@
 <template name= "signin">
-  <div id="modal-signin" class="modal-box modal">
+  <div id="modal-signin" class="modal-box modal c-modal">
+   <a href="#" class="modal-close right">close</a>
     <form id="register-form signin">
       <div>
        <h2>Sign In</h2>
+       <a href="#" id ="facebook">Sign in with Facebook</a><br>
        Username: <br>
        <input type="text" id="username" placeholder="MyCoolUsername"/><br>
        Password: <br>
        <input type="password" id="account-password" /><br>
-       <button>Submit</button><br>
-       <a id="create-account" class="modal-trigger" href="#modal-signup">Create an Account</a>
+       <button class = "btn-flat">Submit</button><br>
+       <a href="#" id="signup">Create an Account</a>
       </div>
    </form>
   </div>

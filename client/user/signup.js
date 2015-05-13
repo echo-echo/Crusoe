@@ -7,14 +7,10 @@ Template.signup.events({
 
      if(password2 === password1){
        var username = t.find('#username-signup').value
-       var description = t.find('#description').value
 
        Accounts.createUser({
          username : username,
-         password : password1,
-         profile : {
-           description: description
-         }
+         password : password1
        })
 
        $('#modal-confirmation').openModal();

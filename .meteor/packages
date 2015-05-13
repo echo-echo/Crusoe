@@ -21,3 +21,5 @@ http
 cfs:standard-packages
 cfs:s3
 cfs:gridfs
+reactive-var
+accounts-facebook
