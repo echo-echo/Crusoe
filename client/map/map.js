@@ -1,5 +1,13 @@
 Meteor.startup(function(){
   Mapbox.load();
+//~~~~~~~~~~~~~~~~~~~~
+// calculates map width
+//~~~~~~~~~~~~~~~~~~~~
+  $(window).resize(function(evt) {
+    $('#map').width($(window).width()-300);
+  });
+
+
 });
 
 Template.Map.onRendered(function () {
@@ -32,11 +40,15 @@ Template.Map.onRendered(function () {
       // if the map isnt initialized then initialize it.
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       if (!map) {
+        //changes the width of the map
+        $('#map').width($(window).width()-300);
+
         L.mapbox.accessToken = "pk.eyJ1Ijoic2tpbm5lcjUyMCIsImEiOiJHOXRJeUlFIn0.ZVhoykCRgo8-_KQl2-x9MQ";
         map = L.mapbox.map('map', 'skinner520.fbb71f90', {
           attributionControl: false,
           zoomControl :false
         });
+
         marker = L.marker([userLat, userLong]).addTo(map);
         map.panTo([userLat, userLong]); //TODO: change this to pan to clicked message location
         map.setZoom(14);
@@ -44,9 +56,6 @@ Template.Map.onRendered(function () {
         bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
         geoJsonLayer = L.geoJson().addTo(map);
       }
-
-
-
 
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       // Updates the user location and pans to that location if
@@ -60,7 +69,6 @@ Template.Map.onRendered(function () {
           map.removeLayer(bounds);
           imageBounds = calcBounds(local.coords.latitude, local.coords.longitude, 1000);
           bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
-          console.log((Date.now()-lastPan )> 3000)
           if(Session.get('pan') && Date.now() - lastPan > 3000){
             lastPan = Date.now()
             map.panTo([local.coords.latitude, local.coords.longitude]);
@@ -205,14 +213,16 @@ var deg2rad = function(deg) {
   return deg * (Math.PI/180);
 };
 
-  var calcBounds = function(userLat, userLong, radius) { //calc bounds for view, radius in feet
-    var lat0 = (userLat - ((radius/1000) * 0.0027565));
-    var lat1 = (userLat + ((radius/1000) * 0.0027565));
-    var lonKmPerDeg = (0.11132 * Math.cos(userLat)); //get km per .001 deg lon...
-    ///(0.3048 km per 1000ft) so...
-    var lonDiff = (0.3048 / lonKmPerDeg);
-    var lon0 = (userLong - (((radius/1000) * .0005) * lonDiff));
-    var lon1 = (userLong + (((radius/1000) * .0005) * lonDiff));
-    return [[lat0, lon0], [lat1, lon1]];
-  }
+var calcBounds = function(userLat, userLong, radius) { //calc bounds for view, radius in feet
+  var lat0 = (userLat - ((radius/1000) * 0.0027565));
+  var lat1 = (userLat + ((radius/1000) * 0.0027565));
+  var lonKmPerDeg = (0.11132 * Math.cos(userLat)); //get km per .001 deg lon...
+  ///(0.3048 km per 1000ft) so...
+  var lonDiff = (0.3048 / lonKmPerDeg);
+  var lon0 = (userLong - (((radius/1000) * .0005) * lonDiff));
+  var lon1 = (userLong + (((radius/1000) * .0005) * lonDiff));
+  return [[lat0, lon0], [lat1, lon1]];
+}
+
+
 
