@@ -1,5 +1,5 @@
 Template.signin.events({
-  "click .submit": function(e, t){
+  "submit": function(e, t){
     console.log(e)
      e.preventDefault();
     var username = t.find('#username').value
