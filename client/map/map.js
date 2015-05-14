@@ -3,9 +3,14 @@ Meteor.startup(function(){
 //~~~~~~~~~~~~~~~~~~~~
 // calculates map width
 //~~~~~~~~~~~~~~~~~~~~
+
+
   $(window).resize(function(evt) {
-    $('#map').width($(window).width()-300);
+    if ($(window).width() > 480) {
+      $('#map').width($(window).width()-300);
+    }
   });
+
 
 
 });
@@ -41,7 +46,9 @@ Template.Map.onRendered(function () {
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       if (!map) {
         //changes the width of the map
-        $('#map').width($(window).width()-300);
+        if ($(window).width() > 480) {
+          $('#map').width($(window).width()-300);
+        }
 
         L.mapbox.accessToken = "pk.eyJ1Ijoic2tpbm5lcjUyMCIsImEiOiJHOXRJeUlFIn0.ZVhoykCRgo8-_KQl2-x9MQ";
         map = L.mapbox.map('map', 'skinner520.fbb71f90', {
