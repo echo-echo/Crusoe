@@ -1,8 +1,7 @@
 <template name = "profile">
-  <!-- Modal Trigger -->
-<!--   <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Write Message</a>
-{{> writeMessage}} -->
-  
+
+  {{> writeMessage}}
+
  <div class="row">
     <div class="col s12">
       <ul class="tabs">
@@ -13,6 +12,7 @@
 
     <div id="test1" class="col s12">
 	    <div class = "user-messages">
+				<h5>{{currentUser.username}}'s messages</h5>
 					<ul class = "collection">
 						{{#each userCreated}}
 			    		{{> tagged}}
@@ -22,6 +22,7 @@
     </div>
     <div id="test2" class="col s12">
     	<div class = "saved-messages">
+				<h5>{{currentUser.username}}'s saved messages</h5>
 				<ul class = "collection">
 					{{#each taggedMessages}}
 		    		{{> tagged}}
@@ -39,6 +40,6 @@
 	  <p>{{origin}}</p>
 	  <p class="text">{{text}}</p>
 	  <span class="mdi-content-drafts"> {{opens}}</span>
-	  <span class="mdi-action-thumb-up"> {{likes.length}}</span>    	
+	  <span class="mdi-action-thumb-up"> {{likes.length}}</span>
 	</li>
 </template>

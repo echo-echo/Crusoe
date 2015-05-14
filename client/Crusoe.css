@@ -1,3 +1,21 @@
+/* CSS declarations go here */
+.compose{
+	position: relative;
+	top:40%;
+	left:-4%;
+	text-align: right;
+	margin-left: 0px
+}
+
+.side-nav{
+
+}
+.compose >textarea{
+	height:100px;
+	width:550px;
+
+}
+
 .leaflet-marker-icon {
   -webkit-transition: 15s;
   position: absolute;
@@ -11,6 +29,18 @@
 }
 .far {
   background-image: url("message-off.png");
+  background-size: 100% auto;
+}
+.close-pop {
+  background-image: url("message-pop.png");
+  background-size: 100% auto;
+}
+.far-pop{
+  background-image: url("message-off-pop.png");
+  background-size: 100% auto;
+}
+.message-user{
+  background-image: url("message-user.png");
   background-size: 100% auto;
 }
 #login-dropdown-list {
@@ -56,17 +86,6 @@ li:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-.anti-modal-overlay .anti-modal-box {
-  border: 1px solid #0A536E;
-  box-shadow: 0px 0px 5px rgba(10,83,110,1);
-  color: #0A536E;
-  text-align: center;
-}
-
-.anti-modal-body {
-  background: #ffffff url('/sea-chart.jpg') no-repeat;
-  background-size: cover;
-}
 
 .background {
   background-color: rgba(255, 255, 255, 0.8);
@@ -77,9 +96,8 @@ li:hover {
 .back {
   color: #0A536E;
 }
-
-.collection{
-  margin-top: 0;
+.readable{
+  background-color: #68ccea !important;
 }
 
 .collection .collection-item.avatar i.circle{
@@ -108,8 +126,22 @@ li:hover {
 #map {
   position:fixed;
   height: 100%;
-  width: 100%;
+  min-width: 300px;
   margin-left: 300px;
+  margin-bottom: 0px;
+}
+#autopan{
+  cursor: pointer;
+  top:70px;
+  position:fixed;
+  z-index: 199;
+}
+.icon{
+  position: relative;
+  top:5px;
+  padding:2px;
+  width:35px;
+  border-radius: 50%
 }
 
 .write{
@@ -119,9 +151,37 @@ li:hover {
   border-radius: 8px;
 }
 
+.collection{
+  margin-top:0px;
+}
+
 /*ul{
   padding-left: 23px;
 }*/
+
+.mobileNav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: white;
+}
+
+.mobile-icons {
+  width: 100%;
+  margin: auto;
+}
+
+.mobile-icon {
+  padding: 20px;
+  width: 50%;
+  float: left;
+}
+
+.mobile-icon a {
+  display: block;
+  padding: 0% 0% 0% 25%;
+}
 
 /* ~~~~~~~~~~~~~~~~
    PHONE STYLING
@@ -139,4 +199,76 @@ li:hover {
 
 }
 
+
+
+/*==========  Non-Mobile First Media Queries  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+  #autopan {
+    top: 5px;
+  }
+
+  #map {
+    margin-left: 0px;
+    bottom: 0px;
+    z-index: 10;
+    width: 100%;
+  }
+
+  .mobileNav {
+    display: block;
+    z-index: 100
+  }
+
+  .nav-wrapper {
+    display: none;
+  }
+
+  .panel {
+    display: none;
+  }
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+  #autopan {
+    top: 5px;
+  }
+
+  #map {
+    margin-left: 0px;
+    bottom: 0px;
+    z-index: 10;
+    width: 100%;
+  }
+
+  .mobileNav{
+    display: block;
+  }
+
+  .nav-wrapper {
+    display: none;
+    z-index: 100;
+  }
+
+  .panel {
+    display: none;
+ }
+}
 

@@ -7,6 +7,7 @@ Router.map(function(){
     path:'/'
   });
   this.route('profile')
+  this.route('feed')
 })
 
 Accounts.ui.config({
