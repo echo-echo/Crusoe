@@ -136,6 +136,30 @@ button.write{
   padding-left: 23px;
 }*/
 
+.mobileNav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: white;
+}
+
+.mobile-icons {
+  width: 100%;
+  margin: auto;
+}
+
+.mobile-icon {
+  padding: 20px;
+  width: 50%;
+  float: left;
+}
+
+.mobile-icon a {
+  display: block;
+  padding: 0% 0% 0% 25%;
+}
+
 /* ~~~~~~~~~~~~~~~~
    PHONE STYLING
 ~~~~~~~~~~~~~~~~~~*/
