@@ -161,9 +161,7 @@ Template.Map.onRendered(function () {
           if(e.layer.feature.properties.title === "too far to view message"){
             $("#too-far").openModal();
           } else {
-            $('#map-message-modal').openModal({
-              //complete:Meteor.call("openMessage", e.layer.feature.properties.id)
-            });
+            $('#map-message-modal').openModal();
           }
       });
     }

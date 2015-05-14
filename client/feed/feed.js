@@ -77,7 +77,6 @@ Template.feed.events({
 	},
 	"click .hidden": function(event){
 		var message = Blaze.getData(event.currentTarget)
-		console.log(message)
 		Session.set("messageId", message._id)
 			$("#too-far").openModal();
 	},
