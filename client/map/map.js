@@ -104,7 +104,9 @@ Template.Map.onRendered(function () {
         var msgLong = object.location.coordinates[0];
 
         var isPopular = object.opens > 5;
-        var isUsers = object.username !== "Anonymous" && object.username === Meteor.user().username
+        if(Meteor.user()){
+          var isUsers = object.username !== "Anonymous" && object.username === Meteor.user().username
+        }
         var proximity = getProx(msgLat,msgLong,userLat,userLong) < radiusVal;
         var currStat = geoJsonLayer.getLayer( checkLayers[object._id] ) || false
         currStat = currStat ? currStat.feature.properties.title !== "too far to view message" : currStat;
@@ -116,8 +118,6 @@ Template.Map.onRendered(function () {
             // var msgLat = object.location.coordinates[1];
             // var msgLong = object.location.coordinates[0];
             var proximity = getProx(msgLat,msgLong,userLat,userLong);
-
-
 
             geoJsonNew = {
                   "type": "Feature",
@@ -233,6 +233,3 @@ var calcBounds = function(userLat, userLong, radius) { //calc bounds for view, r
   var lon1 = (userLong + (((radius/1000) * .0005) * lonDiff));
   return [[lat0, lon0], [lat1, lon1]];
 }
-
-
-
