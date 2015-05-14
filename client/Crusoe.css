@@ -1,25 +1,9 @@
 /* CSS declarations go here */
-.compose{
-	position: relative;
-	top:40%;
-	left:-4%;
-	text-align: right;
-	margin-left: 0px
-}
-
-.side-nav{
-
-}
-.compose >textarea{
-	height:100px;
-	width:550px;
-}
 
 .leaflet-marker-icon {
   -webkit-transition: 15s;
   position: absolute;
   -webkit-transition-timing-function: linear;
-
 }
 /* ~~~~~~~~~~~~~~~~~~~~~~
        BOTTLE ICONS
@@ -176,7 +160,7 @@ li:hover {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background: white;
+  background:#213556;
 }
 
 .mobile-icons {
@@ -193,6 +177,7 @@ li:hover {
 .mobile-icon a {
   display: block;
   padding: 0% 0% 0% 25%;
+  color: white;
 }
 
 /* ~~~~~~~~~~~~~~~~
@@ -248,7 +233,7 @@ li:hover {
     z-index: 100
   }
 
-  .nav-wrapper {
+  nav {
     display: none;
   }
 
@@ -274,7 +259,7 @@ li:hover {
     display: block;
   }
 
-  .nav-wrapper {
+  nav {
     display: none;
     z-index: 100;
   }
