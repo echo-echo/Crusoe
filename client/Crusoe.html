@@ -1,6 +1,7 @@
 <template name = "main">
 <head>
   <title>Crusoe</title>
+  <meta name="viewport" content="width=device-width">
 </head>
 <nav>
   <div class="nav-wrapper">
@@ -30,5 +31,7 @@
   {{>signin}}
   {{>signup}}
   {{>confirmation}}{{>warning}}
+
+  <div class="mobileNav">{{>mobileNav}}</div>
 </body>
 </template>
