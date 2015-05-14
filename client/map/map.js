@@ -163,15 +163,16 @@ Template.Map.onRendered(function () {
        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
       geoJsonLayer.on('click', function (e) {
+        if (Date.now() - lastClick > 1000){
+          lastClick=Date.now()
           Session.set('messageId', e.layer.feature.properties.id)
-          if(e.layer.feature.properties.title === "too far to view message"){
+          if (e.layer.feature.properties.title === "too far to view message"){
             $("#too-far").openModal();
           } else {
-            if (Date.now() - lastClick > 3000){
-
               $('#map-message-modal').openModal();
+              Meteor.call("openMessage", e.layer.feature.properties.id)
             }
-          }
+        }
       });
     }
 	});
