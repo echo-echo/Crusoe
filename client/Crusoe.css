@@ -129,8 +129,15 @@ li:hover {
   border-radius: 50%
 }
 
-button.write{
-  margin-top:20px;
+.write{
+  margin-top:10px;
+  margin-bottom: 10px;
+  width:290px;
+  border-radius: 8px;
+}
+
+.collection{
+  margin-top:0px;
 }
 
 /*ul{
