@@ -31,6 +31,18 @@
   background-image: url("message-off.png");
   background-size: 100% auto;
 }
+.close-pop {
+  background-image: url("message-pop.png");
+  background-size: 100% auto;
+}
+.far-pop{
+  background-image: url("message-off-pop.png");
+  background-size: 100% auto;
+}
+.message-user{
+  background-image: url("message-user.png");
+  background-size: 100% auto;
+}
 #login-dropdown-list {
   position: absolute;
   top: 50px;
@@ -83,6 +95,9 @@ li:hover {
 
 .back {
   color: #0A536E;
+}
+.readable{
+  background-color: #68ccea !important;
 }
 
 .collection .collection-item.avatar i.circle{

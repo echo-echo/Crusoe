@@ -88,13 +88,17 @@ Template.Map.onRendered(function () {
         marker.setIcon(L.divIcon({
           className: marker.feature.properties.icon.iconUrl,
           html: '',
-          iconSize: [50,50]
+          iconSize: [35,35]
         }));
       });
       allMess.forEach(function(object){
         var geoJsonNew;
         var msgLat = object.location.coordinates[1];
         var msgLong = object.location.coordinates[0];
+
+        var isPopular = object.opens > 5;
+        var isUsers = object.username !== "Anonymous" && object.username === Meteor.user().username
+        console.log(isUsers)
         var proximity = getProx(msgLat,msgLong,userLat,userLong) < radiusVal;
         var currStat = geoJsonLayer.getLayer( checkLayers[object._id] ) || false
         currStat = currStat ? currStat.feature.properties.title !== "too far to view message" : currStat;
@@ -106,40 +110,95 @@ Template.Map.onRendered(function () {
             // var msgLat = object.location.coordinates[1];
             // var msgLong = object.location.coordinates[0];
             var proximity = getProx(msgLat,msgLong,userLat,userLong);
-            if (proximity<radiusVal){
+            if(isUsers){
               geoJsonNew = {
-                "type": "Feature",
-                "geometry": {
-                  "type": "Point",
-                  "coordinates": [msgLong, msgLat]
-                },
-                "properties": {
-                  "title": object.text,
-                  "id": object._id,
-                  "description": object.createdAt,
-                  "icon": {
-                    "iconUrl": "close",
-                    "iconSize": [50, 50]
+                  "type": "Feature",
+                  "geometry": {
+                    "type": "Point",
+                    "coordinates": [msgLong, msgLat]
+                  },
+                  "properties": {
+                    "title": object.text,
+                    "id": object._id,
+                    "description": object.createdAt,
+                    "icon": {
+                      "iconUrl": "message-user",
+                      "iconSize": [35, 35]
+                    }
                   }
-                }
-              };
+                };
+             }else if (proximity<radiusVal){
+              if(isPopular){
+                geoJsonNew = {
+                  "type": "Feature",
+                  "geometry": {
+                    "type": "Point",
+                    "coordinates": [msgLong, msgLat]
+                  },
+                  "properties": {
+                    "title": object.text,
+                    "id": object._id,
+                    "description": object.createdAt,
+                    "icon": {
+                      "iconUrl": "close-pop",
+                      "iconSize": [35, 35]
+                    }
+                  }
+                };
+              } else {
+                geoJsonNew = {
+                  "type": "Feature",
+                  "geometry": {
+                    "type": "Point",
+                    "coordinates": [msgLong, msgLat]
+                  },
+                  "properties": {
+                    "title": object.text,
+                    "id": object._id,
+                    "description": object.createdAt,
+                    "icon": {
+                      "iconUrl": "close",
+                      "iconSize": [35, 35]
+                    }
+                  }
+                };
+              }
             }else{
-               geoJsonNew = {
-                "type": "Feature",
-                "geometry": {
-                  "type": "Point",
-                  "coordinates": [msgLong, msgLat]
-                },
-                "properties": {
-                  "title": "too far to view message",
-                  "id": object._id,
-                  "description": object.createdAt,
-                  "icon": {
-                    "iconUrl": "far",
-                    "iconSize": [50, 50]
+              if(isPopular){
+                geoJsonNew = {
+                  "type": "Feature",
+                  "geometry": {
+                    "type": "Point",
+                    "coordinates": [msgLong, msgLat]
+                  },
+                  "properties": {
+                    "title": object.text,
+                    "id": object._id,
+                    "description": object.createdAt,
+                    "icon": {
+                      "iconUrl": "far-pop",
+                      "iconSize": [35, 35]
+                    }
                   }
-                }
-              };
+                };
+              } else {
+                 geoJsonNew = {
+                  "type": "Feature",
+                  "geometry": {
+                    "type": "Point",
+                    "coordinates": [msgLong, msgLat]
+                  },
+                  "properties": {
+                    "title": "too far to view message",
+                    "id": object._id,
+                    "description": object.createdAt,
+                    "icon": {
+                      "iconUrl": "far",
+                      "iconSize": [35, 35]
+                    }
+                  }
+                };
+              }
             }
         geoJsonLayer.addData(geoJsonNew);
         }
