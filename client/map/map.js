@@ -104,7 +104,9 @@ Template.Map.onRendered(function () {
         var msgLong = object.location.coordinates[0];
 
         var isPopular = object.opens > 5;
-        var isUsers = object.username !== "Anonymous" && object.username === Meteor.user().username
+        if(Meteor.user()){
+          var isUsers = object.username !== "Anonymous" && object.username === Meteor.user().username
+        }
         var proximity = getProx(msgLat,msgLong,userLat,userLong) < radiusVal;
         var currStat = geoJsonLayer.getLayer( checkLayers[object._id] ) || false
         currStat = currStat ? currStat.feature.properties.title !== "too far to view message" : currStat;
