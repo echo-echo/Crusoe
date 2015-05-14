@@ -105,7 +105,6 @@ Template.Map.onRendered(function () {
 
         var isPopular = object.opens > 5;
         var isUsers = object.username !== "Anonymous" && object.username === Meteor.user().username
-        console.log(isUsers)
         var proximity = getProx(msgLat,msgLong,userLat,userLong) < radiusVal;
         var currStat = geoJsonLayer.getLayer( checkLayers[object._id] ) || false
         currStat = currStat ? currStat.feature.properties.title !== "too far to view message" : currStat;
@@ -117,8 +116,10 @@ Template.Map.onRendered(function () {
             // var msgLat = object.location.coordinates[1];
             // var msgLong = object.location.coordinates[0];
             var proximity = getProx(msgLat,msgLong,userLat,userLong);
-            if(isUsers){
-              geoJsonNew = {
+
+
+
+            geoJsonNew = {
                   "type": "Feature",
                   "geometry": {
                     "type": "Point",
@@ -134,77 +135,22 @@ Template.Map.onRendered(function () {
                     }
                   }
                 };
-             }else if (proximity<radiusVal){
+
+            if(isUsers){
+              geoJsonNew.properties.icon.iconUrl = "message-user"
+            }else if (proximity<radiusVal){
               if(isPopular){
-                geoJsonNew = {
-                  "type": "Feature",
-                  "geometry": {
-                    "type": "Point",
-                    "coordinates": [msgLong, msgLat]
-                  },
-                  "properties": {
-                    "title": object.text,
-                    "id": object._id,
-                    "description": object.createdAt,
-                    "icon": {
-                      "iconUrl": "close-pop",
-                      "iconSize": [35, 35]
-                    }
-                  }
-                };
+                geoJsonNew.properties.icon.iconUrl = "close-pop"
               } else {
-                geoJsonNew = {
-                  "type": "Feature",
-                  "geometry": {
-                    "type": "Point",
-                    "coordinates": [msgLong, msgLat]
-                  },
-                  "properties": {
-                    "title": object.text,
-                    "id": object._id,
-                    "description": object.createdAt,
-                    "icon": {
-                      "iconUrl": "close",
-                      "iconSize": [35, 35]
-                    }
-                  }
-                };
+                geoJsonNew.properties.icon.iconUrl = "close"
               }
             }else{
               if(isPopular){
-                geoJsonNew = {
-                  "type": "Feature",
-                  "geometry": {
-                    "type": "Point",
-                    "coordinates": [msgLong, msgLat]
-                  },
-                  "properties": {
-                    "title": object.text,
-                    "id": object._id,
-                    "description": object.createdAt,
-                    "icon": {
-                      "iconUrl": "far-pop",
-                      "iconSize": [35, 35]
-                    }
-                  }
-                };
+                geoJsonNew.properties.icon.iconUrl = "far-pop"
+                geoJsonNew.properties.title = "too far to view message"
               } else {
-                 geoJsonNew = {
-                  "type": "Feature",
-                  "geometry": {
-                    "type": "Point",
-                    "coordinates": [msgLong, msgLat]
-                  },
-                  "properties": {
-                    "title": "too far to view message",
-                    "id": object._id,
-                    "description": object.createdAt,
-                    "icon": {
-                      "iconUrl": "far",
-                      "iconSize": [35, 35]
-                    }
-                  }
-                };
+                geoJsonNew.properties.icon.iconUrl = "far"
+                geoJsonNew.properties.title = "too far to view message"
               }
             }
         geoJsonLayer.addData(geoJsonNew);
