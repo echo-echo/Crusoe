@@ -117,8 +117,6 @@ Template.Map.onRendered(function () {
             // var msgLong = object.location.coordinates[0];
             var proximity = getProx(msgLat,msgLong,userLat,userLong);
 
-
-
             geoJsonNew = {
                   "type": "Feature",
                   "geometry": {
@@ -233,6 +231,3 @@ var calcBounds = function(userLat, userLong, radius) { //calc bounds for view, r
   var lon1 = (userLong + (((radius/1000) * .0005) * lonDiff));
   return [[lat0, lon0], [lat1, lon1]];
 }
-
-
-
