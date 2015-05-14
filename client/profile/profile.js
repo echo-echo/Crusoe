@@ -50,34 +50,24 @@ Template.profile.helpers({
 Template.writeMessage.events({
   "click .submit": function () {
     var message = $('textarea').val();
-    var file = $('input.media-upload')[0].files;
-    console.log("file: ", file);
+    var file = $('input.media-upload')[0].files[0];
     var longitude = Number(localStorage.getItem("userLong"));
     var latitude = Number(localStorage.getItem("userLat"));
     var location=[longitude,latitude];
 
-    // necessary to call collection.insert on the client side, was recommended by
-    // collectionFS meteor package. when the fsFile is passed to addMessage, only
-    // // the file info is sent and not the data.
-
     if ( file ) {
-      var s3 = new AWS.S3();
+      // need to convert to format that can be sent to the server and then to S3
+      var fr = new FileReader();
+      fr.readAsDataURL(file);
+      fr.onloadend = function (evt) {
+        var mediaAsBinary = evt.target.result;
+        var filename = file.name;
+        Meteor.call("addMessage", message, location, mediaAsBinary, filename);
+      };
 
-      // store photo in AWS S3 using key
-      s3.upload({
-        Bucket: 'crusoe-media',
-        Key: file[0].name,
-        Body: new Blob(file)
-      }, function(err, data){
-        if ( err ) {
-          console.log(err);
-          throw new Error;
-        }
-        console.log('successfully uploaded woo');
-      });
+    } else {
+      Meteor.call("addMessage", message, location);
     }
-
-    Meteor.call("addMessage", message, location, file);
 
     $('textarea').val('');
   }

@@ -13,7 +13,6 @@ materialize:materialize
 pauloborges:mapbox@2.1.4_3
 mdg:geolocation
 mike:mocha
-
 percolate:synced-cron
 copleykj:livestamp
 http
