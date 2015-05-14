@@ -15,14 +15,14 @@
 				<h5>{{currentUser.username}}'s messages</h5>
 					<ul class = "collection">
 						{{#each userCreated}}
-			    		{{> tagged}}
+			    		{{> userMessages}}
 			  		{{/each}}
 					</ul>
 			</div>
     </div>
     <div id="test2" class="col s12">
     	<div class = "saved-messages">
-				<h5>{{currentUser.username}}'s saved messages</h5>
+				<h5>{{currentUser.username}}'s tagged messages</h5>
 				<ul class = "collection">
 					{{#each taggedMessages}}
 		    		{{> tagged}}
@@ -31,6 +31,10 @@
 			</div>
     </div>
  </div>
+
+ {{>confirmDelete}}
+ {{>promptDelete}}
+ {{>error}}
 
 </template>
 
@@ -42,4 +46,36 @@
 	  <span class="mdi-content-drafts"> {{opens}}</span>
 	  <span class="mdi-action-thumb-up"> {{likes.length}}</span>
 	</li>
+</template>
+<template name = "userMessages">
+  <li class = "profile-list collection-item">
+    <span data-livestamp="{{createdAt}}"></span>
+    <p>{{origin}}</p>
+    <p class="text">{{text}}</p>
+    <span class="mdi-content-drafts"> {{opens}}</span>
+    <span class="mdi-action-thumb-up"> {{likes.length}}</span>
+    <span id="delete" class="mdi-action-delete"></span>
+  </li>
+</template>
+
+<template name = "confirmDelete">
+  <div id="confirmation" class="modal c-modal modal-box">
+    <a href="#" class="right modal-close">close</a>
+    <h4>Your message has been deleted</h4>
+  </div>
+</template>
+<template name = "promptDelete">
+  <div id="promptDelete" class="modal c-modal modal-box">
+    <a href="#" class="right modal-close">close</a>
+    <h4>Are you sure you want to Delete this message?</h4>
+    <button id="confirmDeletion">Delete</button>
+    <button class="modal-close">Cancel</button>
+  </div>
+</template>
+
+<template name = "error">
+  <div id="error" class="modal c-modal modal-box">
+    <a href="#" class="right modal-close">close</a>
+    <h4>There was an error with your request. Message was not deleted</h4>
+  </div>
 </template>
