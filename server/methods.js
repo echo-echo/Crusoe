@@ -32,7 +32,8 @@ Meteor.methods({
         latWeight1month: Math.random() - 0.5,
         lngWeight1month: Math.random() - 0.5,
 	      likes:[],
-	      opens:0
+	      opens:0,
+        hasMedia: !!filename
     	});
 		});
 

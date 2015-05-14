@@ -17,6 +17,9 @@
   <div id="map-message-modal" class="modal modal-box c-modal">
     <div class="modal-content">
       <a href="#" class="right modal-close">close</a>
+        {{#if message.hasMedia}}
+          <img src={{message.media}}>
+        {{/if}}
         <h4>Message:</h4>
         <p>{{message.text}}</p>
         <p data-livestamp="{{message.createdAt}}"></p>
