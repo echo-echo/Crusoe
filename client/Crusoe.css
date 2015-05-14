@@ -58,7 +58,7 @@
   color:red;
 }
 
-.content{
+.feed-content {
   text-align: left;
   font-size: 14px;
   overflow: auto;
@@ -221,6 +221,10 @@ li:hover {
     top: 5px;
   }
 
+  .feed-content {
+    width: 100%;
+  }
+
   #map {
     margin-left: 0px;
     bottom: 0px;
@@ -246,6 +250,10 @@ li:hover {
 @media only screen and (max-width : 320px) {
   #autopan {
     top: 5px;
+  }
+
+  .feed-content {
+    width: 100%;
   }
 
   #map {
