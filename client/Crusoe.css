@@ -13,7 +13,6 @@
 .compose >textarea{
 	height:100px;
 	width:550px;
-
 }
 
 .leaflet-marker-icon {
@@ -22,7 +21,9 @@
   -webkit-transition-timing-function: linear;
 
 }
-
+/* ~~~~~~~~~~~~~~~~~~~~~~
+       BOTTLE ICONS
+~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .close {
   background-image: url("message.png");
   background-size: 100% auto;
@@ -43,12 +44,14 @@
   background-image: url("message-user.png");
   background-size: 100% auto;
 }
+
 #login-dropdown-list {
   position: absolute;
   top: 50px;
   left: -195px;
   font-size: 2em;
 }
+/*~~~~~~~~~~~~~~~~~~~~~*/
 
 .modal-box{
 	background: white;
@@ -60,6 +63,15 @@
   min-width: 100px;
   overflow: scroll;
   padding: 25px;
+}
+/******
+ TRASH Icon for Deleting messages in profile
+ ******/
+#delete{
+  color:#E57373;
+}
+#delete:active{
+  color:red;
 }
 
 .content{
