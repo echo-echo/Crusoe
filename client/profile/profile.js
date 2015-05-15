@@ -10,6 +10,27 @@ Template.profile.onRendered(function(){
   $('.modal-trigger').leanModal();
 });
 
+Template.userMessages.events({
+  'click #delete' : function(){
+    Session.set('toDelete',this._id);
+    $('#promptDelete').openModal();
+  }
+})
+Template.promptDelete.events({
+  'click #confirmDeletion' : function(){
+    var messageId = Session.get('toDelete')
+    console.log(messageId)
+    $('#promptDelete').closeModal()
+    Meteor.call('removeMessage',messageId, function(err, result){
+      if(err){
+        $('#error').openModal();
+      } else {
+        $('#confirmDelete').openModal();
+      }
+    })
+  }
+})
+
 Template.profile.helpers({
   taggedMessages: function(){
     var result=[]
@@ -36,9 +57,7 @@ Template.writeMessage.events({
     var longitude = Number(localStorage.getItem("userLong"));
     var latitude = Number(localStorage.getItem("userLat"));
     var location=[longitude,latitude];
-
     Meteor.call("addMessage", message, location);
-
     $('textarea').val('');
   }
 });

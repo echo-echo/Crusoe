@@ -1,10 +1,6 @@
 <template name = "Map">
   	<div class="panel">{{>feed}}</div>
 
-    {{> writeMessage}}
-    {{> messageModal}}
-    {{> toofar}}
-
   	<div id="map">
       <div id="autopan">
       {{#if pan}}
@@ -31,7 +27,7 @@
 
     <div class="modal-footer">
       <button class ="save btn-flat">
-        <i class ="mdi-content-add-box"> save message</i>
+        <i class ="mdi-content-add-box"> tag message</i>
       </button>
       <button class ="btn-flat like">
         <i class ="mdi-action-thumb-up"> {{message.likes.length}}</i>
