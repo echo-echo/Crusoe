@@ -209,7 +209,7 @@ SyncedCron.add({
 
 SyncedCron.start();
 
-if (ServiceConfiguration.configurations.find({service: 'facebook'}).count()===0) {
+if (!ServiceConfiguration.configurations.find({service: 'facebook'}).count()) {
   ServiceConfiguration.configurations.insert({
     service: "facebook",
     appId: "1617736865105666",
