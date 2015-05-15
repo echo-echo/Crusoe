@@ -60,6 +60,13 @@ Meteor.methods({
 
   openMessage: function(messageId){
   	Messages.update({_id:messageId}, {$inc:{opens:1}})
+  },
+  removeMessage: function(messageId){
+    Messages.remove({_id:messageId}, function(err){
+      if(err){
+        console.log(err);
+      }
+    });
   }
 
 })
