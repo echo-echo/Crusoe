@@ -124,7 +124,7 @@ Template.Map.onRendered(function () {
         // and set the appropriate variables for assign icons later. 
         var isPopular = object.opens > 5;
         if(Meteor.user()){
-          var isUsers = object.username !== "Anonymous" && object.username === Meteor.user().username
+          var isUsers = object.username !== "Anonymous" && object.username === Meteor.user().username || object.username === Meteor.user().profile.name
         }
 
         //checks if message already exists on the map

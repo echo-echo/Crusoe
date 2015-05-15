@@ -42,7 +42,8 @@ Template.profileView.helpers({
   },
 
   userCreated: function(){
-    var created = Messages.find({username:Meteor.user().username});
+    var username = Meteor.user().username || Meteor.user().profile.name
+    var created = Messages.find({username:username});
     return created;
   }
 });
