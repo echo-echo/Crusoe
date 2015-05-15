@@ -58,15 +58,15 @@ Template.feed.helpers({
 
 Template.feed.events({
 	"click .visible": function(event){
-		var message = Blaze.getData(event.currentTarget)
-			Meteor.call("openMessage", message._id)
-			Session.set("messageId", message._id)
+		var message = Blaze.getData(event.currentTarget);
+			Meteor.call("openMessage", message._id);
+			Session.set("messageId", message._id);
 			$("#map-message-modal").openModal();
 	},
 	"click .hidden": function(event){
-		var message = Blaze.getData(event.currentTarget)
-		Session.set("messageId", message._id)
-			$("#too-far").openModal();
+		var message = Blaze.getData(event.currentTarget);
+		Session.set("messageId", message._id);
+		$("#too-far").openModal();
 	},
 
 	"click .write": function(){
@@ -89,22 +89,44 @@ Template.feed.events({
 
 Template.messageModal.helpers({
 	message: function(){
-		var messageId = Session.get("messageId")
-		var message = Messages.find({_id:messageId}).fetch()[0]
-		if ( message.key ) {
-			var key = message.key;
-			// get the blob? from S3 and attach it as a property here
-			Meteor.call("getMedia", key, function (err, result) {
-				if ( err ) {
-					console.log( err );
-					throw new Error;
-				}
+		var messageId = Session.get("messageId");
+		var message = Messages.find({_id:messageId}).fetch()[0];
+
+		// if a message is found and if it has an AWS lookup key
+		if ( message && message.key ) {
+			// if the global namespace is already storing an image and it has the same id
+			// as the message we're looking at.
+			// prevents Meteor from calling AWS multiple times via the getMedia method
+			if ( window.Crusoe.img && window.Crusoe.img.messageId === messageId ) {
+				var result = window.Crusoe.img.img;
 
 				$('#display-message').css({
 					'background': 'url( ' + result + ') no-repeat',
 					'background-size': 'auto auto',
-				})
-			});
+				});
+
+			} else {
+				var key = message.key;
+				// get the blob? from S3 and attach it as a property here
+				Meteor.call("getMedia", key, function (err, result) {
+					if ( err ) {
+						console.log( err );
+						throw new Error;
+					}
+
+					$('#display-message').css({
+						'background': 'url( ' + result + ') no-repeat',
+						'background-size': 'auto auto',
+					});
+
+					var img = {
+						messageId: messageId,
+						img: result
+					}
+					window.Crusoe.img = img;
+				});
+			}
+
 		}
 		return message;
 	}
