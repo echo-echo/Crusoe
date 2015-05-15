@@ -18,7 +18,11 @@
     <div class="modal-content">
       <a href="#" class="right modal-close">close</a>
         <h4>Message:</h4>
+        {{#if message.key}}
+          <div {{attributes}}></div>
+        {{/if}}
         <p>{{message.text}}</p>
+        <p data-livestamp="{{message.createdAt}}"></p>
         <h6>Origin:</h6>
         <p>{{message.origin}}</p>
         <h6>Opens:</h6>
@@ -40,11 +44,13 @@
   <div id = "too-far" class="modal modal-box c-modal">
     <a href="#" class="right modal-close">close</a>
     <h5 class="center">Message is too far away to view</h5>
+    <p data-livestamp="{{message.createdAt}}"></p>
     <h6>Origin:</h6>
     <p>{{message.origin}}</p>
     <h6>Opens:</h6>
     <div>{{message.opens}}</div>
     <h6>Likes:</h6>
     <div>{{message.likes.length}}</div>
+
   </div>
 </template>

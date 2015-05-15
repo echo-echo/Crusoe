@@ -1,10 +1,6 @@
 Meteor.subscribe("userData");
 
 //use below to open materialize modal
-// Template.modal.rendered = function(){
-//  $('.modal-trigger').leanModal()
-// }
-
 Template.profile.onRendered(function(){
   $('ul.tabs').tabs();
   $('.modal-trigger').leanModal();
@@ -54,10 +50,25 @@ Template.profile.helpers({
 Template.writeMessage.events({
   "click .submit": function () {
     var message = $('textarea').val();
+    var file = $('input.media-upload')[0].files[0];
     var longitude = Number(localStorage.getItem("userLong"));
     var latitude = Number(localStorage.getItem("userLat"));
     var location=[longitude,latitude];
-    Meteor.call("addMessage", message, location);
+
+    if ( file ) {
+      // need to convert to format that can be sent to the server and then to S3
+      var fr = new FileReader();
+      fr.readAsDataURL(file);
+      fr.onloadend = function (evt) {
+        var mediaAsDataURL = evt.target.result;
+        var filename = file.name;
+        Meteor.call("addMessage", message, location, mediaAsDataURL, filename);
+      };
+
+    } else {
+      Meteor.call("addMessage", message, location);
+    }
+
     $('textarea').val('');
   }
 });

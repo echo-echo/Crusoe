@@ -12,14 +12,10 @@ iron:router
 materialize:materialize
 pauloborges:mapbox@2.1.4_3
 mdg:geolocation
-anti:modals
 mike:mocha
-
 percolate:synced-cron
 copleykj:livestamp
 http
-cfs:standard-packages
-cfs:s3
-cfs:gridfs
 reactive-var
 accounts-facebook
+peerlibrary:aws-sdk
