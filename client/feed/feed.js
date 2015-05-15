@@ -72,15 +72,17 @@ Template.feed.events({
 	"click .write": function(){
 		$("#write").openModal();
     document.getElementsByClassName("media-upload")[0].addEventListener("change", function(){
-      var file = $('input.media-upload')[0].files,
-          img = document.createElement("img"),
-          preview = $('#write');
-      img.classList.add("obj");
-      img.file = file;
-      preview.append(img);
-      var reader = new FileReader();
-      reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
-      reader.readAsDataURL(file[0]);
+      if ( $('input.media-upload')[0].files.length > 0 ) {
+        var file = $('input.media-upload')[0].files,
+            img = document.createElement("img"),
+            preview = $('#write');
+        img.classList.add("img-upload-preview");
+        img.file = file;
+        preview.append(img);
+        var reader = new FileReader();
+        reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
+        reader.readAsDataURL(file[0]);
+      }
     })
 	}
 });
