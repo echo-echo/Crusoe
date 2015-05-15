@@ -60,9 +60,9 @@ Template.writeMessage.events({
       var fr = new FileReader();
       fr.readAsDataURL(file);
       fr.onloadend = function (evt) {
-        var mediaAsBinary = evt.target.result;
+        var mediaAsDataURL = evt.target.result;
         var filename = file.name;
-        Meteor.call("addMessage", message, location, mediaAsBinary, filename);
+        Meteor.call("addMessage", message, location, mediaAsDataURL, filename);
       };
 
     } else {

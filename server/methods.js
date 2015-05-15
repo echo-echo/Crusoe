@@ -33,7 +33,7 @@ Meteor.methods({
         lngWeight1month: Math.random() - 0.5,
 	      likes:[],
 	      opens:0,
-        hasMedia: !!filename
+        key: filename
     	});
 		});
 
@@ -61,16 +61,26 @@ Meteor.methods({
 
   getMedia: function(key){
     // get photo stored in AWS S3 using key, an identifier for the media generated on upload
+    Future = Npm.require('fibers/future');
+    var future = new Future();
+
     var s3 = new AWS.S3({
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     });
 
-    s3.getObject({Bucket: 'crusoe-media', Key: key}, function (err, data) {
-      console.log(err, data);
-      if ( err ) throw new Error;
-      return data;
+    s3.getObject({
+      Bucket: 'crusoe-media',
+      Key: key
+    }, function (err, data) {
+      if ( err ) {
+        future.throw(err);
+      } else {
+        future.return(data.Body.toString('ascii'));
+      }
     });
+
+    return future.wait();
   },
 
   tagMessage: function(messageId){
