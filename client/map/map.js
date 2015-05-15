@@ -3,6 +3,7 @@ Meteor.startup(function(){
 //~~~~~~~~~~~~~~~~~~~~
 // calculates map width based on page width
 //~~~~~~~~~~~~~~~~~~~~
+  window.Crusoe = {};
 
   $(window).resize(function(evt) {
     if ($(window).width() > 480) {
@@ -70,6 +71,8 @@ Template.Map.onRendered(function () {
         imageBounds = calcBounds(userLat, userLong, radiusVal);
         bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
         geoJsonLayer = L.geoJson().addTo(map);
+
+        window.Crusoe.map = map;
       }
 
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
