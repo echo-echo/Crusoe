@@ -54,6 +54,8 @@ Template.writeMessage.events({
     var longitude = Number(localStorage.getItem("userLong"));
     var latitude = Number(localStorage.getItem("userLat"));
     var location=[longitude,latitude];
+    $('.img-upload-preview').remove() //remove preview
+    // $('input.media-upload')[0].files = undefined; //remove file from element
 
     if ( file ) {
       // need to convert to format that can be sent to the server and then to S3
