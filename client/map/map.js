@@ -44,7 +44,7 @@ Template.Map.onRendered(function () {
         if ($(window).width() > 480) {
           $('#map').width($(window).width()-300);
         } else if ($(window).width() <= 480){
-          $('#map').width($(window.width()));
+          $('#map').width($(window).width());
         }
 
         //grabs mapbox layers from our mapbox account.
