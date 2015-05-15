@@ -4,7 +4,6 @@ Meteor.startup(function(){
 // calculates map width
 //~~~~~~~~~~~~~~~~~~~~
 
-
   $(window).resize(function(evt) {
     if ($(window).width() > 480) {
       $('#map').width($(window).width()-300);
@@ -92,6 +91,7 @@ Template.Map.onRendered(function () {
       geoJsonLayer.on('layeradd', function (e) {
         var marker = e.layer,
         feature = marker.feature;
+        
         //sets each marker to a divIcon, html can be specified
         marker.setIcon(L.divIcon({
           className: marker.feature.properties.icon.iconUrl,

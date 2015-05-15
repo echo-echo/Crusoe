@@ -2,27 +2,6 @@
 Messages = new Mongo.Collection("messages");
 Users = new Mongo.Collection("userData");
 
-var mediaStore = new FS.Store.S3("userMedia", {
-  accessKeyId: "AKIAI2F3SLSN7OELQHJQ",
-  secretAccessKey: "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",
-  bucket: "crusoe-media"
-});
-
-Media = new FS.Collection("media", {
-  stores: [mediaStore]
-});
-
-Media.allow({
-  insert: function(userId, fileObj) {
-    return true;
-  },
-  update: function(userId, fileObj) {
-    return true;
-  }
-});
-
-console.log("server Media: ", Media);
-
 Meteor.publish("messages", function() {
   return Messages.find();
 });
@@ -30,10 +9,6 @@ Meteor.publish("messages", function() {
 //allows client side to access "tagged" property of user
 Meteor.publish("userData", function(){
   return Meteor.users.find({_id: this.userId}, {fields:{tagged:1}});
-});
-
-Meteor.publish("media", function() {
-  return Media.find();
 });
 
 SyncedCron.add({

@@ -1,18 +1,6 @@
 Messages = new Mongo.Collection("messages");
 
-var mediaStore = new FS.Store.S3("userMedia");
-
-Media = new FS.Collection("media", {
-	stores: [mediaStore],
-	filter: {
-		allow: {
-			contentTypes: ['image/*', 'audio/*', 'video/*']
-		}
-	}
-});
-
 Meteor.subscribe("messages");
-Meteor.subscribe("media");
 
 Template.feed.helpers({
 	messages: function(){
@@ -90,7 +78,27 @@ Template.messageModal.helpers({
 	message: function(){
 		var messageId = Session.get("messageId")
 		var message = Messages.find({_id:messageId}).fetch()[0]
+		if ( message.key ) {
+			var key = message.key;
+			// get the blob? from S3 and attach it as a property here
+			Meteor.call("getMedia", key, function (err, result) {
+				console.log("returning from getMedia, yay!");
+				if ( err ) {
+					console.log( err );
+					throw new Error;
+				}
+
+				Session.set("media", result);
+			});
+		}
 		return message;
+	},
+
+	attributes: function(){
+		return {
+			style: "background: url(" + Session.get("media") + ") no-repeat; background-size: auto auto",
+			class: "message-img"
+		}
 	}
 });
 

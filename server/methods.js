@@ -1,5 +1,5 @@
 Meteor.methods({
-  addMessage: function (text, location, files) {
+  addMessage: function (text, location, media, filename) {
     var username = Meteor.user() ? Meteor.user().username : "Anonymous";
 
     Meteor.http.get('http://api.tiles.mapbox.com/v4/geocode/mapbox.places/'+location[0]+','+location[1]+'.json?access_token=pk.eyJ1Ijoiam9zaHVhYmVuc29uIiwiYSI6Im1sT3BqRWcifQ.W7h8nMmj_oI1p4RzChElsQ', function (err, res) {
@@ -32,22 +32,55 @@ Meteor.methods({
         latWeight1month: Math.random() - 0.5,
         lngWeight1month: Math.random() - 0.5,
 	      likes:[],
-	      opens:0
+	      opens:0,
+        key: filename
     	});
 		});
 
-    if ( files ) {
-      for ( var i = 0, len = files.length; i < len; i++ ) {
-        Media.insert(files[i], function (err, filObj) {
-          if ( err ) {
-            console.log(err);
-            throw new Error;
-          }
-          console.log("File successfully uploaded!");
-        });
-      }
+    if ( media ) {
+      var s3 = new AWS.S3({
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+      });
+
+      // store photo in AWS S3 using key
+      s3.upload({
+        Bucket: 'crusoe-media',
+        Key: filename,
+        Body: media
+      }, function(err, data){
+        if ( err ) {
+          console.log(err);
+          throw new Error;
+        }
+        console.log('successfully uploaded woo');
+      });
     }
 
+  },
+
+  getMedia: function(key){
+    // get photo stored in AWS S3 using key, an identifier for the media generated on upload
+    Future = Npm.require('fibers/future');
+    var future = new Future();
+
+    var s3 = new AWS.S3({
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    });
+
+    s3.getObject({
+      Bucket: 'crusoe-media',
+      Key: key
+    }, function (err, data) {
+      if ( err ) {
+        future.throw(err);
+      } else {
+        future.return(data.Body.toString('ascii'));
+      }
+    });
+
+    return future.wait();
   },
 
   tagMessage: function(messageId){
