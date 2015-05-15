@@ -25,6 +25,7 @@ Template.Map.onRendered(function () {
   var geoJsonLayer;
   var imageUrl = '/radius.gif';
   var lastPan = Date.now();
+  var lastClick = Date.now();
 
   Tracker.autorun(function () {
     if (Mapbox.loaded()) {
@@ -162,12 +163,16 @@ Template.Map.onRendered(function () {
        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
       geoJsonLayer.on('click', function (e) {
+        if (Date.now() - lastClick > 1000){
+          lastClick=Date.now()
           Session.set('messageId', e.layer.feature.properties.id)
-          if(e.layer.feature.properties.title === "too far to view message"){
+          if (e.layer.feature.properties.title === "too far to view message"){
             $("#too-far").openModal();
           } else {
-            $('#map-message-modal').openModal();
-          }
+              $('#map-message-modal').openModal();
+              Meteor.call("openMessage", e.layer.feature.properties.id)
+            }
+        }
       });
     }
 	});
