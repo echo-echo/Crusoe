@@ -12,7 +12,7 @@
 
     <div id="myMessages" class="col s12">
 	    <div class = "user-messages">
-				<h5>{{currentUser.username}}'s messages</h5>
+				<h5>{{currentUser.username||currentUser.profile.name}}'s messages</h5>
 					<ul class = "collection">
 						{{#each userCreated}}
 			    		{{> userMessages}}
@@ -22,7 +22,7 @@
     </div>
     <div id="taggedMessages" class="col s12">
     	<div class = "saved-messages">
-				<h5>{{currentUser.username}}'s tagged messages</h5>
+				<h5>{{currentUser.username||currentUser.profile.name}}'s tagged messages</h5>
 				<ul class = "collection">
 					{{#each taggedMessages}}
 		    		{{> tagged}}
