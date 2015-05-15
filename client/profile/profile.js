@@ -27,7 +27,7 @@ Template.promptDelete.events({
   }
 })
 
-Template.profile.helpers({
+Template.profileView.helpers({
   taggedMessages: function(){
     var result=[]
     var tagged = Meteor.users.find({}).fetch()[0].tagged

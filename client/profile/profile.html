@@ -2,63 +2,92 @@
 
   {{> writeMessage}}
 
- <div class="row">
-    <div class="col s12">
-      <ul class="tabs">
-        <li class="tab col s3"><a href="#myMessages" class="active"><h5>My Messages</h5></a></li>
-        <li class="tab col s3"><a href="#taggedMessages"><h5>Tagged Messages</h5></a></li>
-      </ul>
-    </div>
+  <!-- {{#if currentUser}} -->
+    {{>profileView}}
+  <!-- {{/if}} -->
 
-    <div id="myMessages" class="col s12">
-	    <div class = "user-messages">
-        {{#if currentUser.username}}
-				  <h5>{{currentUser.username}}'s messages</h5>
-        {{else}}
-          <h5>{{currentUser.profile.name}}'s messages</h5>
-        {{/if}}
-					<ul class = "collection">
-						{{#each userCreated}}
-			    		{{> userMessages}}
-			  		{{/each}}
-					</ul>
-			</div>
-    </div>
-    <div id="taggedMessages" class="col s12">
-    	<div class = "saved-messages">
-				{{#if currentUser.username}}
-          <h5>{{currentUser.username}}'s messages</h5>
-        {{else}}
-          <h5>{{currentUser.profile.name}}'s messages</h5>
-        {{/if}}
-				<ul class = "collection">
-					{{#each taggedMessages}}
-		    		{{> tagged}}
-		  		{{/each}}
-				</ul>
-			</div>
-    </div>
- </div>
+  {{>confirmDelete}}
+  {{>promptDelete}}
+  {{>error}}
 
- {{>confirmDelete}}
- {{>promptDelete}}
- {{>error}}
+</template>
 
+<template name = "signInMobile">
+  <h1>signin</h1>
+  <form id="register-form signin">
+      <div>
+       <h2>Sign In</h2>
+       <a href="#" id ="facebook">Sign in with Facebook</a><br>
+       Username: <br>
+       <input type="text" id="username" placeholder="MyCoolUsername"/><br>
+       Password: <br>
+       <input type="password" id="account-password" /><br>
+       <button class = "btn-flat">Submit</button><br>
+       <a href="#" id="signup">Create an Account</a>
+      </div>
+   </form>
+</template>
+
+<template name = "profileView">
+  <div class="row">
+      <div class="col s12">
+        <ul class="tabs">
+          <li class="tab col s3"><a href="#myMessages" class="active"><h5>My Messages</h5></a></li>
+          <li class="tab col s3"><a href="#taggedMessages"><h5>Tagged Messages</h5></a></li>
+        </ul>
+      </div>
+
+      <div id="myMessages" class="col s12">
+        <div class = "user-messages">
+          {{#if currentUser.username}}
+            <h5>{{currentUser.username}}'s messages</h5>
+          {{else}}
+            <h5>{{currentUser.profile.name}}'s messages</h5>
+          {{/if}}
+            <ul class = "collection">
+              {{#each userCreated}}
+                {{> userMessages}}
+              {{/each}}
+            </ul>
+        </div>
+      </div>
+      <div id="taggedMessages" class="col s12">
+        <div class = "saved-messages">
+          {{#if currentUser.username}}
+            <h5>{{currentUser.username}}'s messages</h5>
+          {{else}}
+            <h5>{{currentUser.profile.name}}'s messages</h5>
+          {{/if}}
+          <ul class = "collection">
+            {{#each taggedMessages}}
+              {{> tagged}}
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+   </div>
 </template>
 
 <template name = "tagged">
 	<li class = "profile-list collection-item">
     <span data-livestamp="{{createdAt}}"></span>
 	  <p>{{origin}}</p>
+      {{#if key}}
+          <div {{attributes}}></div>
+        {{/if}}
 	  <p class="text">{{text}}</p>
 	  <span class="mdi-content-drafts"> {{opens}}</span>
 	  <span class="mdi-action-thumb-up"> {{likes.length}}</span>
 	</li>
 </template>
+
 <template name = "userMessages">
   <li class = "profile-list collection-item">
     <span data-livestamp="{{createdAt}}"></span>
     <p>{{origin}}</p>
+     {{#if key}}
+          <div {{attributes}}></div>
+        {{/if}}
     <p class="text">{{text}}</p>
     <span class="mdi-content-drafts"> {{opens}}</span>
     <span class="mdi-action-thumb-up"> {{likes.length}}</span>

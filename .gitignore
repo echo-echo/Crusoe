@@ -7,7 +7,7 @@ tests/jasmine/server/unit/packageMocksSpec.js
 tests/jasmine/server/unit/package-stubs.js
 
 # AWS Key
-ADD THIS LINE:::### server/keys.js ####
+server/keys.js ####
 
 # System Files
 .DS_Store
