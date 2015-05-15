@@ -120,7 +120,6 @@ Template.Map.onRendered(function () {
         }));
       });
 
-
       // for each message that we have gotten from the server (object)
       allMess.forEach(function(object){
 
@@ -151,7 +150,6 @@ Template.Map.onRendered(function () {
         // we check to see if the new coordinates of the message are in range of the user
         var newMessageInRange = getProx(newMsgLat,newMsgLng,userLat,userLong) < radiusVal;
 
-
         /*
         * We now need to check if the state of the icon has changed
         * if the message was already on the map, and has either entered or
@@ -160,7 +158,6 @@ Template.Map.onRendered(function () {
         * if the icon has not changed states (hasn't left or entered users
         * readable radius), then we just update the location of the icon
         */
-
 
         //old version of message and new version of message have not changed view state ==> doesnt require icon change
         if(isOldMessage && oldMessageInRange === newMessageInRange){
