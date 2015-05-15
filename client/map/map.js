@@ -1,9 +1,8 @@
 Meteor.startup(function(){
   Mapbox.load();
 //~~~~~~~~~~~~~~~~~~~~
-// calculates map width
+// calculates map width based on page width
 //~~~~~~~~~~~~~~~~~~~~
-
 
   $(window).resize(function(evt) {
     if ($(window).width() > 480) {
@@ -11,7 +10,17 @@ Meteor.startup(function(){
     }
   });
 
-
+  //Listener.
+  //Allows other templates to make the map PAN to different locations.
+  $(document).on('pan-call',function(e, coords){
+    console.log('pan-to has been called. ')
+    if(map){
+      debugger;
+      map.panTo([coords.lat,coords.lng]);
+    } else {
+      console.log("map is not defined")
+    }
+  })
 
 });
 
@@ -38,8 +47,6 @@ Template.Map.onRendered(function () {
       var userLong = Number(localStorage.getItem("userLong"));
       var geoJsons = [];
       var messIds = messIds ? messIds : {};
-
-
 
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       // if the map isnt initialized then initialize it.
@@ -103,10 +110,15 @@ Template.Map.onRendered(function () {
         var msgLat = object.location.coordinates[1];
         var msgLong = object.location.coordinates[0];
 
+
+        // Checks to see if message is popular
         var isPopular = object.opens > 5;
+
+        // Checks to see if the message is the users
         if(Meteor.user()){
           var isUsers = object.username !== "Anonymous" && object.username === Meteor.user().username
         }
+
         var proximity = getProx(msgLat,msgLong,userLat,userLong) < radiusVal;
         var currStat = geoJsonLayer.getLayer( checkLayers[object._id] ) || false
         currStat = currStat ? currStat.feature.properties.title !== "too far to view message" : currStat;
@@ -119,6 +131,9 @@ Template.Map.onRendered(function () {
             // var msgLong = object.location.coordinates[0];
             var proximity = getProx(msgLat,msgLong,userLat,userLong);
 
+            //~~~~~~~~~~~~~~~~
+            //assigns respective icon to the message(popular, is users, is close, is far)
+            //~~~~~~~~~~~~~~~~
             geoJsonNew = {
                   "type": "Feature",
                   "geometry": {
@@ -136,8 +151,13 @@ Template.Map.onRendered(function () {
                   }
                 };
 
+            //always display same icon if the message is the user's
             if(isUsers){
               geoJsonNew.properties.icon.iconUrl = "message-user"
+
+            //else see how far away it is and apply the appropriate icon
+            //'pop' in this case stands for popular
+
             }else if (proximity<radiusVal){
               if(isPopular){
                 geoJsonNew.properties.icon.iconUrl = "close-pop"
@@ -153,13 +173,15 @@ Template.Map.onRendered(function () {
                 geoJsonNew.properties.title = "too far to view message"
               }
             }
+
+        //adds the actual message to the map.
         geoJsonLayer.addData(geoJsonNew);
         }
       });
 
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       //  listener for when a user clicks on a message in the map
-       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
       geoJsonLayer.on('click', function (e) {
           Session.set('messageId', e.layer.feature.properties.id)
@@ -182,16 +204,19 @@ Template.Map.onRendered(function () {
 Template.Map.events({
   'click #autopan' : function(){
     Session.set('pan', !Session.get('pan'));
+  },
+  "click #trackMessage" : function(){
+    $('#map-message-modal').closeModal();
+    debugger;
+    // $(document).trigger('pan-call',{this})
   }
 })
+
 Template.Map.helpers({
   pan : function(){
     return Session.get('pan');
   }
 })
-
-
-
 
 
 //needed the same method for a different template.
@@ -208,6 +233,7 @@ Template.toofar.helpers({
 
 //~~~~~~~~ HELPER FUNCTIONS ~~~~~~~~~~~*/
 //find distance btwn two points on sphere
+
 var getProx = function(lat1,lon1,lat2,lon2) {
   var R = 6371;
   var dLat = deg2rad(lat2-lat1);
