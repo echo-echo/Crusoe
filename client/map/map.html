@@ -19,7 +19,7 @@
       <a href="#" class="right modal-close">close</a>
         <h4>Message:</h4>
         {{#if message.key}}
-          <div {{attributes}}></div>
+          <div id="display-message"></div>
         {{/if}}
         <p>{{message.text}}</p>
         <p data-livestamp="{{message.createdAt}}"></p>

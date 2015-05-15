@@ -95,23 +95,18 @@ Template.messageModal.helpers({
 			var key = message.key;
 			// get the blob? from S3 and attach it as a property here
 			Meteor.call("getMedia", key, function (err, result) {
-				console.log("returning from getMedia, yay!");
 				if ( err ) {
 					console.log( err );
 					throw new Error;
 				}
 
-				Session.set("media", result);
+				$('#display-message').css({
+					'background': 'url( ' + result + ') no-repeat',
+					'background-size': 'auto auto',
+				})
 			});
 		}
 		return message;
-	},
-
-	attributes: function(){
-		return {
-			style: "background: url(" + Session.get("media") + ") no-repeat; background-size: auto auto",
-			class: "message-img"
-		}
 	}
 });
 
