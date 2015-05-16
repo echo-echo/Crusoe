@@ -12,6 +12,23 @@ Meteor.publish("userData", function(){
 });
 
 SyncedCron.add({
+  name: 'Prune messages',
+  schedule: function(parser) {
+    return parser.text('every 5 seconds');
+  },
+  job: function(){
+    var messages = Messages.find({});
+
+    messages.forEach(function(msg) {
+      if ((msg.opens > 3) && (msg.likes.length < 1)){
+        console.log("removing this message: ", msg);
+        Meteor.call('removeMessage', msg._id);
+      }
+    });
+  }
+});
+
+SyncedCron.add({
   name: 'Update messages locations every 15 seconds',
   // parse is a later.parse object
   //  percolate:synced-cron is built on top of Later.js
