@@ -1,5 +1,7 @@
 /* CSS declarations go here */
 
+
+
 .leaflet-marker-icon {
   -webkit-transition: 15s;
   position: absolute;
@@ -258,6 +260,17 @@ li:hover {
   #taggedMessages {
     margin-bottom: 60px;
   }
+<<<<<<< HEAD
+
+  .signin{
+    text-align: center;
+  }
+
+  .profile-header{
+    font-size: 15px;
+  }
+=======
+>>>>>>> 2d88db3790b9698ade97caf87f37750487ebc5dd
 }
 
 /* Custom, iPhone Retina */
@@ -303,5 +316,17 @@ li:hover {
   #taggedMessages {
     margin-bottom: 60px;
   }
+<<<<<<< HEAD
+
+  .mobile-signin{
+    text-align: center
+  }
+
+  .profile-header{
+    font-size: 15px;
+  }
+  
+=======
+>>>>>>> 2d88db3790b9698ade97caf87f37750487ebc5dd
 }
 
