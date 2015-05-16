@@ -51,7 +51,7 @@ Template.profileView.helpers({
 Template.writeMessage.events({
   "click .submit": function () {
     var message = $('textarea').val();
-    var file = $('input.media-upload')[0].files[0];
+    var file = $('input.media-upload')[0].files[0] || Session.get("photo");
     var longitude = Number(localStorage.getItem("userLong"));
     var latitude = Number(localStorage.getItem("userLat"));
     var location=[longitude,latitude];
@@ -74,5 +74,18 @@ Template.writeMessage.events({
 
     $('textarea').val('');
     $('input.media-upload').val('');
+  },
+
+  "click .takephoto": function() {
+    $('input.media-upload').val('');
+
+    MeteorCamera.getPicture({}, function (err, data) {
+      if ( err ) {
+        console.log(err);
+        throw new Error;
+      }
+
+      Session.set("photo", data);
+    })
   }
 });

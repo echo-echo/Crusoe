@@ -148,6 +148,11 @@ li:hover {
   display: block;
 }
 
+.camera-popup {
+  margin-top: 10px;
+  position: relative;
+}
+
 .collection{
   margin-top:0px;
 }
