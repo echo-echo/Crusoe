@@ -1,9 +1,9 @@
 Meteor.startup(function(){
   window.Crusoe = {};
-  
+
   Mapbox.load();
 //~~~~~~~~~~~~~~~~~~~~
-// calculates map width
+// calculates map width based on page width
 //~~~~~~~~~~~~~~~~~~~~
 
   $(window).resize(function(evt) {
@@ -11,8 +11,6 @@ Meteor.startup(function(){
       $('#map').width($(window).width()-300);
     }
   });
-
-
 
 });
 
@@ -63,6 +61,8 @@ Template.Map.onRendered(function () {
         imageBounds = calcBounds(userLat, userLong, radiusVal);
         bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
         geoJsonLayer = L.geoJson().addTo(map);
+
+        window.Crusoe.map = map;
       }
 
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -85,27 +85,26 @@ Template.Map.onRendered(function () {
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       /*    SUMMARY OF THE FOLLOWING CODE
       *   the 'messagesOnMap' variable is an object whos keys are messageId's
-      *   which we have retrieved from the database. These keys represent the message in our databse. 
-      *   The Value of these keys are the leaflet ids, refering to the marker on the map. 
+      *   which we have retrieved from the database. These keys represent the message in our databse.
+      *   The Value of these keys are the leaflet ids, refering to the marker on the map.
       *
-      *  The following code checks to see if the messages fetched from the server already have existing 
+      *  The following code checks to see if the messages fetched from the server already have existing
       *  leaflet id's on the map. If they DO, then we update their location/icon if neccessary. If they DONT
       *  we create the appropriate icon and add it to the map.
       */
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
       //this object is used to check whether or not the messages exist on the map
-      var messagesOnMap = {}; 
+      var messagesOnMap = {};
       //associates the messageID with the leafletId
-      geoJsonLayer.eachLayer(function(layer) {  
+      geoJsonLayer.eachLayer(function(layer) {
         messagesOnMap[layer.feature.properties.id] = layer._leaflet_id;
       });
 
-      // // Adds the classname of the icon to the messages as we add them to the map. 
+      // // Adds the classname of the icon to the messages as we add them to the map.
       geoJsonLayer.on('layeradd', function (e) {
         var marker = e.layer,
         feature = marker.feature;
-        
         //sets each marker to a divIcon, html can be specified
         marker.setIcon(L.divIcon({
           className: marker.feature.properties.icon.iconUrl,
@@ -114,19 +113,21 @@ Template.Map.onRendered(function () {
         }));
       });
 
-  
       // for each message that we have gotten from the server (object)
       allMess.forEach(function(object){
-       
+
         // we grab the new coordinates for the message
         var newMsgLat = object.location.coordinates[1];
         var newMsgLng = object.location.coordinates[0];
 
+
         // we check to see if the message is popular or if it belongs to the user
-        // and set the appropriate variables for assign icons later. 
+        // and set the appropriate variables for assign icons later.
         var isPopular = object.opens > 5;
+
+        // Checks to see if the message is the users
         if(Meteor.user()){
-          var isUsers = object.username !== "Anonymous" && object.username === Meteor.user().username || object.username === Meteor.user().profile.name
+          var isUsers = object.username !== "Anonymous" && (object.username === Meteor.user().username || object.username === Meteor.user().profile.name)
         }
 
         //checks if message already exists on the map
@@ -142,28 +143,25 @@ Template.Map.onRendered(function () {
         // we check to see if the new coordinates of the message are in range of the user
         var newMessageInRange = getProx(newMsgLat,newMsgLng,userLat,userLong) < radiusVal;
 
-
-        /* 
+        /*
         * We now need to check if the state of the icon has changed
-        * if the message was already on the map, and has either entered or 
-        * left the users readable radius, then we need to update the icon. 
+        * if the message was already on the map, and has either entered or
+        * left the users readable radius, then we need to update the icon.
         *
         * if the icon has not changed states (hasn't left or entered users
         * readable radius), then we just update the location of the icon
         */
 
-
         //old version of message and new version of message have not changed view state ==> doesnt require icon change
         if(isOldMessage && oldMessageInRange === newMessageInRange){
           oldMessage.setLatLng([object.location.coordinates[1], object.location.coordinates[0]]).update();
 
-        //the message has changed states, and need an icon change. 
+        //the message has changed states, and need an icon change.
         } else {
           //removes the old marker of the message that matches the message id
-          if(isOldMessage){ 
-            geoJsonLayer.removeLayer(messagesOnMap[object._id]) 
-          } 
-
+          if(isOldMessage){
+            geoJsonLayer.removeLayer(messagesOnMap[object._id])
+          }
           //add the new marker with the new message properties
           var geoJsonNew = {
                         "type": "Feature",
@@ -172,8 +170,12 @@ Template.Map.onRendered(function () {
                           "coordinates": [newMsgLng, newMsgLat]
                         },
                         "properties": {
-                          "title": object.text,
+                          "text": object.text,
                           "id": object._id,
+                          "likes" : object.likes,
+                          "key" : object.key,
+                          "opens" : object.opens,
+                          "origin" : object.origin,
                           "description": object.createdAt,
                           "icon": {
                             "iconUrl": "message-user",
@@ -181,23 +183,27 @@ Template.Map.onRendered(function () {
                           }
                         }
                       };
-
           //assign the appropriate message icon/title
           if(isUsers){
             geoJsonNew.properties.icon.iconUrl = "message-user"
+            geoJsonNew.properties.visible = true
           }else if (newMessageInRange){
             if(isPopular){
               geoJsonNew.properties.icon.iconUrl = "close-pop"
+              geoJsonNew.properties.visible = true
             } else {
               geoJsonNew.properties.icon.iconUrl = "close"
+              geoJsonNew.properties.visible = true
             }
           }else{
             if(isPopular){
               geoJsonNew.properties.icon.iconUrl = "far-pop"
               geoJsonNew.properties.title = "too far to view message"
+              geoJsonNew.properties.visible = false
             } else {
               geoJsonNew.properties.icon.iconUrl = "far"
               geoJsonNew.properties.title = "too far to view message"
+              geoJsonNew.properties.visible = false
             }
           }
 
@@ -211,16 +217,12 @@ Template.Map.onRendered(function () {
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
       geoJsonLayer.on('click', function (e) {
-        if (Date.now() - lastClick > 1000){
-          lastClick=Date.now()
-          Session.set('messageId', e.layer.feature.properties.id)
-          if (e.layer.feature.properties.title === "too far to view message"){
-            $("#too-far").openModal();
-          } else {
-              $('#map-message-modal').openModal();
-              Meteor.call("openMessage", e.layer.feature.properties.id)
-            }
-        }
+          var message = e.layer.feature.properties
+          Session.set('currentMessage', message)
+          if(message.visible){
+            Meteor.call('openMessage', message.id)
+          }
+          $('#map-message-modal').openModal();
       });
     }
 	});
@@ -237,23 +239,17 @@ Template.Map.events({
     Session.set('pan', !Session.get('pan'));
   }
 })
+
 Template.Map.helpers({
   pan : function(){
     return Session.get('pan');
   }
 })
 
-//needed the same method for a different template.
-Template.toofar.helpers({
-  message: function(){
-    var messageId = Session.get("messageId")
-    var message = Messages.find({_id:messageId}).fetch()[0]
-    return message;
-  }
-});
 
 //~~~~~~~~ HELPER FUNCTIONS ~~~~~~~~~~~*/
 //find distance btwn two points on sphere
+
 var getProx = function(lat1,lon1,lat2,lon2) {
   var R = 6371;
   var dLat = deg2rad(lat2-lat1);
