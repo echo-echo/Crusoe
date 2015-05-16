@@ -51,18 +51,30 @@ Template.profileView.helpers({
 Template.writeMessage.events({
   "click .throw": function () {
   //jquery function to append throw-control buttons to the body
-
+    var rotate;
+    var rotation = 0;
     var throwControls = ['<a class="waves-effect waves-light btn-large scan-left"><i class="mdi-navigation-arrow-back left"></i></a>',
       '<a class="waves-effect waves-light btn-large throw">Throw!</a>',
       '<a class="waves-effect waves-light btn-large scan-right"><i class="mdi-navigation-arrow-forward right"></i></a>'];
-    $('#map').append('<div class="throw-controls"></div>');
+    var transformMap = function(){
+      $('#map').css({ 
+        transform: 'translate3d(0px, 0px, 0px) rotateX(0deg) rotateZ(' + rotation + 'deg)'
+      });
+    };  
+    $('.nav-wrapper').append('<div class="throw-controls"></div>');
+    $('.mobileNav').append('<div class="throw-controls"></div>');
+    $('.mobile-icons').slideToggle(500, 'linear')
     throwControls.forEach(function(element){ $('.throw-controls').append(element) });
 
-   $('.scan-left').mousedown(function(){ console.log('go left young man')})
-   $('.scan-left').mouseup(function(){ console.log('stop going left')})
+    $('.scan-left').mousedown(function(){ rotate = 'left'; console.log(rotate); });
+    $('.scan-left').mouseup(function(){ rotate = undefined; });
 
-   $('.scan-right').mousedown(function(){ console.log('go right young man')})
-   $('.scan-right').mouseup(function(){ console.log('stop going right')})
+    $('.scan-right').mousedown(function(){ rotate = 'right'; });
+    $('.scan-right').mouseup(function(){ rotate = undefined; });
+    setInterval(function(){
+      if (rotate==='left') { rotation += 4; transformMap() }
+      if (rotate==='right') { rotation -= 4; transformMap() }
+    }, 200)
   },
 
   "click .submit": function () {

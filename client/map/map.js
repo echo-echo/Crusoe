@@ -61,8 +61,18 @@ Template.Map.onRendered(function () {
         imageBounds = calcBounds(userLat, userLong, radiusVal);
         bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
         geoJsonLayer = L.geoJson().addTo(map);
-
-        window.Crusoe.map = map;
+      //   //increase the bounds shown on map, TODO: conditionally extend this during throws
+      //   var getPxBounds = map.getPixelBounds;
+      //   map.getPixelBounds = function () {
+      //     var bounds = getPxBounds.call(this);
+      //     // ... extend the bounds
+      //     bounds.min.x=bounds.min.x-1000;
+      //     bounds.min.y=bounds.min.y-1000;
+      //     bounds.max.x=bounds.max.x+1000;
+      //     bounds.max.y=bounds.max.y+1000;
+      //     return bounds;
+      // };  
+  		window.Crusoe.map = map;
       }
 
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

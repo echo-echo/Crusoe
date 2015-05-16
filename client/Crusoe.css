@@ -5,6 +5,9 @@
   position: absolute;
   -webkit-transition-timing-function: linear;
 }
+.leaflet-map-pane{
+
+}
 /* ~~~~~~~~~~~~~~~~~~~~~~
        BOTTLE ICONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -115,11 +118,18 @@ li:hover {
 }
 
 #map {
-  position:fixed;
+  position:absolute;
   height: 100%;
   min-width: 300px;
   margin-left: 300px;
   margin-bottom: 0px;
+  /*added these for rotation:*/
+  overflow: visible;
+  -webkit-transform-style: preserve-3d;
+  transition: .1s;
+  -webkit-transform-style: preserve-3d;
+  -webkit-transition: 1s;
+  -webkit-transform-origin: center;
 }
 #autopan{
   cursor: pointer;
@@ -161,6 +171,7 @@ li:hover {
   text-align: center;
   position: relative;
   top: 65%;
+
 }
 
 #display-message {
