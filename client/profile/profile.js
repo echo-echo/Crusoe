@@ -27,7 +27,7 @@ Template.promptDelete.events({
   }
 })
 
-Template.profile.helpers({
+Template.profileView.helpers({
   taggedMessages: function(){
     var result=[]
     var tagged = Meteor.users.find({}).fetch()[0].tagged
@@ -42,7 +42,8 @@ Template.profile.helpers({
   },
 
   userCreated: function(){
-    var created = Messages.find({username:Meteor.user().username});
+    var username = Meteor.user().username || Meteor.user().profile.name
+    var created = Messages.find({username:username});
     return created;
   }
 });

@@ -208,3 +208,11 @@ SyncedCron.add({
 });
 
 SyncedCron.start();
+
+if (!ServiceConfiguration.configurations.find({service: 'facebook'}).count()) {
+  ServiceConfiguration.configurations.insert({
+    service: "facebook",
+    appId: "1617736865105666",
+    secret: "7c63e6d71f5370e7782015f573f90bf9"
+  });
+}

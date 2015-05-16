@@ -250,6 +250,14 @@ li:hover {
   .panel {
     display: none;
   }
+
+  #myMessages {
+    margin-bottom: 60px;
+  }
+
+  #taggedMessages {
+    margin-bottom: 60px;
+  }
 }
 
 /* Custom, iPhone Retina */
@@ -286,6 +294,14 @@ li:hover {
 
   .panel {
     display: none;
- }
+  }
+  
+   #myMessages {
+    margin-bottom: 60px;
+  }
+
+  #taggedMessages {
+    margin-bottom: 60px;
+  }
 }
 

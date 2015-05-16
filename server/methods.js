@@ -1,6 +1,6 @@
 Meteor.methods({
   addMessage: function (text, location, media, filename) {
-    var username = Meteor.user() ? Meteor.user().username || Meteor.user().profile.name : "Anonymous";
+    var username = Meteor.user() ? Meteor.user().username||Meteor.user().profile.name : "Anonymous";
 
     Meteor.http.get('http://api.tiles.mapbox.com/v4/geocode/mapbox.places/'+location[0]+','+location[1]+'.json?access_token=pk.eyJ1Ijoiam9zaHVhYmVuc29uIiwiYSI6Im1sT3BqRWcifQ.W7h8nMmj_oI1p4RzChElsQ', function (err, res) {
 	 	  var geocode = JSON.parse(res.content)
