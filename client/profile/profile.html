@@ -2,9 +2,13 @@
 
   {{> writeMessage}}
 
-  <!-- {{#if currentUser}} -->
+  {{#if currentUser}}
     {{>profileView}}
-  <!-- {{/if}} -->
+  {{else}}
+    {{>signInMobile}}
+  {{/if}}
+
+
 
   {{>confirmDelete}}
   {{>promptDelete}}
@@ -13,11 +17,12 @@
 </template>
 
 <template name = "signInMobile">
-  <h1>signin</h1>
   <form id="register-form signin">
-      <div>
+      <div class = mobile-signin>
        <h2>Sign In</h2>
        <a href="#" id ="facebook">Sign in with Facebook</a><br>
+       <span>or</span>
+       <br>
        Username: <br>
        <input type="text" id="username" placeholder="MyCoolUsername"/><br>
        Password: <br>

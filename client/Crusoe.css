@@ -1,5 +1,7 @@
 /* CSS declarations go here */
 
+
+
 .leaflet-marker-icon {
   -webkit-transition: 15s;
   position: absolute;
@@ -258,6 +260,10 @@ li:hover {
   #taggedMessages {
     margin-bottom: 60px;
   }
+
+  .mobile-signin{
+    text-align: center
+  }
 }
 
 /* Custom, iPhone Retina */
@@ -303,5 +309,7 @@ li:hover {
   #taggedMessages {
     margin-bottom: 60px;
   }
+
+  
 }
 
