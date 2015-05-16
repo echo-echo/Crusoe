@@ -92,12 +92,13 @@ Template.messageModal.helpers({
 		var messageId = Session.get("messageId");
 		var message = Messages.find({_id:messageId}).fetch()[0];
 
-		// if a message is found and if it has an AWS lookup key
+		// if a message is found and if it has an AWS lookup key (it has an img)
 		if ( message && message.key ) {
+			debugger;
 			// if the global namespace is already storing an image and it has the same id
-			// as the message we're looking at.
+			// as the message we're looking at and it wasn't called within the last second;
 			// prevents Meteor from calling AWS multiple times via the getMedia method
-			if ( window.Crusoe.img && window.Crusoe.img.messageId === messageId ) {
+			if ( window.Crusoe.img && (Date.now() - Crusoe.lastCalled) > 3000 && window.Crusoe.img.messageId === messageId ) {
 				var result = window.Crusoe.img.img;
 
 				$('#display-message').css({
@@ -105,8 +106,9 @@ Template.messageModal.helpers({
 					'background-size': 'auto auto',
 				});
 
-			} else {
+			} else if ( !Crusoe.lastCalled || Date.now() - Crusoe.lastCalled > 3000) {
 				var key = message.key;
+				window.Crusoe.lastCalled = Date.now();
 				// get the blob? from S3 and attach it as a property here
 				Meteor.call("getMedia", key, function (err, result) {
 					if ( err ) {
@@ -127,8 +129,8 @@ Template.messageModal.helpers({
 				});
 			}
 
+			return message;
 		}
-		return message;
 	}
 });
 
