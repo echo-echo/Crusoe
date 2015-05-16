@@ -20,3 +20,4 @@ reactive-var
 accounts-facebook
 peerlibrary:aws-sdk
 service-configuration
+mdg:camera

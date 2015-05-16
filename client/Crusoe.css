@@ -144,6 +144,10 @@ li:hover {
   border-radius: 8px;
 }
 
+.takephoto {
+  display: block;
+}
+
 .collection{
   margin-top:0px;
 }
