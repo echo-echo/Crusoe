@@ -235,11 +235,6 @@ Template.Map.onRendered(function () {
 Template.Map.events({
   'click #autopan' : function(){
     Session.set('pan', !Session.get('pan'));
-  },
-  "click #trackMessage" : function(){
-    $('#map-message-modal').closeModal();
-    debugger;
-    // $(document).trigger('pan-call',{this})
   }
 })
 
