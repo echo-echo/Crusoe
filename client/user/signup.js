@@ -19,7 +19,7 @@ Template.signup.events({
          $('#modal-signup').closeModal();
        },1000);
 
-
+       Router.go('profile')
 
      } else {
        $('#modal-warning').openModal();

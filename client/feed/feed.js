@@ -121,7 +121,7 @@ Template.messageModal.helpers({
 
 					$('#display-message').css({
 						'background': 'url( ' + result + ') no-repeat',
-						'background-size': 'auto auto',
+						'background-size': '100% auto'
 					});
 
 					var img = {
