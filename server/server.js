@@ -11,6 +11,29 @@ Meteor.publish("userData", function(){
   return Meteor.users.find({_id: this.userId}, {fields:{tagged:1}});
 });
 
+// this will be set in one cron and used as a weight
+var latWind = 0;
+var lngWind = 0;
+
+SyncedCron.add({
+  name: 'Pull wind data from Robinson Crusoe Island',
+  schedule: function(parser) {
+    return parser.text('every 1 hour');
+  },
+  job: function(){
+    HTTP.call("GET", "http://api.openweathermap.org/data/2.5/weather?lat=-33.6367&lon=-78.8496", function(err, results){
+      if (!err){
+        windData = results.data.wind;
+        console.log("data we are getting:", windData);
+        var theta = (windData.deg * Math.PI / 180).toPrecision(3);
+        var hypotenuse = windData.speed;
+        latWind = (Math.cos(theta) * hypotenuse * 0.1).toPrecision(3);
+        lngWind = (Math.sin(theta) * hypotenuse * 0.1).toPrecision(3);
+      }
+    })
+  }
+});
+
 SyncedCron.add({
   name: 'Prune messages',
   schedule: function(parser) {
@@ -38,6 +61,9 @@ SyncedCron.add({
   job: function () {
     var messages = Messages.find({});
 
+    console.log("latWind from 15s update: ", latWind);
+    console.log("lngWind from 15s update: ", lngWind);
+
     messages.forEach(function (msg) {
       // maybe change this to sine later to make it smoother
       // also you can still add in lat and lng weights for 1hr, 1day, 1wk, 1month, 1year
@@ -46,18 +72,22 @@ SyncedCron.add({
         msg.latWeight1m +
         msg.latWeight15m +
         msg.latWeight1hr +
-        msg.latWeight6hr
+        msg.latWeight6hr +
+        (+latWind || 0)
         ) * 0.0005;
       var lngChange = (
         Math.random() - 0.5 +
         msg.lngWeight1m +
         msg.lngWeight15m +
         msg.lngWeight1hr +
-        msg.lngWeight6hr
+        msg.lngWeight6hr +
+        (+lngWind || 0)
         ) * 0.0005;
-      var newLat = msg.location.coordinates[0] += latChange;
-      var newLng = msg.location.coordinates[1] += lngChange;
-      Messages.update({_id: msg._id}, {$set: {"location.coordinates": [newLat, newLng]} });
+      var newLng = msg.location.coordinates[0] += lngChange;
+      var newLat = msg.location.coordinates[1] += latChange;
+
+      // Lng is first! Then Lat, because that's how GeoJSON does it.
+      Messages.update({_id: msg._id}, {$set: {"location.coordinates": [newLng, newLat]} });
     });
   }
 });
