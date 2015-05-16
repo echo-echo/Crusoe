@@ -14,14 +14,14 @@ Meteor.publish("userData", function(){
 SyncedCron.add({
   name: 'Prune messages',
   schedule: function(parser) {
-    return parser.text('every 5 seconds');
+    return parser.text('every 1 day');
   },
   job: function(){
     var messages = Messages.find({});
 
     messages.forEach(function(msg) {
-      if ((msg.opens > 3) && (msg.likes.length < 1)){
-        console.log("removing this message: ", msg);
+      if ((msg.opens > 20) && (msg.likes.length < 1)){
+        console.log("The Pruner is removing this message: ", msg);
         Meteor.call('removeMessage', msg._id);
       }
     });
