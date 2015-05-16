@@ -1,4 +1,6 @@
 Meteor.startup(function(){
+  window.Crusoe = {};
+  
   Mapbox.load();
 //~~~~~~~~~~~~~~~~~~~~
 // calculates map width
