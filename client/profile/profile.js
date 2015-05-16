@@ -57,6 +57,12 @@ Template.writeMessage.events({
       '<a class="waves-effect waves-light btn-large scan-right"><i class="mdi-navigation-arrow-forward right"></i></a>'];
     $('#map').append('<div class="throw-controls"></div>');
     throwControls.forEach(function(element){ $('.throw-controls').append(element) });
+
+   $('.scan-left').mousedown(function(){ console.log('go left young man')})
+   $('.scan-left').mouseup(function(){ console.log('stop going left')})
+
+   $('.scan-right').mousedown(function(){ console.log('go right young man')})
+   $('.scan-right').mouseup(function(){ console.log('stop going right')})
   },
 
   "click .submit": function () {
