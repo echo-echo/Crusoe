@@ -7,7 +7,7 @@
 <ul id="dropdown" class="dropdown-content">
   {{#if currentUser}}
       <li><a href="/profile">Profile</a></li>
-      <li><a id="signout" href="#">Sign Out</a></li>
+      <li><a id="signout" href="/">Sign Out</a></li>
     {{else}}
       <li><a id="signin" href="#">Sign In</a></li>
   {{/if}}
@@ -25,7 +25,7 @@
 </nav>
 <body>
 	<div>{{>yield}}</div>
-  {{>signin}}
+  {{>signinModal}}
   {{>signup}}
   {{>confirmation}}
   {{>warning}}

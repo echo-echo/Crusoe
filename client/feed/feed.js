@@ -127,8 +127,9 @@ Template.messageModal.helpers({
 					window.Crusoe.img = img;
 				});
 			}
+
 		}
-		return message;
+			return message;
 	}
 });
 

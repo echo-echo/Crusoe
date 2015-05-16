@@ -1,5 +1,7 @@
 /* CSS declarations go here */
 
+
+
 .leaflet-marker-icon {
   -webkit-transition: 15s;
   position: absolute;
@@ -180,6 +182,10 @@ li:hover {
   color: white;
 }
 
+a#signout.btn{
+  display:none;
+}
+
 /* ~~~~~~~~~~~~~~~~
    PHONE STYLING
 ~~~~~~~~~~~~~~~~~~*/
@@ -258,6 +264,18 @@ li:hover {
   #taggedMessages {
     margin-bottom: 60px;
   }
+
+  .signin{
+    text-align: center;
+  }
+
+  .profile-header{
+    font-size: 15px;
+  }
+
+  a#signout.btn{
+  display:block;
+}
 }
 
 /* Custom, iPhone Retina */
@@ -303,5 +321,19 @@ li:hover {
   #taggedMessages {
     margin-bottom: 60px;
   }
+
+  .mobile-signin{
+    text-align: center
+  }
+
+  .profile-header{
+    font-size: 15px;
+  }
+
+  a#signout.btn{
+  display:block;
+  margin-bottom:90px;
+}
+  
 }
 
