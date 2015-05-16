@@ -49,6 +49,18 @@ Template.profileView.helpers({
 });
 
 Template.writeMessage.events({
+  "click .throw": function () {
+  //jquery function to append throw-control buttons to the body
+
+    var throwControls = ['<a class="waves-effect waves-light btn-large">Button</a>',
+    '<a class="waves-effect waves-light btn-large"><i class="mdi-file-cloud left">',
+    '</i>button</a><a class="waves-effect waves-light btn-large"><i class="mdi-file-cloud right"></i>button</a>'];
+
+    throwControls.forEach(function(element){ $('#map').append(element) });
+
+
+  },
+
   "click .submit": function () {
     var message = $('textarea').val();
     var file = $('input.media-upload')[0].files[0];
