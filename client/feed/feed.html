@@ -30,6 +30,35 @@
     </li>
 </template>
 
+<template name="messageModal">
+  <div id="map-message-modal" class="modal modal-box c-modal">
+    <div class="modal-content">
+      <a href="#" class="right modal-close">close</a>
+        {{#if message.visible}}
+        <h4>Message:</h4>
+        {{#if message.key}}
+          <div id="display-message"></div>
+        {{/if}}
+        <p>{{message.text}}</p>
+        {{else}}
+        <h4>Message is too far away to view.</h4>
+        {{/if}}
+        <h6>Origin: {{message.origin}}</h6>
+        <h6>Opens: {{message.opens}}</h6>
+    </div>
+    {{#if message.visible}}
+    <div class="modal-footer">
+      <button class ="save btn-flat">
+        <i class ="mdi-content-add-box"> tag message</i>
+      </button>
+      <button class ="btn-flat like">
+        <i class ="mdi-action-thumb-up"> {{message.likes.length}}</i>
+      </button>
+    </div>
+    {{/if}}
+  </div>
+</template>
+
 <template name="writeMessage">
   <!-- Modal Structure -->
   <div id="write" class="modal modal-box">

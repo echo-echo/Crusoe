@@ -98,7 +98,7 @@ Template.Map.onRendered(function () {
       var messagesOnMap = {};
       //associates the messageID with the leafletId
       geoJsonLayer.eachLayer(function(layer) {
-        messagesOnMap[layer.feature.properties.id] = layer._leaflet_id;
+        messagesOnMap[layer.feature.properties._id] = layer._leaflet_id;
       });
 
       // // Adds the classname of the icon to the messages as we add them to the map.
@@ -126,8 +126,15 @@ Template.Map.onRendered(function () {
         var isPopular = object.opens > 5;
 
         // Checks to see if the message is the users
+        var isUsers = false;
         if(Meteor.user()){
-          var isUsers = object.username !== "Anonymous" && (object.username === Meteor.user().username || object.username === Meteor.user().profile.name)
+          if(object.username !== "Anonymous"){
+            if(object.username === Meteor.user().username){
+              isUsers = true
+            } else if (Meteor.user().profile){
+              isUsers = Meteor.user().profile.name === object.username
+            }
+          }
         }
 
         //checks if message already exists on the map
@@ -171,7 +178,7 @@ Template.Map.onRendered(function () {
                         },
                         "properties": {
                           "text": object.text,
-                          "id": object._id,
+                          "_id": object._id,
                           "likes" : object.likes,
                           "key" : object.key,
                           "opens" : object.opens,
@@ -220,14 +227,14 @@ Template.Map.onRendered(function () {
 
 
         if(Date.now() - lastClick > 1000){
-          var message = e.layer.feature.properties
+        var message = e.layer.feature.properties
           Session.set('currentMessage', message)
 
           if(message.visible){
             //artificially opens the messages
             message.opens+=1;
             //actually updates the message opens on server
-            Meteor.call('openMessage', message.id)
+            Meteor.call('openMessage', message._id)
             lastClick=Date.now()
           }
           $('#map-message-modal').openModal();
