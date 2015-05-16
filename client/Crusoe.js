@@ -6,8 +6,19 @@ Router.map(function(){
   this.route('map', {
     path:'/'
   });
-  this.route('profile')
+  this.route('profile',{
+    onBeforeAction: function(){
+      if (!Meteor.user()){
+        if (!Meteor.loggingIn()){
+          Router.go('signin')
+        }
+      } else {
+        this.next()
+      }
+    }
+  });
   this.route('feed')
+  this.route('signin')
 })
 
 Accounts.ui.config({

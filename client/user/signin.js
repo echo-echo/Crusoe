@@ -17,6 +17,7 @@ Template.signin.events({
            $('#modal-confirmation').closeModal();
            $('#modal-signin').closeModal();
          },1000);
+         Router.go('profile')
        }
      })
      return false;
@@ -31,6 +32,7 @@ Template.signin.events({
            $('#modal-confirmation').closeModal();
            $('#modal-signin').closeModal();
           },1000)
+         Router.go('profile')
       }
     })
   } ,
