@@ -261,8 +261,12 @@ li:hover {
     margin-bottom: 60px;
   }
 
-  .mobile-signin{
-    text-align: center
+  .signin{
+    text-align: center;
+  }
+
+  .profile-header{
+    font-size: 15px;
   }
 }
 
@@ -310,6 +314,13 @@ li:hover {
     margin-bottom: 60px;
   }
 
+  .mobile-signin{
+    text-align: center
+  }
+
+  .profile-header{
+    font-size: 15px;
+  }
   
 }
 
