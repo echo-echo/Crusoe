@@ -73,5 +73,6 @@ Template.writeMessage.events({
     }
 
     $('textarea').val('');
+    $('input.media-upload').val('');
   }
 });
