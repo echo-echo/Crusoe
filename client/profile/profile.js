@@ -51,22 +51,29 @@ Template.profileView.helpers({
 Template.writeMessage.events({
   "click .submit": function () {
     var message = $('textarea').val();
-    var file = $('input.media-upload')[0].files[0] || Session.get("photo");
+    var file = $('input.media-upload')[0].files[0];
+    var photo = Session.get("photo");
+    console.log("file", file);
     var longitude = Number(localStorage.getItem("userLong"));
     var latitude = Number(localStorage.getItem("userLat"));
     var location=[longitude,latitude];
     $('.img-upload-preview').remove() //remove preview
     // $('input.media-upload')[0].files = undefined; //remove file from element
 
-    if ( file ) {
-      // need to convert to format that can be sent to the server and then to S3
-      var fr = new FileReader();
-      fr.readAsDataURL(file);
-      fr.onloadend = function (evt) {
-        var mediaAsDataURL = evt.target.result;
-        var filename = file.name;
-        Meteor.call("addMessage", message, location, mediaAsDataURL, filename);
-      };
+    if ( file || photo ) {
+      if ( file ) {
+        // need to convert to format that can be sent to the server and then to S3
+        var fr = new FileReader();
+        fr.readAsDataURL(file);
+        fr.onloadend = function (evt) {
+          var mediaAsDataURL = evt.target.result;
+          var filename = file.name;
+          Meteor.call("addMessage", message, location, mediaAsDataURL, filename);
+        };
+      }
+
+      var filename = "test.jpg";
+      Meteor.call("addMessage", message, location, photo, filename);
 
     } else {
       Meteor.call("addMessage", message, location);
@@ -85,6 +92,7 @@ Template.writeMessage.events({
         throw new Error;
       }
 
+      console.log("photo data:", data);
       Session.set("photo", data);
     })
   }
