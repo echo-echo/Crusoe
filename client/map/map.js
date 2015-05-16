@@ -217,12 +217,22 @@ Template.Map.onRendered(function () {
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
       geoJsonLayer.on('click', function (e) {
+
+
+        if(Date.now() - lastClick > 1000){
           var message = e.layer.feature.properties
           Session.set('currentMessage', message)
+
           if(message.visible){
+            //artificially opens the messages
+            message.opens+=1;
+            //actually updates the message opens on server
             Meteor.call('openMessage', message.id)
+            lastClick=Date.now()
           }
           $('#map-message-modal').openModal();
+        } //end date now
+
       });
     }
 	});
