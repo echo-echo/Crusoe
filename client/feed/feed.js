@@ -71,16 +71,18 @@ Template.feed.helpers({
 })
 
 Template.feed.events({
-	"click .visible": function(event){
+	"click .feedMessage": function(event){
 		var message = Blaze.getData(event.currentTarget)
-			Meteor.call("openMessage", message._id)
-			Session.set("messageId", message._id)
+		if(message.visible){
+		  Session.set('currentMessage', message)
 			$("#map-message-modal").openModal();
-	},
-	"click .hidden": function(event){
-		var message = Blaze.getData(event.currentTarget)
-		Session.set("messageId", message._id)
-			$("#too-far").openModal();
+			Meteor.call('openMessage', message._id)
+		} else {
+			Session.set('currentMessage', message);
+			var lng = message.location.coordinates[0]
+			var lat = message.location.coordinates[1]
+			window.Crusoe.map.panTo([lat,lng]);
+		}
 	},
 
 	"click .write": function(){
@@ -88,22 +90,23 @@ Template.feed.events({
 	}
 });
 
+
 Template.messageModal.helpers({
-	message: function(){
-		var messageId = Session.get("messageId")
-		var message = Messages.find({_id:messageId}).fetch()[0]
-		return message;
-	}
+  message: function(){
+    return Session.get('currentMessage');
+  }
 });
 
 Template.messageModal.events({
-	"click .save": function(){
-		var messageId = Session.get("messageId")
-		Meteor.call("tagMessage", messageId)
-	},
+  "click .save": function(){
+    var messageId = Session.get("currentMessage").id
+    Meteor.call("tagMessage", messageId)
+  },
 
-	"click .like": function(){
-		var messageId = Session.get("messageId")
-		Meteor.call("likeMessage", messageId)
-	}
+  "click .like": function(){
+    var messageId = Session.get("currentMessage").id
+    Meteor.call("likeMessage", messageId)
+  }
 });
+
+

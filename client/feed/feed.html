@@ -17,18 +17,17 @@
 </template>
 
 <template name="feedMessage">
-		<li class="collection-item avatar">
+		<li class="collection-item avatar feedMessage">
       {{#if visible}}
 			<i class="mdi-communication-email circle readable lighten-2"></i>
       {{else}}
 		  <i class="mdi-action-lock circle grey darken-1"></i>
       {{/if}}
-            <p class="proximity">{{proximity}} ft</p>
+            <p class="proximity"> {{proximity}} ft</p>
             <p>{{origin}}</p>
             <p data-livestamp="{{createdAt}}"></p>
             <span class="mdi-content-drafts"> {{opens}} </span>
             <span class="mdi-action-thumb-up"> {{likes.length}}</span>
-            <span id="track" class="mdi-action-track-changes"></span>
     </li>
 </template>
 

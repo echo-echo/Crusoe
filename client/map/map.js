@@ -4,24 +4,14 @@ Meteor.startup(function(){
 // calculates map width based on page width
 //~~~~~~~~~~~~~~~~~~~~
   window.Crusoe = {};
+  console.log("Created crusoe object")
+
 
   $(window).resize(function(evt) {
     if ($(window).width() > 480) {
       $('#map').width($(window).width()-300);
     }
   });
-
-  //Listener.
-  //Allows other templates to make the map PAN to different locations.
-  $(document).on('pan-call',function(e, coords){
-    console.log('pan-to has been called. ')
-    if(map){
-      debugger;
-      map.panTo([coords.lat,coords.lng]);
-    } else {
-      console.log("map is not defined")
-    }
-  })
 
 });
 
@@ -180,8 +170,11 @@ Template.Map.onRendered(function () {
                           "coordinates": [newMsgLng, newMsgLat]
                         },
                         "properties": {
-                          "title": object.text,
+                          "text": object.text,
                           "id": object._id,
+                          "likes" : object.likes,
+                          "opens" : object.opens,
+                          "origin" : object.origin,
                           "description": object.createdAt,
                           "icon": {
                             "iconUrl": "message-user",
@@ -192,19 +185,24 @@ Template.Map.onRendered(function () {
           //assign the appropriate message icon/title
           if(isUsers){
             geoJsonNew.properties.icon.iconUrl = "message-user"
+            geoJsonNew.properties.visible = true
           }else if (newMessageInRange){
             if(isPopular){
               geoJsonNew.properties.icon.iconUrl = "close-pop"
+              geoJsonNew.properties.visible = true
             } else {
               geoJsonNew.properties.icon.iconUrl = "close"
+              geoJsonNew.properties.visible = true
             }
           }else{
             if(isPopular){
               geoJsonNew.properties.icon.iconUrl = "far-pop"
               geoJsonNew.properties.title = "too far to view message"
+              geoJsonNew.properties.visible = false
             } else {
               geoJsonNew.properties.icon.iconUrl = "far"
               geoJsonNew.properties.title = "too far to view message"
+              geoJsonNew.properties.visible = false
             }
           }
 
@@ -217,12 +215,12 @@ Template.Map.onRendered(function () {
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
       geoJsonLayer.on('click', function (e) {
-          Session.set('messageId', e.layer.feature.properties.id)
-          if(e.layer.feature.properties.title === "too far to view message"){
-            $("#too-far").openModal();
-          } else {
-            $('#map-message-modal').openModal();
+          var message = e.layer.feature.properties
+          Session.set('currentMessage', message)
+          if(message.visible){
+            Meteor.call('openMessage', message.id)
           }
+          $('#map-message-modal').openModal();
       });
     }
 	});
@@ -251,14 +249,6 @@ Template.Map.helpers({
   }
 })
 
-//needed the same method for a different template.
-Template.toofar.helpers({
-  message: function(){
-    var messageId = Session.get("messageId")
-    var message = Messages.find({_id:messageId}).fetch()[0]
-    return message;
-  }
-});
 
 //~~~~~~~~ HELPER FUNCTIONS ~~~~~~~~~~~*/
 //find distance btwn two points on sphere

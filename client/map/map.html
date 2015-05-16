@@ -17,14 +17,16 @@
   <div id="map-message-modal" class="modal modal-box c-modal">
     <div class="modal-content">
       <a href="#" class="right modal-close">close</a>
+        {{#if message.visible}}
         <h4>Message:</h4>
         <p>{{message.text}}</p>
-        <h6>Origin:</h6>
-        <p>{{message.origin}}</p>
-        <h6>Opens:</h6>
-        <p>{{message.opens}}</p>
+        {{else}}
+        <h4>Message is too far away to view.</h4>
+        {{/if}}
+        <h6>Origin: {{message.origin}}</h6>
+        <h6>Opens: {{message.opens}}</h6>
     </div>
-
+    {{#if message.visible}}
     <div class="modal-footer">
       <button class ="save btn-flat">
         <i class ="mdi-content-add-box"> tag message</i>
@@ -33,18 +35,6 @@
         <i class ="mdi-action-thumb-up"> {{message.likes.length}}</i>
       </button>
     </div>
-  </div>
-</template>
-
-<template name='toofar'>
-  <div id = "too-far" class="modal modal-box c-modal">
-    <a href="#" class="right modal-close">close</a>
-    <h5 class="center">Message is too far away to view</h5>
-    <h6>Origin:</h6>
-    <p>{{message.origin}}</p>
-    <h6>Opens:</h6>
-    <div>{{message.opens}}</div>
-    <h6>Likes:</h6>
-    <div>{{message.likes.length}}</div>
+    {{/if}}
   </div>
 </template>
