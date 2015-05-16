@@ -52,13 +52,11 @@ Template.writeMessage.events({
   "click .throw": function () {
   //jquery function to append throw-control buttons to the body
 
-    var throwControls = ['<a class="waves-effect waves-light btn-large">Button</a>',
-    '<a class="waves-effect waves-light btn-large"><i class="mdi-file-cloud left">',
-    '</i>button</a><a class="waves-effect waves-light btn-large"><i class="mdi-file-cloud right"></i>button</a>'];
-
-    throwControls.forEach(function(element){ $('#map').append(element) });
-
-
+    var throwControls = ['<a class="waves-effect waves-light btn-large scan-left"><i class="mdi-navigation-arrow-back left"></i></a>',
+      '<a class="waves-effect waves-light btn-large throw">Throw!</a>',
+      '<a class="waves-effect waves-light btn-large scan-right"><i class="mdi-navigation-arrow-forward right"></i></a>'];
+    $('#map').append('<div class="throw-controls"></div>');
+    throwControls.forEach(function(element){ $('.throw-controls').append(element) });
   },
 
   "click .submit": function () {

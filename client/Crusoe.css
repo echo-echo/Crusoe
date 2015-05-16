@@ -1,7 +1,5 @@
 /* CSS declarations go here */
 
-
-
 .leaflet-marker-icon {
   -webkit-transition: 15s;
   position: absolute;
@@ -155,6 +153,14 @@ li:hover {
 
 .collection{
   margin-top:0px;
+}
+
+.throw-controls{
+  display: block; /*these center buttons in div*/
+  margin: 0 auto; 
+  text-align: center;
+  position: relative;
+  top: 65%;
 }
 
 #display-message {
