@@ -53,7 +53,7 @@ Template.writeMessage.events({
   //jquery function to append throw-control buttons to the body
     var rotate;
     var rotation = 0;
-    //define throw controls html element and function for map rotation:
+  //define throw controls html element and function for map rotation:
     var throwControls = ['<a class="waves-effect waves-light btn-large scan-left"><i class="mdi-navigation-arrow-back left"></i></a>',
       '<a class="waves-effect waves-light btn-large throw">Throw!</a>',
       '<a class="waves-effect waves-light btn-large scan-right"><i class="mdi-navigation-arrow-forward right"></i></a>'];
@@ -62,7 +62,7 @@ Template.writeMessage.events({
         transform: 'translate3d(0px, 0px, 0px) rotateX(0deg) rotateZ(' + rotation + 'deg)'
       });
     }; 
-    
+
     $('body').first().append('<div class="throw-controls"></div>');
     $('.mobileNav').append('<div class="throw-controls"></div>');
     //TODO these slide hiding animations need to be reversed upon completion:
@@ -70,19 +70,40 @@ Template.writeMessage.events({
     $('.panel').slideToggle(500, 'linear')
     $('.nav-wrapper').slideToggle(500, 'linear')
     $('nav').slideToggle(500, 'linear')
-    $('#map').css({'overflow': 'visible', 'margin-left': '150px',' margin-right': '0px'});
- 
-    throwControls.forEach(function(element){ $('.throw-controls').append(element) });
 
+  //conditionally set map css for large or small, only difference is 'margin-left'
+  if ($(window).width() < 480) {
+    $('#map').css({'overflow': 'visible', 'margin-left': '0px'});
+  } else {
+    $('#map').css({'overflow': 'visible', 'margin-left': '150px'});
+  }
+  //append throw controls to map:
+    throwControls.forEach(function(element){ $('.throw-controls').append(element) });
+  //listen to scanning buttons and set value of 'rotate':
     $('.scan-left').mousedown(function(){ rotate = 'left'; console.log(rotate); });
     $('.scan-left').mouseup(function(){ rotate = undefined; });
 
     $('.scan-right').mousedown(function(){ rotate = 'right'; });
     $('.scan-right').mouseup(function(){ rotate = undefined; });
+    //read value of 'rotate', change rotation variable, and call transform map to set Z rotation to rotation variable:
     setInterval(function(){
       if (rotate==='left') { rotation += 4; transformMap() }
       if (rotate==='right') { rotation -= 4; transformMap() }
-    }, 200)
+    }, 100)
+
+  //reset UI on throw completion:
+  $('.throw').mousedown(function(){
+    $('.throw-controls').remove();
+    $('.mobile-icons').slideToggle(500, 'linear')
+    $('.panel').slideToggle(500, 'linear')
+    $('.nav-wrapper').slideToggle(500, 'linear')
+    $('nav').slideToggle(500, 'linear')
+    if ($(window).width() < 480) {
+      $('#map').css({'overflow': 'hidden', 'margin-left': '0px'});
+    } else {
+      $('#map').css({'overflow': 'hidden', 'margin-left': '300px'});
+    }
+  });  
   },
 
   "click .submit": function () {
