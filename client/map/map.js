@@ -178,15 +178,18 @@ Template.Map.onRendered(function () {
 
       geoJsonLayer.on('click', function (e) {
 
-
+        //the Date.now() portion is used to de-bounce the click.
+        //for some reason clicking on an message icon in the map calls
+        // this function multiple times. We are making a simple check to see if
+        // that call has happened in the last second or not. This eliminates
+        // the server counting multiple opens to the message due to the
+        // 'bouncing' of the message click.
         if(Date.now() - lastClick > 1000){
         var message = e.layer.feature.properties
           Session.set('currentMessage', message)
 
           if(message.visible){
-            //artificially opens the messages
-            message.opens+=1;
-            //actually updates the message opens on server
+            //updates the message opens on server
             Meteor.call('openMessage', message._id)
             lastClick=Date.now()
           }
