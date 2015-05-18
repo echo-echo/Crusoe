@@ -36,13 +36,16 @@
       <a href="#" class="right modal-close">close</a>
         {{#if message.visible}}
         <h4>Message:</h4>
-        {{#if message.key}}
-          <div id="display-message"></div>
-        {{/if}}
         <p>{{message.text}}</p>
+
+          {{#if message.key}}
+            <div id="display-message"></div>
+          {{/if}}
+
         {{else}}
         <h4>Message is too far away to view.</h4>
         {{/if}}
+        <h6 data-livestamp="{{message.description}}"></h6>
         <h6>Origin: {{message.origin}}</h6>
         <h6>Opens: {{message.opens}}</h6>
     </div>

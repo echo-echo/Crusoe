@@ -82,6 +82,7 @@ Template.Map.onRendered(function () {
             map.panTo([local.coords.latitude, local.coords.longitude]);
           }
         }
+
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       /*    SUMMARY OF THE FOLLOWING CODE
       *   the 'messagesOnMap' variable is an object whos keys are messageId's
@@ -101,7 +102,7 @@ Template.Map.onRendered(function () {
         messagesOnMap[layer.feature.properties._id] = layer._leaflet_id;
       });
 
-      // // Adds the classname of the icon to the messages as we add them to the map.
+      // Adds the classname of the icon to the messages as we add them to the map.
       geoJsonLayer.on('layeradd', function (e) {
         var marker = e.layer,
         feature = marker.feature;
@@ -150,73 +151,25 @@ Template.Map.onRendered(function () {
         // we check to see if the new coordinates of the message are in range of the user
         var newMessageInRange = getProx(newMsgLat,newMsgLng,userLat,userLong) < radiusVal;
 
-        /*
-        * We now need to check if the state of the icon has changed
-        * if the message was already on the map, and has either entered or
-        * left the users readable radius, then we need to update the icon.
-        *
-        * if the icon has not changed states (hasn't left or entered users
-        * readable radius), then we just update the location of the icon
-        */
-
-        //old version of message and new version of message have not changed view state ==> doesnt require icon change
-        if(isOldMessage && oldMessageInRange === newMessageInRange){
+        //update the message props and location if the message is already on the map.
+        if(isOldMessage){
+          oldMessage.feature.properties = getProperties(object, newMessageInRange, isUsers, isPopular)
+          oldMessage.setIcon(getIcon(true, newMessageInRange, isUsers, isPopular))
           oldMessage.setLatLng([object.location.coordinates[1], object.location.coordinates[0]]).update();
-
-        //the message has changed states, and need an icon change.
         } else {
-          //removes the old marker of the message that matches the message id
-          if(isOldMessage){
-            geoJsonLayer.removeLayer(messagesOnMap[object._id])
-          }
-          //add the new marker with the new message properties
-          var geoJsonNew = {
+          var text = newMessageInRange || isUsers ? object.text : "too far to view message"
+          var obj = {
                         "type": "Feature",
                         "geometry": {
                           "type": "Point",
                           "coordinates": [newMsgLng, newMsgLat]
                         },
-                        "properties": {
-                          "text": object.text,
-                          "_id": object._id,
-                          "likes" : object.likes,
-                          "key" : object.key,
-                          "opens" : object.opens,
-                          "origin" : object.origin,
-                          "description": object.createdAt,
-                          "icon": {
-                            "iconUrl": "message-user",
-                            "iconSize": [35, 35]
-                          }
-                        }
-                      };
-          //assign the appropriate message icon/title
-          if(isUsers){
-            geoJsonNew.properties.icon.iconUrl = "message-user"
-            geoJsonNew.properties.visible = true
-          }else if (newMessageInRange){
-            if(isPopular){
-              geoJsonNew.properties.icon.iconUrl = "close-pop"
-              geoJsonNew.properties.visible = true
-            } else {
-              geoJsonNew.properties.icon.iconUrl = "close"
-              geoJsonNew.properties.visible = true
-            }
-          }else{
-            if(isPopular){
-              geoJsonNew.properties.icon.iconUrl = "far-pop"
-              geoJsonNew.properties.title = "too far to view message"
-              geoJsonNew.properties.visible = false
-            } else {
-              geoJsonNew.properties.icon.iconUrl = "far"
-              geoJsonNew.properties.title = "too far to view message"
-              geoJsonNew.properties.visible = false
-            }
-          }
+                        "properties": getProperties(object, newMessageInRange, isUsers, isPopular)
+                      }
 
-          //add the new marker to the map.
-          geoJsonLayer.addData(geoJsonNew);
-        }
+             geoJsonLayer.addData(obj);
+            // geoJsonLayer.getLayer(marker._leaflet_id).setIcon(getIcon(true, newMessageInRange, isUsers, isPopular))
+          }//end else
       });
 
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -225,15 +178,18 @@ Template.Map.onRendered(function () {
 
       geoJsonLayer.on('click', function (e) {
 
-
+        //the Date.now() portion is used to de-bounce the click.
+        //for some reason clicking on an message icon in the map calls
+        // this function multiple times. We are making a simple check to see if
+        // that call has happened in the last second or not. This eliminates
+        // the server counting multiple opens to the message due to the
+        // 'bouncing' of the message click.
         if(Date.now() - lastClick > 1000){
         var message = e.layer.feature.properties
           Session.set('currentMessage', message)
 
           if(message.visible){
-            //artificially opens the messages
-            message.opens+=1;
-            //actually updates the message opens on server
+            //updates the message opens on server
             Meteor.call('openMessage', message._id)
             lastClick=Date.now()
           }
@@ -291,4 +247,76 @@ var calcBounds = function(userLat, userLong, radius) { //calc bounds for view, r
   var lon0 = (userLong - (((radius/1000) * .0005) * lonDiff));
   var lon1 = (userLong + (((radius/1000) * .0005) * lonDiff));
   return [[lat0, lon0], [lat1, lon1]];
+}
+//~~~~~~~~~~~~~~~~~~~~~~~
+/*
+  if the 'return icon' argument is true, the function will return an actual
+  Leaflet Icon. This is useful when using .setIcon on a message icon that
+  already exists on the map. If it is false, it will return the STRING
+  that needs to be set to the iconUrl property of the geoJson object.
+  See getProperties function below
+*/
+//~~~~~~~~~~~~~~~~~~~~~~~
+var getIcon = function(returnIcon, newMessageInRange, isUsers, isPopular){
+
+  if(returnIcon){
+
+    var icon = {
+      iconUrl: 'message.png',
+      iconSize: [35, 35]
+    };
+
+    if(isUsers){
+      icon.iconUrl = "message-user.png"
+    } else if(isPopular && newMessageInRange){
+      icon.iconUrl = "message-pop.png"
+    } else if(isPopular && !newMessageInRange){
+      icon.iconUrl = "message-off-pop.png"
+    } else if(newMessageInRange){
+      icon.iconUrl = "message.png"
+    } else {
+      icon.iconUrl = "message-off.png"
+    }
+
+    return L.icon(icon)
+  } else {
+
+     if(isUsers){
+      return "message-user"
+    } else if(isPopular && newMessageInRange){
+      return "close-pop"
+    } else if(isPopular && !newMessageInRange){
+      return "far-pop"
+    } else if(newMessageInRange){
+      return "close"
+    } else {
+      return "far"
+    }
+
+  }
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~
+//    returns the properties used in the geoJson Object.
+//~~~~~~~~~~~~~~~~~~~~~~~
+
+var getProperties = function(newMessageData, newMessageInRange, isUsers, isPopular){
+
+  var text = newMessageInRange || isUsers ? newMessageData.text : "too far to view message"
+  var props = {
+    "text": text,
+    "_id": newMessageData._id,
+    "likes" : newMessageData.likes,
+    "key" : newMessageData.key,
+    "opens" : newMessageData.opens,
+    "origin" : newMessageData.origin,
+    "description": newMessageData.createdAt,
+    'visible' :  isUsers || newMessageInRange,
+    'icon' : {
+      "iconUrl" : getIcon(false, newMessageInRange, isUsers, isPopular),
+      "iconSize" : [35,35]
+    }
+
+  }
+  return props
 }
