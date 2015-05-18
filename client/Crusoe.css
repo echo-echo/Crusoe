@@ -117,19 +117,18 @@ li:hover {
   text-align: center;
 }
 
-#map {
+#map{
   position:absolute;
   height: 100%;
   min-width: 300px;
   margin-left: 300px;
   margin-bottom: 0px;
+  overflow: hidden;
   /*added these for rotation:*/
-  overflow: visible;
   -webkit-transform-style: preserve-3d;
   transition: .1s;
   -webkit-transform-style: preserve-3d;
-  -webkit-transition: 1s;
-  -webkit-transform-origin: center;
+  -webkit-transition: .1s;
 }
 #autopan{
   cursor: pointer;
