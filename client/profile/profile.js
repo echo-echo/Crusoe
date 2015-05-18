@@ -60,9 +60,13 @@ Template.writeMessage.events({
         transform: 'translate3d(0px, 0px, 0px) rotateX(0deg) rotateZ(' + rotation + 'deg)'
       });
     };  
-    $('.nav-wrapper').append('<div class="throw-controls"></div>');
+    $('body').append('<div class="throw-controls"></div>');
     $('.mobileNav').append('<div class="throw-controls"></div>');
+    //TODO these slide hiding animations need to be reversed upon completion:
     $('.mobile-icons').slideToggle(500, 'linear')
+    $('.panel').slideToggle(500, 'linear')
+    $('.nav-wrapper').slideToggle(500, 'linear')
+    $('nav').slideToggle(500, 'linear')
     throwControls.forEach(function(element){ $('.throw-controls').append(element) });
 
     $('.scan-left').mousedown(function(){ rotate = 'left'; console.log(rotate); });
