@@ -11,7 +11,7 @@ Meteor.publish("userData", function(){
   return Meteor.users.find({_id: this.userId}, {fields:{tagged:1}});
 });
 
-// this will be set in one cron and used as a weight
+// these will be set in the cron pulling the wind data and used as weights
 var latWind = 0;
 var lngWind = 0;
 
@@ -29,6 +29,8 @@ SyncedCron.add({
         var hypotenuse = windData.speed;
         latWind = (Math.cos(theta) * hypotenuse * 0.1).toPrecision(3);
         lngWind = (Math.sin(theta) * hypotenuse * 0.1).toPrecision(3);
+      } else {
+        console.log("Error: ", err);
       }
     })
   }
