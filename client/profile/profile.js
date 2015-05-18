@@ -52,6 +52,7 @@ Template.writeMessage.events({
   //jquery function to append throw-control buttons to the body
     var rotate;
     var rotation = 0;
+
     var throwControls = ['<a class="waves-effect waves-light btn-large scan-left"><i class="mdi-navigation-arrow-back left"></i></a>',
       '<a class="waves-effect waves-light btn-large throw">Throw!</a>',
       '<a class="waves-effect waves-light btn-large scan-right"><i class="mdi-navigation-arrow-forward right"></i></a>'];
@@ -59,14 +60,17 @@ Template.writeMessage.events({
       $('#map').css({ 
         transform: 'translate3d(0px, 0px, 0px) rotateX(0deg) rotateZ(' + rotation + 'deg)'
       });
-    };  
-    $('body').append('<div class="throw-controls"></div>');
+    }; 
+
+    $('body').first().append('<div class="throw-controls"></div>');
     $('.mobileNav').append('<div class="throw-controls"></div>');
     //TODO these slide hiding animations need to be reversed upon completion:
     $('.mobile-icons').slideToggle(500, 'linear')
     $('.panel').slideToggle(500, 'linear')
     $('.nav-wrapper').slideToggle(500, 'linear')
     $('nav').slideToggle(500, 'linear')
+    $('#map').css({'overflow': 'visible', 'margin-left': 'auto'});
+ 
     throwControls.forEach(function(element){ $('.throw-controls').append(element) });
 
     $('.scan-left').mousedown(function(){ rotate = 'left'; console.log(rotate); });
