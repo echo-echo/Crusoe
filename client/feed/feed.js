@@ -98,6 +98,7 @@ Template.messageModal.helpers({
 
 		// if a message is found and if it has an AWS lookup key (it has an img)
 		if ( message && message.key ) {
+			var messageId = message._id;
 			// if the global namespace is already storing an image and it has the same id
 			// as the message we're looking at and it wasn't called within the last second;
 			// prevents Meteor from calling AWS multiple times via the getMedia method

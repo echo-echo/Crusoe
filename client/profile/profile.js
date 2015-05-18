@@ -53,12 +53,10 @@ Template.writeMessage.events({
     var message = $('textarea').val();
     var file = $('input.media-upload')[0].files[0];
     var photo = Session.get("photo");
-    console.log("file", file);
     var longitude = Number(localStorage.getItem("userLong"));
     var latitude = Number(localStorage.getItem("userLat"));
     var location=[longitude,latitude];
     $('.img-upload-preview').remove() //remove preview
-    // $('input.media-upload')[0].files = undefined; //remove file from element
 
     if ( file || photo ) {
       if ( file ) {
@@ -72,7 +70,9 @@ Template.writeMessage.events({
         };
       }
 
+      // else, it's a photo the user just took with their camera
       var filename = "test.jpg";
+      console.log(photo);
       Meteor.call("addMessage", message, location, photo, filename);
 
     } else {
