@@ -55,7 +55,7 @@ Template.writeMessage.events({
     var rotation = 0;
   //define throw controls html element and function for map rotation:
     var throwControls = ['<a class="waves-effect waves-light btn-large scan-left"><i class="mdi-navigation-arrow-back left"></i></a>',
-      '<a class="waves-effect waves-light btn-large throw">Throw!</a>',
+      '<a class="waves-effect waves-light btn-large throw-it">Throw!</a>',
       '<a class="waves-effect waves-light btn-large scan-right"><i class="mdi-navigation-arrow-forward right"></i></a>'];
     var transformMap = function(){
       $('#map').css({ 
@@ -92,12 +92,16 @@ Template.writeMessage.events({
     }, 100)
 
   //reset UI on throw completion:
-  $('.throw').mousedown(function(){
+  $('.throw-it').click(function(){
     $('.throw-controls').remove();
     $('.mobile-icons').slideToggle(500, 'linear')
     $('.panel').slideToggle(500, 'linear')
     $('.nav-wrapper').slideToggle(500, 'linear')
     $('nav').slideToggle(500, 'linear')
+    $('#map').css({ 
+      transform: 'translate3d(0px, 0px, 0px) rotateX(0deg) rotateZ(0deg)'
+    });
+    rotation = 0;
     if ($(window).width() < 480) {
       $('#map').css({'overflow': 'hidden', 'margin-left': '0px'});
     } else {
