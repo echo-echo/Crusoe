@@ -248,7 +248,15 @@ var calcBounds = function(userLat, userLong, radius) { //calc bounds for view, r
   var lon1 = (userLong + (((radius/1000) * .0005) * lonDiff));
   return [[lat0, lon0], [lat1, lon1]];
 }
-
+//~~~~~~~~~~~~~~~~~~~~~~~
+/*
+  if the 'return icon' argument is true, the function will return an actual
+  Leaflet Icon. This is useful when using .setIcon on a message icon that
+  already exists on the map. If it is false, it will return the STRING
+  that needs to be set to the iconUrl property of the geoJson object.
+  See getProperties function below
+*/
+//~~~~~~~~~~~~~~~~~~~~~~~
 var getIcon = function(returnIcon, newMessageInRange, isUsers, isPopular){
 
   if(returnIcon){
@@ -287,6 +295,10 @@ var getIcon = function(returnIcon, newMessageInRange, isUsers, isPopular){
 
   }
 }
+
+//~~~~~~~~~~~~~~~~~~~~~~~
+//    returns the properties used in the geoJson Object.
+//~~~~~~~~~~~~~~~~~~~~~~~
 
 var getProperties = function(newMessageData, newMessageInRange, isUsers, isPopular){
 
