@@ -140,13 +140,11 @@ Template.messageModal.helpers({
 
 Template.messageModal.events({
   "click .save": function(){
-  	console.log('clicked save')
     var messageId = Session.get("currentMessage")._id
     Meteor.call("tagMessage", messageId)
   },
 
   "click .like": function(){
-  	console.log('clicked like')
     var messageId = Session.get("currentMessage")._id
     Meteor.call("likeMessage", messageId)
   }

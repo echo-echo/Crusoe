@@ -15,7 +15,6 @@ Template.userMessages.events({
 Template.promptDelete.events({
   'click #confirmDeletion' : function(){
     var messageId = Session.get('toDelete')
-    console.log(messageId)
     $('#promptDelete').closeModal()
     Meteor.call('removeMessage',messageId, function(err, result){
       if(err){
@@ -65,14 +64,13 @@ Template.writeMessage.events({
         fr.readAsDataURL(file);
         fr.onloadend = function (evt) {
           var mediaAsDataURL = evt.target.result;
-          var filename = file.name;
+          var filename = Date.now().toString() + file.name;
           Meteor.call("addMessage", message, location, mediaAsDataURL, filename);
         };
       }
 
       // else, it's a photo the user just took with their camera
-      var filename = "test.jpg";
-      console.log(photo);
+      var filename = Date.now().toString() + ".jpg";
       Meteor.call("addMessage", message, location, photo, filename);
 
     } else {
@@ -92,7 +90,6 @@ Template.writeMessage.events({
         throw new Error;
       }
 
-      console.log("photo data:", data);
       Session.set("photo", data);
     })
   }
