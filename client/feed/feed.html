@@ -5,38 +5,58 @@
   <div class = "feed-content">
 		<ul class="collection">
 			{{#each messages.visible}}
-		    {{> visible}}
+		    {{> feedMessage}}
 		  {{/each}}
 
-		  {{#each messages.hidden}}
-		    {{> hidden}}
-		 	{{/each}}
+      {{#each messages.hidden}}
+        {{> feedMessage}}
+      {{/each}}
 		</ul>
 	</div>
-
 </template>
 
-<template name="visible">
-		<li class="collection-item avatar visible">
+<template name="feedMessage">
+		<li class="collection-item avatar feedMessage">
+      {{#if visible}}
 			<i class="mdi-communication-email circle readable lighten-2"></i>
-		      	<p class="proximity">{{proximity}} ft</p>
-		      	<p>{{origin}}</p>
-		      	<p data-livestamp="{{createdAt}}"></p>
-		      	<span class="mdi-content-drafts"> {{opens}} </span>
-		      	<span class="mdi-action-thumb-up"> {{likes.length}}</span>
-		</li>
+      {{else}}
+		  <i class="mdi-action-lock circle grey darken-1"></i>
+      {{/if}}
+            <p class="proximity"> {{proximity}} ft</p>
+            <p>{{origin}}</p>
+            <p data-livestamp="{{createdAt}}"></p>
+            <span class="mdi-content-drafts"> {{opens}} </span>
+            <span class="mdi-action-thumb-up"> {{likes.length}}</span>
+    </li>
 </template>
 
-<template name="hidden">
-		<li class="collection-item avatar hidden">
-		<i class="mdi-action-lock circle grey darken-1"></i>
-      		<p class="proximity">{{proximity}} ft</p>
-	      	<p>{{origin}}</p>
-	      	<p data-livestamp="{{createdAt}}"></p>
-	      	<span class="mdi-content-drafts"> {{opens}} </span>
-	      	<span class="mdi-action-thumb-up"> {{likes.length}}</span>
-
-		</li>
+<template name="messageModal">
+  <div id="map-message-modal" class="modal modal-box c-modal">
+    <div class="modal-content">
+      <a href="#" class="right modal-close">close</a>
+        {{#if message.visible}}
+        <h4>Message:</h4>
+        {{#if message.key}}
+          <div id="display-message"></div>
+        {{/if}}
+        <p>{{message.text}}</p>
+        {{else}}
+        <h4>Message is too far away to view.</h4>
+        {{/if}}
+        <h6>Origin: {{message.origin}}</h6>
+        <h6>Opens: {{message.opens}}</h6>
+    </div>
+    {{#if message.visible}}
+    <div class="modal-footer">
+      <button class ="save btn-flat">
+        <i class ="mdi-content-add-box"> tag message</i>
+      </button>
+      <button class ="btn-flat like">
+        <i class ="mdi-action-thumb-up"> {{message.likes.length}}</i>
+      </button>
+    </div>
+    {{/if}}
+  </div>
 </template>
 
 <template name="writeMessage">
