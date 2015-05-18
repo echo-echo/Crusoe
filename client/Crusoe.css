@@ -126,9 +126,9 @@ li:hover {
   overflow: hidden;
   /*added these for rotation:*/
   -webkit-transform-style: preserve-3d;
-  transition: .1s;
+  transition: .5s;
   -webkit-transform-style: preserve-3d;
-  -webkit-transition: .1s;
+  -webkit-transition: .5s;
 }
 #autopan{
   cursor: pointer;
