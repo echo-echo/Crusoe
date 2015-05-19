@@ -1,5 +1,6 @@
 Meteor.methods({
   addMessage: function (text, location, media, filename) {
+    console.log(text, location);
     var username = Meteor.user() ? Meteor.user().username||Meteor.user().profile.name : "Anonymous";
 
     Meteor.http.get('http://api.tiles.mapbox.com/v4/geocode/mapbox.places/'+location[0]+','+location[1]+'.json?access_token=pk.eyJ1Ijoiam9zaHVhYmVuc29uIiwiYSI6Im1sT3BqRWcifQ.W7h8nMmj_oI1p4RzChElsQ', function (err, res) {
