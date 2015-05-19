@@ -50,9 +50,11 @@ Template.profileView.helpers({
 
 Template.writeMessage.events({
   "click .throw": function () {
-  //jquery function to append throw-control buttons to the body
+    var message = $('textarea').val();
     var rotate;
-    var rotation = 0;
+    var rotation = 0 % 360;
+    var userLat = Number(localStorage.getItem("userLat"));
+    var userLong = Number(localStorage.getItem("userLong"));
   //define throw controls html element and function for map rotation:
     var throwControls = ['<a class="waves-effect waves-light btn-large scan-left"><i class="mdi-navigation-arrow-back left"></i></a>',
       '<a class="waves-effect waves-light btn-large throw-it">Throw!</a>',
@@ -63,6 +65,10 @@ Template.writeMessage.events({
       });
     }; 
 
+    window.Crusoe.map.panTo([userLat, userLong]);
+    setTimeout(function(){window.Crusoe.map.setZoom(15)}, 800);//TODO set listener on finished panning to fire zoom.  This is a stopgap because zoom was being called before panning completed
+
+  //jquery function to append throw-control buttons to the body, to both body and mobileNav
     $('body').first().append('<div class="throw-controls"></div>');
     $('.mobileNav').append('<div class="throw-controls"></div>');
     //TODO these slide hiding animations need to be reversed upon completion:
@@ -85,6 +91,17 @@ Template.writeMessage.events({
 
     $('.scan-right').mousedown(function(){ rotate = 'right'; });
     $('.scan-right').mouseup(function(){ rotate = undefined; });
+
+          var getPxBounds = window.Crusoe.map.getPixelBounds;
+        window.Crusoe.map.getPixelBounds = function () {
+          var bounds = getPxBounds.call(this);
+          // ... extend the bounds
+          bounds.min.x=bounds.min.x-1000;
+          bounds.min.y=bounds.min.y-1000;
+          bounds.max.x=bounds.max.x+1000;
+          bounds.max.y=bounds.max.y+1000;
+          return bounds;
+      };  
     //read value of 'rotate', change rotation variable, and call transform map to set Z rotation to rotation variable:
     setInterval(function(){
       if (rotate==='left') { rotation += 4; transformMap() }
@@ -92,22 +109,31 @@ Template.writeMessage.events({
     }, 100)
 
   //reset UI on throw completion:
-  $('.throw-it').click(function(){
-    $('.throw-controls').remove();
-    $('.mobile-icons').slideToggle(500, 'linear')
-    $('.panel').slideToggle(500, 'linear')
-    $('.nav-wrapper').slideToggle(500, 'linear')
-    $('nav').slideToggle(500, 'linear')
-    $('#map').css({ 
-      transform: 'translate3d(0px, 0px, 0px) rotateX(0deg) rotateZ(0deg)'
-    });
-    rotation = 0;
-    if ($(window).width() < 480) {
-      $('#map').css({'overflow': 'hidden', 'margin-left': '0px'});
-    } else {
-      $('#map').css({'overflow': 'hidden', 'margin-left': '300px'});
-    }
-  });  
+     $('.throw-it').click(function(){
+       var currPoint = window.Crusoe.map.latLngToLayerPoint([userLat, userLong]);
+       var radAng = -1 * (rotation + 90) * (Math.PI/180);
+       var newPoint = window.Crusoe.map.layerPointToLatLng([(150 * Math.cos(radAng)) + currPoint['x'], (150 * Math.sin(radAng)) + currPoint['y']]);
+// console.log(newPoint);
+       Meteor.call("addMessage", message, [newPoint['lng'], newPoint['lat']]);
+
+      setTimeout(function(){
+     $('.throw-controls').remove();
+     $('.mobile-icons').slideToggle(500, 'linear')
+     $('.panel').slideToggle(500, 'linear')
+     $('.nav-wrapper').slideToggle(500, 'linear')
+     $('nav').slideToggle(500, 'linear')
+     $('#map').css({ 
+       transform: 'translate3d(0px, 0px, 0px) rotateX(0deg) rotateZ(0deg)'
+     });
+     rotation = 0;
+     if ($(window).width() < 480) {
+       $('#map').css({'overflow': 'hidden', 'margin-left': '0px'});
+     } else {
+       $('#map').css({'overflow': 'hidden', 'margin-left': '300px'});
+  }
+     }, 1400);
+
+     }); 
   },
 
   "click .submit": function () {

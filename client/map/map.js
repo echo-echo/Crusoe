@@ -28,6 +28,7 @@ Template.Map.onRendered(function () {
 
   Tracker.autorun(function () {
     if (Mapbox.loaded()) {
+
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       // pulls all the messages from the database.
       // re-initializes the users location variables and
@@ -35,7 +36,6 @@ Template.Map.onRendered(function () {
       var allMess = Messages.find({},{sort: {createdAt: -1}}).fetch();
       var userLat = Number(localStorage.getItem("userLat"));
       var userLong = Number(localStorage.getItem("userLong"));
-
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       // if the map isnt initialized then initialize it.
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
