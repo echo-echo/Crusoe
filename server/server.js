@@ -75,16 +75,26 @@ SyncedCron.add({
         msg.latWeight15m +
         msg.latWeight1hr +
         msg.latWeight6hr +
+        msg.latWeight12hr +
+        msg.latWeight1day +
+        msg.latWeight3day +
+        msg.latWeight1wk +
+        msg.latWeight1month +
         (+latWind || 0)
-        ) * 0.0005;
+        ) * 0.0003;
       var lngChange = (
         Math.random() - 0.5 +
         msg.lngWeight1m +
         msg.lngWeight15m +
         msg.lngWeight1hr +
         msg.lngWeight6hr +
+        msg.lngWeight12hr +
+        msg.lngWeight1day +
+        msg.lngWeight3day +
+        msg.lngWeight1wk +
+        msg.lngWeight1month +
         (+lngWind || 0)
-        ) * 0.0005;
+        ) * 0.0003;
       var newLng = msg.location.coordinates[0] += lngChange;
       var newLat = msg.location.coordinates[1] += latChange;
 
