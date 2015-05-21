@@ -177,7 +177,6 @@ Template.Map.onRendered(function () {
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
       geoJsonLayer.on('click', function (e) {
-
         //the Date.now() portion is used to de-bounce the click.
         //for some reason clicking on an message icon in the map calls
         // this function multiple times. We are making a simple check to see if
@@ -185,7 +184,7 @@ Template.Map.onRendered(function () {
         // the server counting multiple opens to the message due to the
         // 'bouncing' of the message click.
         if(Date.now() - lastClick > 1000){
-        var message = e.layer.feature.properties
+          var message = e.layer.feature.properties
           Session.set('currentMessage', message)
 
           if(message.visible){
