@@ -162,6 +162,11 @@ li:hover {
   width: 500px;
 }
 
+.streetview {
+  height: 200px;
+  width: 200px;
+}
+
 /*ul{
   padding-left: 23px;
 }*/

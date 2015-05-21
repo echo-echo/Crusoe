@@ -136,12 +136,14 @@ Template.messageModal.helpers({
 
     }
 
-    var lat = message.location.coordinates[1];
-    var lng = message.location.coordinates[0];
-    var coords = new google.maps.LatLng(lat, lng);
-    var panorama = new google.maps.StreetViewPanorama($('.streetview')[0], {
-      position: coords
-    });
+    if ( message ) {
+      var lat = message.location.coordinates[1];
+      var lng = message.location.coordinates[0];
+      var coords = new google.maps.LatLng(lat, lng);
+      var panorama = new google.maps.StreetViewPanorama($('.streetview')[0], {
+        position: coords
+      });
+    }
 
     return message;
   }
