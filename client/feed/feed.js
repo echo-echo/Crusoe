@@ -116,7 +116,6 @@ Template.messageModal.helpers({
 						throw new Error;
 					}
 
-					console.log(result)
 					$('#display-message').css({
 						'background': 'url( ' + result[0][1] + ') no-repeat',
 						'background-size': '100% auto'
