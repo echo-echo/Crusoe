@@ -185,7 +185,7 @@ Template.writeMessage.events({
     'transition': '3s', '-webkit-transition': '3s'
   });
   //append throw controls to map:
-    $('html').css({'overflow': 'hidden', 'height': '100%'});
+    $('html').css({'overflow': 'hidden'});
     throwControls.forEach(function(element){ $('.throw-controls').append(element) });
   //listen to scanning buttons and set value of 'rotate':
     $('.scan-left').mousedown(function(){ rotation = (rotation + 4) % 360; transformMap(); leftInt = setInterval(function(){ rotation = (rotation + 4) % 360; transformMap(); }, 100) });
