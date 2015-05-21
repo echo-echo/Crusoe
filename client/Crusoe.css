@@ -1,11 +1,18 @@
 /* CSS declarations go here */
-
-
-
+html{
+  overflow: hidden;
+  height: 100%;
+}
 .leaflet-marker-icon {
-  -webkit-transition: 15s;
   position: absolute;
+  transition: 15s;
+  -webkit-transition: 15s;
+  transition-timing-function: linear;
   -webkit-transition-timing-function: linear;
+}
+.leaflet-container{
+   background:none!important;
+   overflow:visible;
 }
 /* ~~~~~~~~~~~~~~~~~~~~~~
        BOTTLE ICONS
@@ -115,17 +122,33 @@ li:hover {
   overflow:hidden;
   text-align: center;
 }
+.yield{
+/*  perspective: 800px;*/
+}
 
-#map {
-  position:fixed;
+.map-rotation{
+}
+
+#map{
+  position:absolute;
   height: 100%;
   min-width: 300px;
   margin-left: 300px;
   margin-bottom: 0px;
+  overflow: hidden;
+  backface-visibility:visible!important;
+  /*added these for rotation:*/
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: .1s;
+  -webkit-transition: .1s;
+  transition-timing-function: linear;
+  -webkit-transition-timing-function: linear;
 }
 #autopan{
   cursor: pointer;
   top:70px;
+  left:310px;
   position:fixed;
   z-index: 199;
 }
@@ -155,6 +178,14 @@ li:hover {
 
 .collection{
   margin-top:0px;
+}
+
+.throw-controls{
+  display: block; /*these center buttons in div*/
+  margin: 0 auto; 
+  text-align: center;
+  position: relative;
+  top: 65%;
 }
 
 #display-message {
@@ -239,6 +270,7 @@ a#signout.btn{
 @media only screen and (max-width : 480px) {
   #autopan {
     top: 5px;
+    left: 8px;
   }
 
   .feed-content {
@@ -252,7 +284,7 @@ a#signout.btn{
   }
 
   #map {
-    margin-left: 0px;
+    margin-left: 0px!important;
     bottom: 0px;
     z-index: 10;
     width: 100%;
@@ -296,6 +328,7 @@ a#signout.btn{
 @media only screen and (max-width : 320px) {
   #autopan {
     top: 5px;
+    left: 8px;
   }
 
   .feed-content {
@@ -309,7 +342,7 @@ a#signout.btn{
   }
 
   #map {
-    margin-left: 0px;
+    margin-left: 0px!important;
     bottom: 0px;
     z-index: 10;
     width: 100%;

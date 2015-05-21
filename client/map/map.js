@@ -29,6 +29,7 @@ Template.Map.onRendered(function () {
 
   Tracker.autorun(function () {
     if (Mapbox.loaded()) {
+
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       // pulls all the messages from the database.
       // re-initializes the users location variables and
@@ -36,7 +37,6 @@ Template.Map.onRendered(function () {
       var allMess = Messages.find({},{sort: {createdAt: -1}}).fetch();
       var userLat = Number(localStorage.getItem("userLat"));
       var userLong = Number(localStorage.getItem("userLong"));
-
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       // if the map isnt initialized then initialize it.
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -62,8 +62,7 @@ Template.Map.onRendered(function () {
         imageBounds = calcBounds(userLat, userLong, radiusVal);
         bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
         geoJsonLayer = L.geoJson().addTo(map);
-
-        window.Crusoe.map = map;
+  		  window.Crusoe.map = map;
       }
 
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
