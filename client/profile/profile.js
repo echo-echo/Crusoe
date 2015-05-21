@@ -1,24 +1,35 @@
 Meteor.subscribe("userData");
-var submitMessage = function(location){
 
-    var message = $('textarea').val();
-    var file = $('input.media-upload')[0].files[0];
-    var photo = Session.get("photo");
-    var longitude = Number(localStorage.getItem("userLong"));
-    var latitude = Number(localStorage.getItem("userLat"));
-    // var location=[newPoint['lng'], newPoint['lat']];
-    $('.img-upload-preview').remove() //remove preview
-    if ( file || photo ) {
-      if ( file ) {
-        // need to convert to format that can be sent to the server and then to S3
-        var fr = new FileReader();
-        fr.readAsDataURL(file);
-        fr.onloadend = function (evt) {
-          var mediaAsDataURL = evt.target.result;
-          var filename = Date.now().toString() + file.name;
-          Meteor.call("addMessage", message, location, mediaAsDataURL, filename);
-        };
-      }
+var submitMessage = function(location){
+  var message = $('textarea').val();
+  var file = $('input.media-upload')[0].files[0];
+  var photo = Session.get("photo");
+  $('.img-upload-preview').remove() //remove preview
+  if ( file || photo ) {
+    if ( file ) {
+      // need to convert to format that can be sent to the server and then to S3
+      var fr = new FileReader();
+      fr.readAsDataURL(file);
+      fr.onloadend = function (evt) {
+        var mediaAsDataURL = evt.target.result;
+        var filename = file.name;
+        var resizedURL;
+        //resize image before uploading to S3         
+        var img = document.createElement('img');
+        img.src = mediaAsDataURL
+        img.onload = function(){
+          var canvas = document.createElement('canvas');
+          var context = canvas.getContext('2d')
+          canvas.width = 300;
+          canvas.height = 300*img.height/img.width;
+          context.drawImage(img, 0, 0, 300, 300*img.height/img.width)  
+          resizedURL = canvas.toDataURL()
+          console.log(mediaAsDataURL)
+          console.log(resizedURL)
+          Meteor.call("addMessage", message, location, resizedURL, filename);
+        }
+      };
+    }
       // else, it's a photo the user just took with their camera
       var filename = Date.now().toString() + ".jpg";
       Meteor.call("addMessage", message, location, photo, filename);
@@ -29,7 +40,7 @@ var submitMessage = function(location){
 
     $('textarea').val('');
     $('input.media-upload').val('');
-}
+};
 
 //use below to open materialize modal
 Template.profile.onRendered(function(){
@@ -131,9 +142,10 @@ Template.profileView.helpers({
 
 Template.writeMessage.events({
   "click .throw": function () {
-    var message = $('textarea').val();
     var rotate;
-    var rotation = 0 % 360;
+    var rotation = 0;
+    var leftInt;
+    var rightInt;
     var userLat = Number(localStorage.getItem("userLat"));
     var userLong = Number(localStorage.getItem("userLong"));
   //define throw controls html element and function for map rotation:
@@ -142,12 +154,11 @@ Template.writeMessage.events({
       '<a class="waves-effect waves-light btn-large scan-right"><i class="mdi-navigation-arrow-forward right"></i></a>'];
     var transformMap = function(){
       $('#map').css({ 
-        'transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)', 'transition': '.2s', '-webkit-transition': '.2s', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)'
+        'transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)', 'transition': '.1s', '-webkit-transition': '.1s', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)'
       }); 
     }; 
-
     window.Crusoe.map.panTo([userLat, userLong]);
-    setTimeout(function(){window.Crusoe.map.setZoom(15)}, 800);//TODO set listener on finished panning to fire zoom.  This is a stopgap because zoom was being called before panning completed
+    setTimeout(function(){window.Crusoe.map.setZoom(16)}, 800);//TODO set listener on finished panning to fire zoom.  This is a stopgap because zoom was being called before panning completed
 
   //jquery function to append throw-control buttons to the body, to both body and mobileNav
     $('body').first().append('<div class="throw-controls"></div>');
@@ -157,7 +168,6 @@ Template.writeMessage.events({
     $('.panel').slideToggle(500, 'linear')
     $('.nav-wrapper').slideToggle(500, 'linear')
     $('nav').slideToggle(500, 'linear')
-
   //conditionally set map css for large or small, only difference is 'margin-left'
   if ($(window).width() < 480) {
     $('#map').css({'overflow': 'visible', 'margin-left': '0px'});
@@ -171,11 +181,11 @@ Template.writeMessage.events({
   //append throw controls to map:
     throwControls.forEach(function(element){ $('.throw-controls').append(element) });
   //listen to scanning buttons and set value of 'rotate':
-    $('.scan-left').mousedown(function(){ rotate = 'left'; console.log(rotate); });
-    $('.scan-left').mouseup(function(){ rotate = undefined; });
+    $('.scan-left').mousedown(function(){ rotation = (rotation + 4) % 360; transformMap(); leftInt = setInterval(function(){ rotation = (rotation + 4) % 360; transformMap(); }, 100) });
+    $('.scan-left').mouseup(function(){ clearInterval(leftInt) });
 
-    $('.scan-right').mousedown(function(){ rotate = 'right'; });
-    $('.scan-right').mouseup(function(){ rotate = undefined; });
+    $('.scan-right').mousedown(function(){ rotation = (rotation - 4) % 360; transformMap(); rightInt = setInterval(function(){ rotation = (rotation - 4) % 360; transformMap(); }, 100) });
+    $('.scan-right').mouseup(function(){ clearInterval(rightInt)});
 
           var getPxBounds = window.Crusoe.map.getPixelBounds;
         window.Crusoe.map.getPixelBounds = function () {
@@ -188,20 +198,17 @@ Template.writeMessage.events({
           return bounds;
       };  
     //read value of 'rotate', change rotation variable, and call transform map to set Z rotation to rotation variable:
-    setInterval(function(){
-      if (rotate==='left') { rotation += 4; transformMap() }
-      if (rotate==='right') { rotation -= 4; transformMap() }
-    }, 100)
+    // setInterval(function(){
+    //   if (rotate==='left') { rotation = (rotation + 4) % 360; transformMap() }
+    //   if (rotate==='right') { rotation = (rotation - 4) % 360; transformMap() }
+    // }, 100)
 
   //reset UI on throw completion:
      $('.throw-it').click(function(){
        var currPoint = window.Crusoe.map.latLngToLayerPoint([userLat, userLong]);
        var radAng = -1 * (rotation + 90) * (Math.PI/180);
        var newPoint = window.Crusoe.map.layerPointToLatLng([(150 * Math.cos(radAng)) + currPoint['x'], (150 * Math.sin(radAng)) + currPoint['y']]);
-  // console.log(newPoint);
        submitMessage([newPoint['lng'], newPoint['lat']]);
-       // Meteor.call("addMessage", message, [newPoint['lng'], newPoint['lat']]);
-
       setTimeout(function(){
      $('.throw-controls').remove();
      $('.mobile-icons').slideToggle(500, 'linear')
@@ -235,51 +242,10 @@ Template.writeMessage.events({
   },
 
   "click .submit": function () {
-    var message = $('textarea').val();
-    var file = $('input.media-upload')[0].files[0];
-    var photo = Session.get("photo");
     var longitude = Number(localStorage.getItem("userLong"));
     var latitude = Number(localStorage.getItem("userLat"));
     var location=[longitude,latitude];
-    $('.img-upload-preview').remove() //remove preview
-
-    if ( file || photo ) {
-      if ( file ) {
-        // need to convert to format that can be sent to the server and then to S3
-        var fr = new FileReader();
-        fr.readAsDataURL(file);
-        fr.onloadend = function (evt) {
-          var mediaAsDataURL = evt.target.result;
-          var filename = file.name;
-          var resizedURL;
-
-          //resize image before uploading to S3         
-            var img = document.createElement('img');
-            img.src = mediaAsDataURL
-            img.onload = function(){
-              var canvas = document.createElement('canvas');
-              var context = canvas.getContext('2d')
-              canvas.width = 300;
-              canvas.height = 300*img.height/img.width;
-              context.drawImage(img, 0, 0, 300, 300*img.height/img.width)  
-              resizedURL = canvas.toDataURL()
-              console.log(mediaAsDataURL)
-              console.log(resizedURL)
-              Meteor.call("addMessage", message, location, resizedURL, filename);
-            }
-        };
-      } else {
-        // else, it's a photo the user just took with their camera
-        var filename = Date.now().toString() + ".jpg";
-        console.log("filename client side: ", filename);
-        Meteor.call("addMessage", message, location, photo, filename);
-      }
-    } else {
-      Meteor.call("addMessage", message, location);
-    }
-
-    $('textarea').val('');
-    $('input.media-upload').val('');
+    submitMessage(location);
   },
 
   "click .takephoto": function() {
