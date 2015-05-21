@@ -48,7 +48,7 @@
           {{/if}}
           <ul class = "collection">
             {{#each taggedMessages}}
-              {{> tagged}}
+              {{> userMessages}}
             {{/each}}
           </ul>
         </div>
@@ -56,26 +56,13 @@
    </div>
 </template>
 
-<template name = "tagged">
-	<li class = "profile-list collection-item">
-    <span data-livestamp="{{createdAt}}"></span>
-	  <p>{{origin}}</p>
-      {{#if key}}
-          <div {{attributes}}></div>
-        {{/if}}
-	  <p class="text">{{text}}</p>
-	  <span class="mdi-content-drafts"> {{opens}}</span>
-	  <span class="mdi-action-thumb-up"> {{likes.length}}</span>
-	</li>
-</template>
-
 <template name = "userMessages">
   <li class = "profile-list collection-item">
     <span data-livestamp="{{createdAt}}"></span>
     <p>{{origin}}</p>
-     {{#if key}}
-          <div {{attributes}}></div>
-        {{/if}}
+      {{#if key}}
+          <img src="{{image}}"/>
+      {{/if}}
     <p class="text">{{text}}</p>
     <span class="mdi-content-drafts"> {{opens}}</span>
     <span class="mdi-action-thumb-up"> {{likes.length}}</span>

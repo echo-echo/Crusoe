@@ -28,22 +28,73 @@ Template.promptDelete.events({
 
 Template.profileView.helpers({
   taggedMessages: function(){
-    var result=[]
-    var tagged = Meteor.users.find({}).fetch()[0].tagged
+    var messages=[]
+    var taggedIds = Meteor.user().tagged
+    var keys = []
 
-    if ( tagged ) {
-      tagged.forEach(function(item){
-        result.push(Messages.find({_id:item}).fetch()[0]);
-      });
+    if (taggedIds){
+      taggedIds.forEach(function(tagId){
+        var message = Messages.find({_id:tagId}).fetch()[0]
+        messages.push(message)
 
-      return result;
+        if (message.key){
+          var key = [message._id, message.key]
+          keys.push(key)
+        }
+      })
     }
+
+    //add logic to prevent getMedia from being called repeatedly
+    Meteor.call("getMedia", keys, function(err, result){
+      if (err) {
+        console.log(err)
+      } else {
+        messages.forEach(function(message){
+          for (var i = 0; i<result.length; i++){
+              if (result[i][0] === message._id){
+                message.image = result[i][1]
+                console.log(messages)
+
+              }
+          }
+        })
+        Session.set("taggedMessages", messages)
+      }
+    })
+
+
+    return Session.get("taggedMessages")
   },
 
   userCreated: function(){
     var username = Meteor.user().username || Meteor.user().profile.name
-    var created = Messages.find({username:username});
-    return created;
+    var messages = Messages.find({username:username}).fetch()
+    var keys = []
+
+    messages.forEach(function(message){
+      if (message.key){
+        var key = [message._id, message.key]
+        keys.push(key)
+      }
+    })
+
+    Meteor.call("getMedia", keys, function(err, result){
+      if (err){
+        console.log(err)
+      } else {
+        messages.forEach(function(message){
+          for (var i = 0; i<result.length; i++){
+            if (result[i][0] === message._id){
+              message.image = result[i][1]
+            }
+          }
+        })
+        Session.set("userMessages", messages)
+      }
+    })
+
+
+    return Session.get("userMessages")
   }
 });
 
@@ -167,8 +218,23 @@ Template.writeMessage.events({
         fr.readAsDataURL(file);
         fr.onloadend = function (evt) {
           var mediaAsDataURL = evt.target.result;
-          var filename = Date.now().toString() + file.name;
-          Meteor.call("addMessage", message, location, mediaAsDataURL, filename);
+          var filename = file.name;
+          var resizedURL;
+
+          //resize image before uploading to S3         
+            var img = document.createElement('img');
+            img.src = mediaAsDataURL
+            img.onload = function(){
+              var canvas = document.createElement('canvas');
+              var context = canvas.getContext('2d')
+              canvas.width = 300;
+              canvas.height = 300*img.height/img.width;
+              context.drawImage(img, 0, 0, 300, 300*img.height/img.width)  
+              resizedURL = canvas.toDataURL()
+              console.log(mediaAsDataURL)
+              console.log(resizedURL)
+              Meteor.call("addMessage", message, location, resizedURL, filename);
+            }
         };
       }
 
