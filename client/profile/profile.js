@@ -82,10 +82,10 @@ Template.writeMessage.events({
   } else {
     $('#map').css({'overflow': 'visible', 'margin-left': '150px'});
   }
-    $('#map').css({ 
-      'transform': 'translate3d(0px, 0px, 0px)rotateX(65deg)', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(65deg)', 
-      'transition': '3s', '-webkit-transition': '3s'
-    });
+  $('#map').css({ 
+    'transform': 'translate3d(0px, 0px, 0px)rotateX(65deg)', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(65deg)', 
+    'transition': '3s', '-webkit-transition': '3s'
+  });
   //append throw controls to map:
     throwControls.forEach(function(element){ $('.throw-controls').append(element) });
   //listen to scanning buttons and set value of 'rotate':
