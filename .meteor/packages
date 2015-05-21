@@ -21,3 +21,4 @@ accounts-facebook
 peerlibrary:aws-sdk
 service-configuration
 mdg:camera
+dburles:google-maps
