@@ -60,8 +60,8 @@ Template.writeMessage.events({
       '<a class="waves-effect waves-light btn-large scan-right"><i class="mdi-navigation-arrow-forward right"></i></a>'];
     var transformMap = function(){
       $('#map').css({ 
-        transform: 'translate3d(0px, 0px, 0px) rotateX(0deg) rotateZ(' + rotation + 'deg)'
-      });
+        'transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)', 'transition': '.1s', '-webkit-transition': '.1s', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)'
+      }); 
     }; 
 
     window.Crusoe.map.panTo([userLat, userLong]);
@@ -82,6 +82,10 @@ Template.writeMessage.events({
   } else {
     $('#map').css({'overflow': 'visible', 'margin-left': '150px'});
   }
+    $('#map').css({ 
+      'transform': 'translate3d(0px, 0px, 0px)rotateX(65deg)', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(65deg)', 
+      'transition': '3s', '-webkit-transition': '3s'
+    });
   //append throw controls to map:
     throwControls.forEach(function(element){ $('.throw-controls').append(element) });
   //listen to scanning buttons and set value of 'rotate':
@@ -112,7 +116,7 @@ Template.writeMessage.events({
        var currPoint = window.Crusoe.map.latLngToLayerPoint([userLat, userLong]);
        var radAng = -1 * (rotation + 90) * (Math.PI/180);
        var newPoint = window.Crusoe.map.layerPointToLatLng([(150 * Math.cos(radAng)) + currPoint['x'], (150 * Math.sin(radAng)) + currPoint['y']]);
-// console.log(newPoint);
+  // console.log(newPoint);
        Meteor.call("addMessage", message, [newPoint['lng'], newPoint['lat']]);
 
       setTimeout(function(){
@@ -122,17 +126,28 @@ Template.writeMessage.events({
      $('.nav-wrapper').slideToggle(500, 'linear')
      $('nav').slideToggle(500, 'linear')
      $('#map').css({ 
-       transform: 'translate3d(0px, 0px, 0px) rotateX(0deg) rotateZ(0deg)'
+       'transform': 'translate3d(0px, 0px, 0px) rotateX(0) rotateZ(0deg)', '-webkit-transform': 'translate3d(0px, 0px, 0px) rotateX(0) rotateZ(0deg)'
      });
      rotation = 0;
      if ($(window).width() < 480) {
        $('#map').css({'overflow': 'hidden', 'margin-left': '0px'});
      } else {
        $('#map').css({'overflow': 'hidden', 'margin-left': '300px'});
-  }
+     }
+
+     var getPxBounds = window.Crusoe.map.getPixelBounds;
+     window.Crusoe.map.getPixelBounds = function () {
+       var bounds = getPxBounds.call(this);
+          // ... reset the bounds
+       bounds.min.x=bounds.min.x+1000;
+       bounds.min.y=bounds.min.y+1000;
+       bounds.max.x=bounds.max.x-1000;
+       bounds.max.y=bounds.max.y-1000;
+       return bounds;
+       }; 
      }, 1400);
 
-     }); 
+    }); 
   },
 
   "click .submit": function () {

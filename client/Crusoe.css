@@ -1,12 +1,16 @@
 /* CSS declarations go here */
-
+html{
+  overflow: hidden;
+  height: 100%;
+}
 .leaflet-marker-icon {
   -webkit-transition: 15s;
   position: absolute;
   -webkit-transition-timing-function: linear;
 }
-.leaflet-map-pane{
-
+.leaflet-container{
+   background:none!important;
+   overflow:visible;
 }
 /* ~~~~~~~~~~~~~~~~~~~~~~
        BOTTLE ICONS
@@ -116,6 +120,13 @@ li:hover {
   overflow:hidden;
   text-align: center;
 }
+.yield{
+/*  perspective: 800px;*/
+}
+
+.map-rotation{
+
+}
 
 #map{
   position:absolute;
@@ -124,10 +135,11 @@ li:hover {
   margin-left: 300px;
   margin-bottom: 0px;
   overflow: hidden;
+  backface-visibility:visible!important;
   /*added these for rotation:*/
+  transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   transition: .5s;
-  -webkit-transform-style: preserve-3d;
   -webkit-transition: .5s;
 }
 #autopan{
