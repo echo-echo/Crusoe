@@ -315,7 +315,8 @@ var getProperties = function(newMessageData, newMessageInRange, isUsers, isPopul
     'icon' : {
       "iconUrl" : getIcon(false, newMessageInRange, isUsers, isPopular),
       "iconSize" : [35,35]
-    }
+    },
+    "location": newMessageData.location
 
   }
   return props
