@@ -114,7 +114,38 @@ getMedia: function(keys){
         console.log(err);
       }
     });
-  }
+  },
+
+   test:function(n){
+    Future = Npm.require('fibers/future');
+        // build a range of tasks from 0 to n-1
+        var range=_.range(n);
+        // iterate sequentially over the range to launch tasks
+        var futures=_.map(range,function(index){
+            var future=new Future();
+            console.log("launching task",index);
+            // simulate an asynchronous HTTP request using a setTimeout
+            Meteor.setTimeout(function(){
+                // sometime in the future, return the square of the task index
+                future.return(index*index);
+            },index*1000);
+            // accumulate asynchronously parallel tasks
+            return future;
+        });
+        // iterate sequentially over the tasks to resolve them
+        var results=_.map(futures,function(future,index){
+            console.log("FUTRE",futures)
+            // waiting until the future has return
+            var result=future.wait();
+            console.log("result from task",index,"is",result);
+            // accumulate results
+            return result;
+        });
+        //
+        console.log(results);
+        return results;
+    }
+
 })
 
 
