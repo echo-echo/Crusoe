@@ -110,6 +110,11 @@ Template.messageModal.helpers({
       if ( window.Crusoe.img && (Date.now() - Crusoe.lastCalled) > 3000 && window.Crusoe.img.messageId === messageId ) {
         var result = window.Crusoe.img.img;
 
+        $('#display-message').css({
+          'background': 'url( ' + result + ') no-repeat',
+          'background-size': '100% auto'
+        });
+
 			} else if ( !Crusoe.lastCalled || Date.now() - Crusoe.lastCalled > 3000) {
 				var key = [[message._id, message.key]]
 				window.Crusoe.lastCalled = Date.now();
