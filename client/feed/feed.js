@@ -117,7 +117,7 @@ Template.messageModal.helpers({
 			}
     	}
 
-    if ( message ) {
+    if ( message && message.location ) {
       var lat = message.location.coordinates[1];
       var lng = message.location.coordinates[0];
       var coords = new google.maps.LatLng(lat, lng);
