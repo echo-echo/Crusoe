@@ -147,5 +147,12 @@ Template.messageModal.events({
   "click .like": function(){
     var messageId = Session.get("currentMessage")._id
     Meteor.call("likeMessage", messageId)
+  },
+
+  "click .streetview": function(){
+  	// call google maps api to get street view photo for current lat/long
+  	var message = Session.get("currentMessage");
+  	var lng = message.location.coordinates[0];
+  	var lat = message.location.coordinates[1];
   }
 });
