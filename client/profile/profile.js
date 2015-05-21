@@ -44,6 +44,7 @@ Template.profileView.helpers({
       })
     }
 
+    //add logic to prevent getMedia from being called repeatedly
     Meteor.call("getMedia", keys, function(err, result){
       if (err) {
         console.log(err)
@@ -60,13 +61,40 @@ Template.profileView.helpers({
         Session.set("taggedMessages", messages)
       }
     })
+
+
     return Session.get("taggedMessages")
   },
 
   userCreated: function(){
     var username = Meteor.user().username || Meteor.user().profile.name
-    var created = Messages.find({username:username});
-    return created;
+    var messages = Messages.find({username:username}).fetch()
+    var keys = []
+
+    messages.forEach(function(message){
+      if (message.key){
+        var key = [message._id, message.key]
+        keys.push(key)
+      }
+    })
+
+    Meteor.call("getMedia", keys, function(err, result){
+      if (err){
+        console.log(err)
+      } else {
+        messages.forEach(function(message){
+          for (var i = 0; i<result.length; i++){
+            if (result[i][0] === message._id){
+              message.image = result[i][1]
+            }
+          }
+        })
+        Session.set("userMessages", messages)
+      }
+    })
+
+
+    return Session.get("userMessages")
   }
 });
 
