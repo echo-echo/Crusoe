@@ -134,6 +134,7 @@ Template.Map.onRendered(function () {
               isUsers = true
             } else if (Meteor.user().profile){
               isUsers = Meteor.user().profile.name === object.username
+              console.log(isUsers);
             }
           }
         }
@@ -186,6 +187,7 @@ Template.Map.onRendered(function () {
         // 'bouncing' of the message click.
         if(Date.now() - lastClick > 1000){
         var message = e.layer.feature.properties
+        debugger;
           Session.set('currentMessage', message)
 
           if(message.visible){
