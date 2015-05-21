@@ -177,7 +177,6 @@ Template.Map.onRendered(function () {
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
       geoJsonLayer.on('click', function (e) {
-
         //the Date.now() portion is used to de-bounce the click.
         //for some reason clicking on an message icon in the map calls
         // this function multiple times. We are making a simple check to see if
