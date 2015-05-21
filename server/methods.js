@@ -95,65 +95,6 @@ getMedia: function(keys){
 
       return results
 
-
-  // getMedia: function(key){
-  //   console.log("getMedia called!");
-  //  // get photo stored in AWS S3 using key, an identifier for the media generated on upload
-  //   Future = Npm.require('fibers/future');
-  //   var futureArray = []
-
-  //   for (var item in key){
-  //     if (key[item]){
-  //       var future = new Future()
-  //       var s3 = new AWS.S3({
-  //         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  //         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-  //       });
-
-  //       s3.getObject({
-  //         Bucket: 'crusoe-media',
-  //         Key: key[item]
-  //       }, function(err, data){
-  //         if (err){
-  //           future.throw(err)
-  //         } else {
-  //           future.return(data.Body.toString('ascii'))
-  //         }
-  //       })
-  //         futureArray.push(future)
-  //     }
-  //   }
-
-  //     var results = futureArray.map(function(future){
-  //       console.log("future array", futureArray)
-  //       var result = future.wait()
-  //       return result
-  //     })
-
-  //     console.log("RESULTS", results)
-  //     return results
-
-
-
-    // var future = new Future();
-
-    // var s3 = new AWS.S3({
-    //   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    //   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-    // });
-
-    // s3.getObject({
-    //   Bucket: 'crusoe-media',
-    //   Key: key
-    // }, function (err, data) {
-    //   if ( err ) {
-    //     future.throw(err);
-    //   } else {
-    //     future.return(data.Body.toString('ascii'));
-    //   }
-    // });
-
-    // return future.wait();
   },
 
   tagMessage: function(messageId){
