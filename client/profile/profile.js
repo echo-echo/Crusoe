@@ -1,4 +1,35 @@
 Meteor.subscribe("userData");
+var submitMessage = function(location){
+
+    var message = $('textarea').val();
+    var file = $('input.media-upload')[0].files[0];
+    var photo = Session.get("photo");
+    var longitude = Number(localStorage.getItem("userLong"));
+    var latitude = Number(localStorage.getItem("userLat"));
+    // var location=[newPoint['lng'], newPoint['lat']];
+    $('.img-upload-preview').remove() //remove preview
+    if ( file || photo ) {
+      if ( file ) {
+        // need to convert to format that can be sent to the server and then to S3
+        var fr = new FileReader();
+        fr.readAsDataURL(file);
+        fr.onloadend = function (evt) {
+          var mediaAsDataURL = evt.target.result;
+          var filename = Date.now().toString() + file.name;
+          Meteor.call("addMessage", message, location, mediaAsDataURL, filename);
+        };
+      }
+      // else, it's a photo the user just took with their camera
+      var filename = Date.now().toString() + ".jpg";
+      Meteor.call("addMessage", message, location, photo, filename);
+
+    } else {
+      Meteor.call("addMessage", message, location);
+    }
+
+    $('textarea').val('');
+    $('input.media-upload').val('');
+}
 
 //use below to open materialize modal
 Template.profile.onRendered(function(){
@@ -168,7 +199,8 @@ Template.writeMessage.events({
        var radAng = -1 * (rotation + 90) * (Math.PI/180);
        var newPoint = window.Crusoe.map.layerPointToLatLng([(150 * Math.cos(radAng)) + currPoint['x'], (150 * Math.sin(radAng)) + currPoint['y']]);
   // console.log(newPoint);
-       Meteor.call("addMessage", message, [newPoint['lng'], newPoint['lat']]);
+       submitMessage([newPoint['lng'], newPoint['lat']]);
+       // Meteor.call("addMessage", message, [newPoint['lng'], newPoint['lat']]);
 
       setTimeout(function(){
      $('.throw-controls').remove();
