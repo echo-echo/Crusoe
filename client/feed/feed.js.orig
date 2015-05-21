@@ -93,6 +93,7 @@ Template.feed.events({
 });
 
 Template.messageModal.helpers({
+<<<<<<< HEAD
   message: function(){
     var message = Session.get('currentMessage');
 
@@ -105,6 +106,64 @@ Template.messageModal.helpers({
       // prevents Meteor from calling AWS multiple times via the getMedia method
       if ( window.Crusoe.img && (Date.now() - Crusoe.lastCalled) > 3000 && window.Crusoe.img.messageId === messageId ) {
         var result = window.Crusoe.img.img;
+
+        $('#display-message').css({
+          'background': 'url( ' + result + ') no-repeat',
+          'background-size': 'auto auto',
+        });
+
+      } else if ( !Crusoe.lastCalled || Date.now() - Crusoe.lastCalled > 3000) {
+        var key = message.key;
+        window.Crusoe.lastCalled = Date.now();
+        // get the blob? from S3 and attach it as a property here
+        Meteor.call("getMedia", key, function (err, result) {
+          if ( err ) {
+            console.log( err );
+            throw new Error;
+          }
+
+          $('#display-message').css({
+            'background': 'url( ' + result + ') no-repeat',
+            'background-size': '100% auto'
+          });
+
+          var img = {
+            messageId: messageId,
+            img: result
+          }
+          window.Crusoe.img = img;
+        });
+      }
+
+    }
+
+    if ( message ) {
+      var lat = message.location.coordinates[1];
+      var lng = message.location.coordinates[0];
+      var coords = new google.maps.LatLng(lat, lng);
+      var panorama = new google.maps.StreetViewPanorama($('.streetview')[0], {
+        position: coords
+      });
+    }
+
+    return message;
+  }
+=======
+	message: function(){
+		var message = Session.get('currentMessage')
+
+		// if a message is found and if it has an AWS lookup key (it has an img)
+		if ( message && message.key ) {
+			// if the global namespace is already storing an image and it has the same id
+			// as the message we're looking at and it wasn't called within the last second;
+			// prevents Meteor from calling AWS multiple times via the getMedia method
+			if ( window.Crusoe.img && (Date.now() - Crusoe.lastCalled) > 3000 && window.Crusoe.img.messageId === messageId ) {
+				var result = window.Crusoe.img.img;
+
+				$('#display-message').css({
+					'background': 'url( ' + result + ') no-repeat',
+					'background-size': 'auto auto',
+				});
 
 			} else if ( !Crusoe.lastCalled || Date.now() - Crusoe.lastCalled > 3000) {
 				var key = [[message._id, message.key]]
@@ -129,19 +188,11 @@ Template.messageModal.helpers({
 					window.Crusoe.img = img;
 				});
 			}
-    	}
 
-    if ( message ) {
-      var lat = message.location.coordinates[1];
-      var lng = message.location.coordinates[0];
-      var coords = new google.maps.LatLng(lat, lng);
-      var panorama = new google.maps.StreetViewPanorama($('.streetview')[0], {
-        position: coords
-      });
-    }
-
-    return message;
-  }
+		}
+			return message;
+	}
+>>>>>>> profile pictures loaded
 });
 
 Template.messageModal.events({
