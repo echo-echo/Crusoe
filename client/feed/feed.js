@@ -154,5 +154,10 @@ Template.messageModal.events({
   	var message = Session.get("currentMessage");
   	var lng = message.location.coordinates[0];
   	var lat = message.location.coordinates[1];
+  	var coords = new google.maps.LatLng(lat, lng);
+
+  	var panorama = new google.maps.StreetViewPanorama($('.streetview')[0], {
+  		position: coords
+  	});
   }
 });

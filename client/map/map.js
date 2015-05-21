@@ -2,6 +2,7 @@ Meteor.startup(function(){
   window.Crusoe = {};
 
   Mapbox.load();
+  GoogleMaps.load();
 //~~~~~~~~~~~~~~~~~~~~
 // calculates map width based on page width
 //~~~~~~~~~~~~~~~~~~~~
