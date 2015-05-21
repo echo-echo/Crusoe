@@ -18,7 +18,7 @@ Template.feed.helpers({
 			var msgLong = messages[i].location.coordinates[0];
 	    var proximity = getProx(msgLat,msgLong,userLat,userLong) * 3280.84; //  to get ft
 
-      proximity = convertProx(proximity)
+      messages[i].proximityString = convertProx(proximity)
 
       messages[i].proximity = Math.round(proximity);
 	    if (proximity<1000){
@@ -166,7 +166,7 @@ var deg2rad = function(deg) {
 var convertProx = function(dist){
   if(dist > 5280){
     dist/=5280
-    dist.toPrecision(2)
+    dist = Math.round(dist)
     return dist.toString()+ " miles"
   } else {
     return dist.toString()+ " ft"
