@@ -1,45 +1,48 @@
 Meteor.subscribe("userData");
 
 var submitMessage = function(location){
+
+  $('.img-upload-preview').remove() //remove preview
   var message = $('textarea').val();
   var file = $('input.media-upload')[0].files[0];
   var photo = Session.get("photo");
-  $('.img-upload-preview').remove() //remove preview
-  if ( file || photo ) {
-    if ( file ) {
-      // need to convert to format that can be sent to the server and then to S3
-      var fr = new FileReader();
-      fr.readAsDataURL(file);
-      fr.onloadend = function (evt) {
-        var mediaAsDataURL = evt.target.result;
-        var filename = file.name;
-        var resizedURL;
-        //resize image before uploading to S3         
-        var img = document.createElement('img');
-        img.src = mediaAsDataURL
-        img.onload = function(){
-          var canvas = document.createElement('canvas');
-          var context = canvas.getContext('2d')
-          canvas.width = 300;
-          canvas.height = 300*img.height/img.width;
-          context.drawImage(img, 0, 0, 300, 300*img.height/img.width)  
-          resizedURL = canvas.toDataURL()
-          console.log(mediaAsDataURL)
-          console.log(resizedURL)
-          Meteor.call("addMessage", message, location, resizedURL, filename);
-        }
-      };
-    }
-      // else, it's a photo the user just took with their camera
-      var filename = Date.now().toString() + ".jpg";
-      Meteor.call("addMessage", message, location, photo, filename);
 
+    if ( file || photo ) {
+      if ( file ) {
+        // need to convert to format that can be sent to the server and then to S3
+        var fr = new FileReader();
+        fr.readAsDataURL(file);
+        fr.onloadend = function (evt) {
+          var mediaAsDataURL = evt.target.result;
+          var filename = file.name;
+          var resizedURL;
+
+          //resize image before uploading to S3         
+          var img = document.createElement('img');
+          img.src = mediaAsDataURL
+          img.onload = function(){
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d')
+            canvas.width = 300;
+            canvas.height = 300*img.height/img.width;
+            context.drawImage(img, 0, 0, 300, 300*img.height/img.width)  
+            resizedURL = canvas.toDataURL()
+            console.log(mediaAsDataURL)
+            console.log(resizedURL)
+            Meteor.call("addMessage", message, location, resizedURL, filename);
+          }
+        };
+      } else {
+        // else, it's a photo the user just took with their camera
+        var filename = Date.now().toString() + ".jpg";
+        console.log("filename client side: ", filename);
+        Meteor.call("addMessage", message, location, photo, filename);
+      }
     } else {
       Meteor.call("addMessage", message, location);
     }
-
-    $('textarea').val('');
-    $('input.media-upload').val('');
+  $('textarea').val('');
+  $('input.media-upload').val('');
 };
 
 //use below to open materialize modal
