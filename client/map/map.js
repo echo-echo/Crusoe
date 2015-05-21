@@ -185,7 +185,7 @@ Template.Map.onRendered(function () {
         // the server counting multiple opens to the message due to the
         // 'bouncing' of the message click.
         if(Date.now() - lastClick > 1000){
-        var message = e.layer.feature
+        var message = e.layer.feature.properties
           Session.set('currentMessage', message)
 
           if(message.visible){

@@ -174,6 +174,7 @@ var convertProx = function(dist){
     dist = Math.round(dist)
     return dist.toString()+ " miles"
   } else {
+    dist = Math.round(dist)
     return dist.toString()+ " ft"
   }
 }
