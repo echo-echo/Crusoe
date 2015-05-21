@@ -157,9 +157,12 @@ Template.writeMessage.events({
         'transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)', 'transition': '.1s', '-webkit-transition': '.1s', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)'
       }); 
     }; 
-    window.Crusoe.map.panTo([userLat, userLong]);
-    setTimeout(function(){window.Crusoe.map.setZoom(16)}, 800);//TODO set listener on finished panning to fire zoom.  This is a stopgap because zoom was being called before panning completed
-
+    // window.Crusoe.map.dragging.disable();
+    // window.Crusoe.map.touchZoom.disable();
+    // window.Crusoe.map.doubleClickZoom.disable();
+    // window.Crusoe.map.scrollWheelZoom.disable();
+    window.Crusoe.map.on('moveend', function(){ window.Crusoe.map.panTo([userLat, userLong]) });
+    window.Crusoe.map.setZoom(17); 
   //jquery function to append throw-control buttons to the body, to both body and mobileNav
     $('body').first().append('<div class="throw-controls"></div>');
     $('.mobileNav').append('<div class="throw-controls"></div>');
