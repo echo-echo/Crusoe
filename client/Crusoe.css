@@ -136,12 +136,10 @@ li:hover {
   margin-left: 300px;
   margin-bottom: 0px;
   overflow: hidden;
-  backface-visibility:visible!important;
+/*  backface-visibility:visible!important;*/
   /*added these for rotation:*/
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-  transition: .1s;
-  -webkit-transition: .1s;
   transition-timing-function: linear;
   -webkit-transition-timing-function: linear;
 }

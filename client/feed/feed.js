@@ -85,6 +85,10 @@ Template.messageModal.helpers({
 
     // if a message is found and if it has an AWS lookup key (it has an img)
     if ( message && message.key ) {
+      $('#display-message').css({
+        'background': 'url("loading.gif") no-repeat'
+      });
+
       var messageId = message._id;
 
       // if the global namespace is already storing an image and it has the same id
@@ -93,6 +97,11 @@ Template.messageModal.helpers({
       if ( window.Crusoe.img && (Date.now() - Crusoe.lastCalled) > 3000 && window.Crusoe.img.messageId === messageId ) {
         var result = window.Crusoe.img.img;
 
+        $('#display-message').css({
+          'background': 'url( ' + result + ') no-repeat',
+          'background-size': '100% auto'
+        });
+
 			} else if ( !Crusoe.lastCalled || Date.now() - Crusoe.lastCalled > 3000) {
 				var key = [[message._id, message.key]]
 				window.Crusoe.lastCalled = Date.now();
@@ -100,6 +109,7 @@ Template.messageModal.helpers({
 				Meteor.call("getMedia", key, function (err, result) {
 					if ( err ) {
 						console.log( err );
+            console.log("key: ", key);
 						throw new Error;
 					}
 
@@ -117,7 +127,7 @@ Template.messageModal.helpers({
 			}
     	}
 
-    if ( message && message.location && GoogleMaps.loaded()) {
+    if ( message && message.location && GoogleMaps.loaded() ) {
       var lat = message.location.coordinates[1];
       var lng = message.location.coordinates[0];
       var coords = new google.maps.LatLng(lat, lng);
