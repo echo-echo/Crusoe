@@ -93,6 +93,7 @@ getMedia: function(keys){
         return result
       })
 
+      console.log("RESULTS", results)
       return results
 
 
