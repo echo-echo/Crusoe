@@ -236,12 +236,12 @@ Template.writeMessage.events({
               Meteor.call("addMessage", message, location, resizedURL, filename);
             }
         };
+      } else {
+        // else, it's a photo the user just took with their camera
+        var filename = Date.now().toString() + ".jpg";
+        console.log("filename client side: ", filename);
+        Meteor.call("addMessage", message, location, photo, filename);
       }
-
-      // else, it's a photo the user just took with their camera
-      var filename = Date.now().toString() + ".jpg";
-      Meteor.call("addMessage", message, location, photo, filename);
-
     } else {
       Meteor.call("addMessage", message, location);
     }
