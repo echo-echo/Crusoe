@@ -59,29 +59,102 @@ Meteor.methods({
 
   },
 
-  getMedia: function(key){
+getMedia: function(keys){
     console.log("getMedia called!");
-    // get photo stored in AWS S3 using key, an identifier for the media generated on upload
+   // get photo stored in AWS S3 using key, an identifier for the media generated on upload
     Future = Npm.require('fibers/future');
-    var future = new Future();
+ 
+    var futureArray = keys.map(function(key){
 
-    var s3 = new AWS.S3({
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-    });
+        var future = new Future()
+        var s3 = new AWS.S3({
+          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+        });
+        
+        s3.getObject({
+          Bucket: 'crusoe-media',
+          Key: key[1]
+        }, function(err, data){
+          if (err){
+            future.throw(err)
+          } else {
+            var dataURL = [key[0],data.Body.toString('ascii')]
+            future.return(dataURL)
+          }
+        })
 
-    s3.getObject({
-      Bucket: 'crusoe-media',
-      Key: key
-    }, function (err, data) {
-      if ( err ) {
-        future.throw(err);
-      } else {
-        future.return(data.Body.toString('ascii'));
-      }
-    });
+        return future
 
-    return future.wait();
+      })
+
+      var results = futureArray.map(function(future){
+        var result = future.wait()
+        return result
+      })
+
+      console.log("RESULTS", results)
+      return results
+
+
+  // getMedia: function(key){
+  //   console.log("getMedia called!");
+  //  // get photo stored in AWS S3 using key, an identifier for the media generated on upload
+  //   Future = Npm.require('fibers/future');
+  //   var futureArray = []
+
+  //   for (var item in key){
+  //     if (key[item]){
+  //       var future = new Future()
+  //       var s3 = new AWS.S3({
+  //         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  //         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  //       });
+
+  //       s3.getObject({
+  //         Bucket: 'crusoe-media',
+  //         Key: key[item]
+  //       }, function(err, data){
+  //         if (err){
+  //           future.throw(err)
+  //         } else {
+  //           future.return(data.Body.toString('ascii'))
+  //         }
+  //       })
+  //         futureArray.push(future)
+  //     }
+  //   }
+
+  //     var results = futureArray.map(function(future){
+  //       console.log("future array", futureArray)
+  //       var result = future.wait()
+  //       return result
+  //     })
+
+  //     console.log("RESULTS", results)
+  //     return results
+
+
+
+    // var future = new Future();
+
+    // var s3 = new AWS.S3({
+    //   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    //   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    // });
+
+    // s3.getObject({
+    //   Bucket: 'crusoe-media',
+    //   Key: key
+    // }, function (err, data) {
+    //   if ( err ) {
+    //     future.throw(err);
+    //   } else {
+    //     future.return(data.Body.toString('ascii'));
+    //   }
+    // });
+
+    // return future.wait();
   },
 
   tagMessage: function(messageId){
@@ -101,7 +174,37 @@ Meteor.methods({
         console.log(err);
       }
     });
-  }
+  },
+
+   test:function(n){
+    Future = Npm.require('fibers/future');
+        // build a range of tasks from 0 to n-1
+        var range=_.range(n);
+        // iterate sequentially over the range to launch tasks
+        var futures=_.map(range,function(index){
+            var future=new Future();
+            console.log("launching task",index);
+            // simulate an asynchronous HTTP request using a setTimeout
+            Meteor.setTimeout(function(){
+                // sometime in the future, return the square of the task index
+                future.return(index*index);
+            },index*1000);
+            // accumulate asynchronously parallel tasks
+            return future;
+        });
+        // iterate sequentially over the tasks to resolve them
+        var results=_.map(futures,function(future,index){
+            console.log("FUTRE",futures)
+            // waiting until the future has return
+            var result=future.wait();
+            console.log("result from task",index,"is",result);
+            // accumulate results
+            return result;
+        });
+        //
+        console.log(results);
+        return results;
+    }
 
 })
 

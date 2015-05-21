@@ -106,25 +106,29 @@ Template.messageModal.helpers({
       if ( window.Crusoe.img && (Date.now() - Crusoe.lastCalled) > 3000 && window.Crusoe.img.messageId === messageId ) {
         var result = window.Crusoe.img.img;
 
-        $('#display-message').css({
-          'background': 'url( ' + result + ') no-repeat',
-          'background-size': 'auto auto',
-        });
+			} else if ( !Crusoe.lastCalled || Date.now() - Crusoe.lastCalled > 3000) {
+				var key = [[message._id, message.key]]
+				window.Crusoe.lastCalled = Date.now();
+				// get the blob? from S3 and attach it as a property here
+				Meteor.call("getMedia", key, function (err, result) {
+					if ( err ) {
+						console.log( err );
+						throw new Error;
+					}
 
-      } else if ( !Crusoe.lastCalled || Date.now() - Crusoe.lastCalled > 3000) {
-        var key = message.key;
-        window.Crusoe.lastCalled = Date.now();
-        // get the blob? from S3 and attach it as a property here
-        Meteor.call("getMedia", key, function (err, result) {
-          if ( err ) {
-            console.log( err );
-            throw new Error;
-          }
+					console.log(result)
+					$('#display-message').css({
+						'background': 'url( ' + result[0][1] + ') no-repeat',
+						'background-size': '100% auto'
+					});
 
-          $('#display-message').css({
-            'background': 'url( ' + result + ') no-repeat',
-            'background-size': '100% auto'
-          });
+					var img = {
+						messageId: messageId,
+						img: result[0][1]
+					}
+					window.Crusoe.img = img;
+				});
+			}
 
           var img = {
             messageId: messageId,
