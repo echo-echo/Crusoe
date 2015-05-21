@@ -1,7 +1,4 @@
 <template name = "Map">
-  	<div class="panel">{{>feed}}</div>
-
-  	<div id="map">
       <div id="autopan">
       {{#if pan}}
       <i class ="mdi-action-explore small icon" style = "background-color: #E6E4E3"></i>
@@ -9,6 +6,9 @@
       <i class ="mdi-action-explore small icon" style = "background-color: #white"></i>
       {{/if}}
       </div>
+  	<div class="panel">{{>feed}}</div>
+
+  	<div id="map">
 
     </div>
 </template>

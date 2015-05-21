@@ -145,6 +145,7 @@ li:hover {
 #autopan{
   cursor: pointer;
   top:70px;
+  left:310px;
   position:fixed;
   z-index: 199;
 }
@@ -266,6 +267,7 @@ a#signout.btn{
 @media only screen and (max-width : 480px) {
   #autopan {
     top: 5px;
+    left: 8px;
   }
 
   .feed-content {
@@ -323,6 +325,7 @@ a#signout.btn{
 @media only screen and (max-width : 320px) {
   #autopan {
     top: 5px;
+    left: 8px;
   }
 
   .feed-content {
