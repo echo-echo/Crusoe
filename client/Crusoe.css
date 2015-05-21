@@ -4,8 +4,10 @@ html{
   height: 100%;
 }
 .leaflet-marker-icon {
-  -webkit-transition: 15s;
   position: absolute;
+  transition: 15s;
+  -webkit-transition: 15s;
+  transition-timing-function: linear;
   -webkit-transition-timing-function: linear;
 }
 .leaflet-container{
@@ -125,7 +127,6 @@ li:hover {
 }
 
 .map-rotation{
-
 }
 
 #map{
@@ -139,8 +140,10 @@ li:hover {
   /*added these for rotation:*/
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-  transition: .5s;
-  -webkit-transition: .5s;
+  transition: .1s;
+  -webkit-transition: .1s;
+  transition-timing-function: linear;
+  -webkit-transition-timing-function: linear;
 }
 #autopan{
   cursor: pointer;
@@ -281,7 +284,7 @@ a#signout.btn{
   }
 
   #map {
-    margin-left: 0px;
+    margin-left: 0px!important;
     bottom: 0px;
     z-index: 10;
     width: 100%;
@@ -339,7 +342,7 @@ a#signout.btn{
   }
 
   #map {
-    margin-left: 0px;
+    margin-left: 0px!important;
     bottom: 0px;
     z-index: 10;
     width: 100%;

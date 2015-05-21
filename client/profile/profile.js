@@ -60,7 +60,7 @@ Template.writeMessage.events({
       '<a class="waves-effect waves-light btn-large scan-right"><i class="mdi-navigation-arrow-forward right"></i></a>'];
     var transformMap = function(){
       $('#map').css({ 
-        'transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)', 'transition': '.1s', '-webkit-transition': '.1s', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)'
+        'transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)', 'transition': '.2s', '-webkit-transition': '.2s', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)'
       }); 
     }; 
 
@@ -123,6 +123,7 @@ Template.writeMessage.events({
      $('.throw-controls').remove();
      $('.mobile-icons').slideToggle(500, 'linear')
      $('.panel').slideToggle(500, 'linear')
+     $('.panel').css({'display': 'inline'});
      $('.nav-wrapper').slideToggle(500, 'linear')
      $('nav').slideToggle(500, 'linear')
      $('#map').css({ 
