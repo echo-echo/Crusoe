@@ -129,7 +129,16 @@ Template.messageModal.helpers({
 					window.Crusoe.img = img;
 				});
 			}
-    	}
+
+          var img = {
+            messageId: messageId,
+            img: result
+          }
+          window.Crusoe.img = img;
+        });
+      }
+
+    }
 
     if ( message ) {
       var lat = message.location.coordinates[1];
