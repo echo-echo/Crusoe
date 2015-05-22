@@ -79,7 +79,26 @@ Template.profileView.helpers({
 
     if (taggedIds){
       taggedIds.forEach(function(tagId){
-        var message = Messages.find({_id:tagId}).fetch()[0]
+        var message = Messages.find({_id:tagId},{fields:{
+        location: 0,
+        latWeight1m: 0, 
+        lngWeight1m: 0, 
+        latWeight15m: 0, 
+        lngWeight15m: 0,
+        latWeight1hr: 0,
+        lngWeight1hr: 0,
+        latWeight6hr: 0,
+        lngWeight6hr: 0,
+        latWeight12hr: 0,
+        lngWeight12hr: 0,
+        latWeight1day: 0,
+        lngWeight1day: 0,
+        latWeight3day: 0,
+        lngWeight3day: 0,
+        latWeight1wk: 0,
+        lngWeight1wk: 0,
+        latWeight1month: 0,
+        lngWeight1month: 0}}).fetch()[0]
         messages.push(message)
 
         if (message.key){
@@ -89,7 +108,6 @@ Template.profileView.helpers({
       })
     }
 
-    //add logic to prevent getMedia from being called repeatedly
     Meteor.call("getMedia", keys, function(err, result){
       if (err) {
         console.log(err)
@@ -113,7 +131,26 @@ Template.profileView.helpers({
 
   userCreated: function(){
     var username = Meteor.user().username || Meteor.user().profile.name
-    var messages = Messages.find({username:username}).fetch()
+    var messages = Messages.find({username:username},{fields:{
+        location: 0,
+        latWeight1m: 0, 
+        lngWeight1m: 0, 
+        latWeight15m: 0, 
+        lngWeight15m: 0,
+        latWeight1hr: 0,
+        lngWeight1hr: 0,
+        latWeight6hr: 0,
+        lngWeight6hr: 0,
+        latWeight12hr: 0,
+        lngWeight12hr: 0,
+        latWeight1day: 0,
+        lngWeight1day: 0,
+        latWeight3day: 0,
+        lngWeight3day: 0,
+        latWeight1wk: 0,
+        lngWeight1wk: 0,
+        latWeight1month: 0,
+        lngWeight1month: 0}}).fetch()
     var keys = []
 
     messages.forEach(function(message){
