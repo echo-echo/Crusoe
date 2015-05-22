@@ -166,8 +166,8 @@ li:hover {
 }
 
 .img-upload-preview {
-  height: auto;
-  width: 300px;
+  height: 250px;
+  width: auto;
 }
 
 .takephoto {
