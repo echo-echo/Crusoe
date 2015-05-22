@@ -82,9 +82,7 @@ Template.feed.events({
 Template.messageModal.helpers({
   message: function(){
     var message = Session.get('currentMessage');
-    console.log('outside')
     if((Date.now() - window.Crusoe.lastCalled) > 1000){
-      console.log('inside')
       window.Crusoe.lastCalled= Date.now();
 
       // if a message is found and if it has an AWS lookup key (it has an img)
@@ -148,7 +146,26 @@ Template.messageModal.events({
   "click .like": function(){
     var messageId = Session.get("currentMessage")._id
     Meteor.call("likeMessage", messageId)
+<<<<<<< Updated upstream
   },
+=======
+  }
+});
+
+  "click .streetview": function(){
+    var message = Session.get("currentMessage");
+    var lat = message.location.coordinates[1];
+    var lng = message.location.coordinates[0];
+    var coords = new google.maps.LatLng(lat, lng);
+    if ( $('#display-photo').length ) {
+      $('#display-photo').toggle();
+    }
+    $('#display-streetview').toggle();
+
+    var panorama = new google.maps.StreetViewPanorama($('#display-streetview')[0], {
+      position: coords
+    });
+>>>>>>> Stashed changes
 
   "click .streetview": function(){
     var message = Session.get("currentMessage");
