@@ -13,11 +13,15 @@ Template.signup.events({
          password : password1
        })
 
-       $('#modal-confirmation').openModal();
+       $('#modal-signup').closeModal();
+
+      Meteor.setTimeout(function(){
+          $('#modal-confirmation').openModal();
+       },500);
+
        Meteor.setTimeout(function(){
-         $('#modal-confirmation').closeModal()
-         $('#modal-signup').closeModal();
-       },1000);
+         $('#modal-confirmation').closeModal();
+       },2000);
 
        Router.go('map')
 
