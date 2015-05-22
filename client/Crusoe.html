@@ -4,22 +4,22 @@
   <meta name="viewport" content="width=device-width">
 </head>
 
-<ul id="dropdown" class="dropdown-content">
-  {{#if currentUser}}
-      <li><a href="/profile">Profile</a></li>
-      <li><a id="signout" href="/">Sign Out</a></li>
-    {{else}}
-      <li><a id="signin" href="#">Sign In</a></li>
-  {{/if}}
-</ul>
+<!-- <ul id="dropdown" class="dropdown-content">
+  <li><a href="/profile">Profile</a></li>
+  <li><a id="signout" href="/">Sign Out</a></li>
+</ul> -->
 
 <nav>
   <div class="nav-wrapper">
     <a href="/" class="brand-logo">Crusoe</a>
     <ul class="right hide-on-med-and-down">
-      <li><a href="/"><i class="mdi-maps-place"></i></a></li>
-      <!-- Dropdown Trigger -->
-      <li><a class="dropdown-button" href="#" data-activates="dropdown"><i class="mdi-social-person medium"></i></a></li>
+      {{#if currentUser}}
+          <li><a href="{{ pathFor "map"}}">Map</a></li>
+          <li><a href="{{ pathFor "profile"}}">{{currentUser.username}}</a></li>
+          <li><a id="signout" href="/">Sign Out</a></li>
+      {{else}}
+          <li><a id="signin" href="#">Sign In</a></li>
+      {{/if}}
     </ul>
   </div>
 </nav>
