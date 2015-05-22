@@ -14,6 +14,10 @@
 /* ~~~~~~~~~~~~~~~~~~~~~~
        BOTTLE ICONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.throwing {
+  transform-style: preserve-3d;
+  perspective: 900px;
+}
 .close {
   background-image: url("message.png");
   background-size: 100% auto;
@@ -111,7 +115,8 @@ li:hover {
   text-align: center;
 }
 .yield{
-/*  perspective: 800px;*/
+/*transform-style: preserve-3d;  
+-webkit-transform-style: preserve-3d;*/
 }
 
 .map-rotation{
