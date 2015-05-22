@@ -141,7 +141,7 @@ Template.messageModal.helpers({
     return message;
   },
   isUser : function(){
-  	return !!Meteor.user()
+  	return !!Meteor.user() && Session.get('currentMessage').visible
   }
 });
 

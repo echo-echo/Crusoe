@@ -4,7 +4,6 @@ Template.signin.events({
      e.preventDefault();
     var username = t.find('#username').value
         , password = t.find('#account-password').value;
-     console.log(username,password)
      Meteor.loginWithPassword(username, password, function(err){
        if(err){
          $('#modal-warning').openModal();
