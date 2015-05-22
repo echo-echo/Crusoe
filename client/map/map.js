@@ -308,6 +308,7 @@ var getProperties = function(newMessageData, newMessageInRange, isUsers, isPopul
     "_id": newMessageData._id,
     "likes" : newMessageData.likes,
     "key" : newMessageData.key,
+    "username" : newMessageData.username,
     "opens" : newMessageData.opens,
     "origin" : newMessageData.origin,
     "description": newMessageData.createdAt,
