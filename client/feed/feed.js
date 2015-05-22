@@ -171,14 +171,14 @@ Template.messageModal.events({
     var lng = message.location.coordinates[0];
     var coords = new google.maps.LatLng(lat, lng);
     if ( $('#display-photo').length ) {
-      console.log("inside conditional for display-photo streetview")
       $('#display-photo').hide();
     }
+
+    $('#display-streetview').show();
+
     var panorama = new google.maps.StreetViewPanorama($('#display-streetview')[0], {
       position: coords
     });
-
-    $('#display-streetview').show();
   }
 });
 
