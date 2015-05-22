@@ -1,6 +1,6 @@
 //need this for mobile to work.
 App.info({
-  name: 'Cursoe',
+  name: 'Crusoe',
   description: 'The modern message in bottle',
   author: 'Jamie Skinner'
 });
