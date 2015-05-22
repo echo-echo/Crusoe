@@ -188,6 +188,19 @@ li:hover {
   top: 65%;
 }
 
+.modal-content {
+  font-size: 20px;
+}
+
+.modal-content h6 {
+  font-size: 18px;
+}
+
+.view-msg-container {
+  margin: 0 auto;
+  max-width: 70%;
+}
+
 #display-message {
   height: 300px;
   width: 500px;
