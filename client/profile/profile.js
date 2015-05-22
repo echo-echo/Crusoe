@@ -155,6 +155,8 @@ Template.writeMessage.events({
     var throwControls = ['<a class="waves-effect waves-light btn-large scan-left"><i class="mdi-navigation-arrow-back left"></i></a>',
       '<a class="waves-effect waves-light btn-large throw-it">Throw!</a>',
       '<a class="waves-effect waves-light btn-large scan-right"><i class="mdi-navigation-arrow-forward right"></i></a>'];
+    var zoomCall = function(){ window.Crusoe.map.once('moveend', function(){ window.Crusoe.map.panTo([userLat, userLong]) }); }
+    zoomCall();
     var transformMap = function(){
       $('#map').css({ 
         'transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)', 'transition': '.1s', '-webkit-transition': '.1s', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)'
@@ -164,7 +166,6 @@ Template.writeMessage.events({
     // window.Crusoe.map.touchZoom.disable();
     // window.Crusoe.map.doubleClickZoom.disable();
     // window.Crusoe.map.scrollWheelZoom.disable();
-    window.Crusoe.map.on('moveend', function(){ window.Crusoe.map.panTo([userLat, userLong]) });
     window.Crusoe.map.setZoom(17); 
   //jquery function to append throw-control buttons to the body, to both body and mobileNav
     $('body').first().append('<div class="throw-controls"></div>');
