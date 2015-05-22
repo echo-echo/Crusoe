@@ -79,7 +79,7 @@ Template.profileView.helpers({
 
     if (taggedIds){
       taggedIds.forEach(function(tagId){
-        var message = Messages.find({_id:tagId}).fetch()[0]
+        var message = Messages.find({_id:tagId}, {reactive:false}).fetch()[0]
         messages.push(message)
 
         if (message.key){
@@ -113,7 +113,7 @@ Template.profileView.helpers({
 
   userCreated: function(){
     var username = Meteor.user().username || Meteor.user().profile.name
-    var messages = Messages.find({username:username}).fetch()
+    var messages = Messages.find({username:username}, {reactive:false}).fetch()
     var keys = []
 
     messages.forEach(function(message){
