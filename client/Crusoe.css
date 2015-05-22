@@ -185,13 +185,41 @@ li:hover {
 .collection{
   margin-top:0px;
 }
+.scan-left{
+  width:30%;
+  height:90%;
 
+}
+.throw-it{
+  width:20%;
+  height:90%;
+}
+.scan-right{
+  width:30%;
+  height:90%;
+}
+.throw-button-col{
+height:80px;
+margin-left:auto;
+margin-right:auto;
+position: absolute;
+bottom:0;
+width: 100%;
+text-align: center;
+}
 .throw-controls{
-  display: block; /*these center buttons in div*/
-  margin: 0 auto;
-  text-align: center;
-  position: relative;
-  top: 65%;
+height:80px;
+padding-top:0px;
+width:80%;
+/*    border: 0;*/
+/*  height: auto !important;
+  margin: auto !important;*/
+/*  max-width: 100%;
+  padding: 0;*/
+/*  width: auto 9;*/
+/*  position: absolute;*/
+/*  bottom: 0;
+  left-margin: auto;*/
 }
 
 /*
