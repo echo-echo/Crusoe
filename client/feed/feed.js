@@ -82,13 +82,15 @@ Template.feed.events({
 Template.messageModal.helpers({
   message: function(){
     var message = Session.get('currentMessage');
+    console.log("outside")
     if((Date.now() - window.Crusoe.lastCalled) > 1000){
+      console.log("inside")
       window.Crusoe.lastCalled= Date.now();
 
       // if a message is found and if it has an AWS lookup key (it has an img)
       // adds loading gif
       if ( message && message.key ) {
-        $('#display-message').css({
+        $('#display-photo').css({
           'background': 'url("loading.gif") no-repeat'
         });
 
@@ -100,7 +102,7 @@ Template.messageModal.helpers({
         if ( window.Crusoe.img && window.Crusoe.img.messageId === messageId ) {
           var result = window.Crusoe.img.img;
           console.log('changing image')
-          $('#display-message').css({
+          $('#display-photo').css({
             'background': 'url( ' + result + ') no-repeat',
             'background-size': '100% auto'
           });
@@ -115,7 +117,7 @@ Template.messageModal.helpers({
   						throw new Error;
   					}
             console.log('setting image')
-  					$('#display-message').css({
+  					$('#display-photo').css({
   						'background': 'url( ' + result[0][1] + ') no-repeat',
   						'background-size': '100% auto'
   					});
@@ -146,11 +148,7 @@ Template.messageModal.events({
   "click .like": function(){
     var messageId = Session.get("currentMessage")._id
     Meteor.call("likeMessage", messageId)
-<<<<<<< Updated upstream
   },
-=======
-  }
-});
 
   "click .streetview": function(){
     var message = Session.get("currentMessage");
@@ -165,21 +163,22 @@ Template.messageModal.events({
     var panorama = new google.maps.StreetViewPanorama($('#display-streetview')[0], {
       position: coords
     });
->>>>>>> Stashed changes
+  },
 
   "click .streetview": function(){
     var message = Session.get("currentMessage");
     var lat = message.location.coordinates[1];
     var lng = message.location.coordinates[0];
     var coords = new google.maps.LatLng(lat, lng);
-    if ( !$('#display-message').length ) {
-      $('.view-msg-container p').after('<div id="display-message"></div>');
+    if ( $('#display-photo').length ) {
+      console.log("inside conditional for display-photo streetview")
+      $('#display-photo').hide();
     }
-    var panorama = new google.maps.StreetViewPanorama($('#display-message')[0], {
+    var panorama = new google.maps.StreetViewPanorama($('#display-streetview')[0], {
       position: coords
     });
 
-    $('')
+    $('#display-streetview').show();
   }
 });
 

@@ -211,15 +211,15 @@ li:hover {
   max-width: 70%;
 }
 
-<<<<<<< Updated upstream
-#display-message {
-=======
 #display-photo, #display-streetview {
->>>>>>> Stashed changes
   background-color: rgb(229, 227, 223);
   height: 300px;
   text-align: center;
   width: 100%;
+}
+
+#display-streetview {
+  display: none;
 }
 
 .streetview {
