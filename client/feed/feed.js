@@ -66,7 +66,7 @@ Template.feed.events({
     document.getElementsByClassName("media-upload")[0].addEventListener("change", function(){
       if ( $('input.media-upload')[0].files.length > 0 ) {
         var file = $('input.media-upload')[0].files,
-            img = document.createElement("img"),
+            img = document.getElementsByClassName("img-upload-preview")[0] || document.createElement("img"),
             preview = $('#write');
         img.classList.add("img-upload-preview");
         img.file = file;

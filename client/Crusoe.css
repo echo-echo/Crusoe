@@ -1,8 +1,5 @@
 /* CSS declarations go here */
-html{
-  overflow: hidden;
-  height: 100%;
-}
+
 .leaflet-marker-icon {
   position: absolute;
   transition: 15s;
@@ -163,6 +160,11 @@ li:hover {
   margin-bottom: 10px;
   width:290px;
   border-radius: 8px;
+}
+
+.img-upload-preview {
+  height: 250px;
+  width: auto;
 }
 
 .takephoto {
