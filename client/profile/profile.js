@@ -108,8 +108,6 @@ Template.profileView.helpers({
       })
     }
 
-    console.log(messages)
-    //add logic to prevent getMedia from being called repeatedly
     Meteor.call("getMedia", keys, function(err, result){
       if (err) {
         console.log(err)
