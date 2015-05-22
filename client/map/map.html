@@ -1,9 +1,9 @@
 <template name = "Map">
       <div id="autopan">
       {{#if pan}}
-      <i class ="mdi-action-explore small icon" style = "background-color: #E6E4E3"></i>
+      <i class ="mdi-communication-location-on small icon" title ="User Tracking: ON" style = "background-color:#333; color:white"></i>
       {{else}}
-      <i class ="mdi-action-explore small icon" style = "background-color: #white"></i>
+      <i class ="mdi-communication-location-off small icon" title ="User Tracking: OFF" style = "background-color:#333; color: #9C9C9C"></i>
       {{/if}}
       </div>
   	<div class="panel">{{>feed}}</div>
