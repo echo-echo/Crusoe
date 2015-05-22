@@ -127,6 +127,8 @@ Template.messageModal.helpers({
 			}
     	}
 
+    // grabs the google street view image from the Google Maps API and
+    // displays it in the message modal
     if ( message && message.location && GoogleMaps.loaded() ) {
       var lat = message.location.coordinates[1];
       var lng = message.location.coordinates[0];
@@ -137,6 +139,9 @@ Template.messageModal.helpers({
     }
 
     return message;
+  },
+  isUser : function(){
+  	return !!Meteor.user() && Session.get('currentMessage').visible
   }
 });
 
