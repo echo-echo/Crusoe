@@ -262,6 +262,10 @@ SyncedCron.add({
   }
 });
 
+SyncedCron.config({
+  log: false
+});
+
 SyncedCron.start();
 
 if (!ServiceConfiguration.configurations.find({service: 'facebook'}).count()) {
