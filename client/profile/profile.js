@@ -155,6 +155,8 @@ Template.writeMessage.events({
     var throwControls = ['<a class="waves-effect waves-light btn-large scan-left"><i class="mdi-navigation-arrow-back left"></i></a>',
       '<a class="waves-effect waves-light btn-large throw-it">Throw!</a>',
       '<a class="waves-effect waves-light btn-large scan-right"><i class="mdi-navigation-arrow-forward right"></i></a>'];
+    var zoomCall = function(){ window.Crusoe.map.once('moveend', function(){ window.Crusoe.map.panTo([userLat, userLong]) }); }
+    zoomCall();
     var transformMap = function(){
       $('#map').css({ 
         'transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)', 'transition': '.1s', '-webkit-transition': '.1s', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)'
@@ -164,7 +166,6 @@ Template.writeMessage.events({
     // window.Crusoe.map.touchZoom.disable();
     // window.Crusoe.map.doubleClickZoom.disable();
     // window.Crusoe.map.scrollWheelZoom.disable();
-    window.Crusoe.map.on('moveend', function(){ window.Crusoe.map.panTo([userLat, userLong]) });
     window.Crusoe.map.setZoom(17); 
   //jquery function to append throw-control buttons to the body, to both body and mobileNav
     $('body').first().append('<div class="throw-controls"></div>');
@@ -185,6 +186,7 @@ Template.writeMessage.events({
     'transition': '3s', '-webkit-transition': '3s'
   });
   //append throw controls to map:
+    $('html').css({'overflow': 'hidden'});
     throwControls.forEach(function(element){ $('.throw-controls').append(element) });
   //listen to scanning buttons and set value of 'rotate':
     $('.scan-left').mousedown(function(){ rotation = (rotation + 4) % 360; transformMap(); leftInt = setInterval(function(){ rotation = (rotation + 4) % 360; transformMap(); }, 100) });
@@ -215,6 +217,7 @@ Template.writeMessage.events({
        var radAng = -1 * (rotation + 90) * (Math.PI/180);
        var newPoint = window.Crusoe.map.layerPointToLatLng([(150 * Math.cos(radAng)) + currPoint['x'], (150 * Math.sin(radAng)) + currPoint['y']]);
        submitMessage([newPoint['lng'], newPoint['lat']]);
+     $('html').css({'overflow': 'scroll'});  
       setTimeout(function(){
      $('.throw-controls').remove();
      $('.mobile-icons').slideToggle(500, 'linear')

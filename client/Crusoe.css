@@ -1,8 +1,5 @@
 /* CSS declarations go here */
-html{
-  overflow: hidden;
-  height: 100%;
-}
+
 .leaflet-marker-icon {
   position: absolute;
   transition: 15s;
