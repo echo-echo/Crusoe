@@ -38,6 +38,15 @@ Template.main.events({
         console.log("there was an error logging out.")
         throw err
       } else {
+
+        Meteor.setTimeout(function(){
+          $('#modal-signout-confirmation').openModal()
+        },500);
+
+        Meteor.setTimeout(function(){
+          $('#modal-signout-confirmation').closeModal()
+        }, 2000);
+
         console.log("You've been logged out")
       }
     });
