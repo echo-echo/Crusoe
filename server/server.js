@@ -24,7 +24,6 @@ SyncedCron.add({
     HTTP.call("GET", "http://api.openweathermap.org/data/2.5/weather?lat=-33.6367&lon=-78.8496", function(err, results){
       if (!err){
         windData = results.data.wind;
-        console.log("data we are getting:", windData);
         var theta = (windData.deg * Math.PI / 180).toPrecision(3);
         var hypotenuse = windData.speed;
         latWind = (Math.cos(theta) * hypotenuse * 0.1).toPrecision(3);
@@ -62,9 +61,6 @@ SyncedCron.add({
   },
   job: function () {
     var messages = Messages.find({});
-
-    console.log("latWind from 15s update: ", latWind);
-    console.log("lngWind from 15s update: ", lngWind);
 
     messages.forEach(function (msg) {
       // maybe change this to sine later to make it smoother
