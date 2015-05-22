@@ -60,6 +60,7 @@ Meteor.methods({
   },
 
 getMedia: function(keys){
+    console.log("getMedia called!");
    // get photo stored in AWS S3 using key, an identifier for the media generated on upload
     Future = Npm.require('fibers/future');
  

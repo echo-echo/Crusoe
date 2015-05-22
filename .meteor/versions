@@ -44,7 +44,7 @@ localstorage@1.0.3
 logging@1.0.7
 materialize:materialize@0.96.1
 mdg:camera@1.1.4
-mdg:geolocation@1.0.3
+mdg:geolocation@1.0.2
 meteor@1.1.6
 meteor-platform@1.2.2
 meteorhacks:inject-initial@1.0.2
@@ -63,7 +63,7 @@ package-version-parser@3.0.3
 pauloborges:mapbox@2.1.4_3
 peerlibrary:aws-sdk@2.1.17_1
 peerlibrary:blocking@0.5.2
-percolate:synced-cron@1.2.1
+percolate:synced-cron@1.2.0
 practicalmeteor:chai@1.9.2_3
 practicalmeteor:loglevel@1.1.0_3
 random@1.0.3
