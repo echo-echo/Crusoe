@@ -82,61 +82,55 @@ Template.feed.events({
 Template.messageModal.helpers({
   message: function(){
     var message = Session.get('currentMessage');
+    console.log('outside')
+    if((Date.now() - window.Crusoe.lastCalled) > 1000){
+      console.log('inside')
+      window.Crusoe.lastCalled= Date.now();
 
-    // if a message is found and if it has an AWS lookup key (it has an img)
-    if ( message && message.key ) {
-      $('#display-message').css({
-        'background': 'url("loading.gif") no-repeat'
-      });
-
-      var messageId = message._id;
-
-      // if the global namespace is already storing an image and it has the same id
-      // as the message we're looking at and it wasn't called within the last second;
-      // prevents Meteor from calling AWS multiple times via the getMedia method
-      if ( window.Crusoe.img && (Date.now() - Crusoe.lastCalled) > 3000 && window.Crusoe.img.messageId === messageId ) {
-        var result = window.Crusoe.img.img;
-
+      // if a message is found and if it has an AWS lookup key (it has an img)
+      // adds loading gif
+      if ( message && message.key ) {
         $('#display-message').css({
-          'background': 'url( ' + result + ') no-repeat',
-          'background-size': '100% auto'
+          'background': 'url("loading.gif") no-repeat'
         });
 
-			} else if ( !Crusoe.lastCalled || Date.now() - Crusoe.lastCalled > 3000) {
-				var key = [[message._id, message.key]]
-				window.Crusoe.lastCalled = Date.now();
-				// get the blob? from S3 and attach it as a property here
-				Meteor.call("getMedia", key, function (err, result) {
-					if ( err ) {
-						console.log( err );
-            console.log("key: ", key);
-						throw new Error;
-					}
+        var messageId = message._id;
 
-					$('#display-message').css({
-						'background': 'url( ' + result[0][1] + ') no-repeat',
-						'background-size': '100% auto'
-					});
+        // if the global namespace is already storing an image and it has the same id
+        // as the message we're looking at and it wasn't called within the last second;
+        // prevents Meteor from calling AWS multiple times via the getMedia method
+        if ( window.Crusoe.img && window.Crusoe.img.messageId === messageId ) {
+          var result = window.Crusoe.img.img;
+          console.log('changing image')
+          $('#display-message').css({
+            'background': 'url( ' + result + ') no-repeat',
+            'background-size': '100% auto'
+          });
 
-					var img = {
-						messageId: messageId,
-						img: result[0][1]
-					}
-					window.Crusoe.img = img;
-				});
-			}
-    	}
+  			} else {
+  				var key = [[message._id, message.key]]
+  				// get the blob? from S3 and attach it as a property here
+  				Meteor.call("getMedia", key, function (err, result) {
+  					if ( err ) {
+  						console.log( err );
+              console.log("key: ", key);
+  						throw new Error;
+  					}
+            console.log('setting image')
+  					$('#display-message').css({
+  						'background': 'url( ' + result[0][1] + ') no-repeat',
+  						'background-size': '100% auto'
+  					});
 
-    // grabs the google street view image from the Google Maps API and
-    // displays it in the message modal
-    if ( message && message.location && GoogleMaps.loaded() ) {
-      var lat = message.location.coordinates[1];
-      var lng = message.location.coordinates[0];
-      var coords = new google.maps.LatLng(lat, lng);
-      var panorama = new google.maps.StreetViewPanorama($('.streetview')[0], {
-        position: coords
-      });
-    }
+  					var img = {
+  						messageId: messageId,
+  						img: result[0][1]
+  					}
+  					window.Crusoe.img = img;
+  				});
+  			}
+      }
+    }//END DEBOUCE IF
 
     return message;
   },
@@ -154,6 +148,21 @@ Template.messageModal.events({
   "click .like": function(){
     var messageId = Session.get("currentMessage")._id
     Meteor.call("likeMessage", messageId)
+  },
+
+  "click .streetview": function(){
+    var message = Session.get("currentMessage");
+    var lat = message.location.coordinates[1];
+    var lng = message.location.coordinates[0];
+    var coords = new google.maps.LatLng(lat, lng);
+    if ( !$('#display-message').length ) {
+      $('.view-msg-container p').after('<div id="display-message"></div>');
+    }
+    var panorama = new google.maps.StreetViewPanorama($('#display-message')[0], {
+      position: coords
+    });
+
+    $('')
   }
 });
 

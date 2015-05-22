@@ -1,5 +1,6 @@
 Meteor.startup(function(){
   window.Crusoe = {};
+  window.Crusoe.lastCalled = Date.now();
 
   Mapbox.load();
   GoogleMaps.load();

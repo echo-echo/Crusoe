@@ -36,8 +36,8 @@
       <a href="#" class="right modal-close">close</a>
       <div class="view-msg-container">
         {{#if message.visible}}
-        <p>{{message.text}}</p>
 
+          <p>{{message.text}}</p>
           {{#if message.key}}
             <div id="display-message"></div>
           {{/if}}
@@ -45,10 +45,16 @@
         {{else}}
         <h4>Message is too far away to view.</h4>
         {{/if}}
-        <h6 data-livestamp="{{message.description}}"></h6>
-        <h6>Origin: {{message.origin}}</h6>
-        <h6>Opens: {{message.opens}}</h6>
-        <i class="mdi-action-launch streetview"></i>
+
+        <div class="message-info">
+          <h6 data-livestamp="{{message.description}}"></h6>
+          <h6>Origin: {{message.origin}}</h6>
+          <h6>Opens: {{message.opens}}</h6>
+        </div>
+
+        <div class="message-info toggle-panel">
+          <i class="mdi-action-launch streetview"></i>
+        </div>
       </div>
     </div>
     {{#if isUser }}
