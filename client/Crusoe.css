@@ -162,6 +162,11 @@ li:hover {
   border-radius: 8px;
 }
 
+.img-upload-preview {
+  height: 250px;
+  width: auto;
+}
+
 .takephoto {
   display: block;
 }
