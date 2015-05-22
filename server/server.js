@@ -143,7 +143,6 @@ SyncedCron.add({
   },
   job: function(){
     var messages = Messages.find({});
-
     messages.forEach(function(msg) {
       Messages.update({_id: msg._id}, {$set: {
         "latWeight1hr": Math.random() - 0.5,

@@ -26,6 +26,7 @@ Template.Map.onRendered(function () {
   var imageUrl = '/radius.gif';
   var lastPan = Date.now();
   var lastClick = Date.now();
+  Session.set('pan', true);
 
   Tracker.autorun(function () {
     if (Mapbox.loaded()) {
