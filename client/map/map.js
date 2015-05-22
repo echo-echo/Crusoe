@@ -60,7 +60,7 @@ Template.Map.onRendered(function () {
         map.panTo([userLat, userLong]); //TODO: change this to pan to clicked message location
         map.setZoom(14);
         imageBounds = calcBounds(userLat, userLong, radiusVal);
-        bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
+        bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(1.0);
         geoJsonLayer = L.geoJson().addTo(map);
   		  window.Crusoe.map = map;
       }
