@@ -7,8 +7,8 @@
 <div class="navbar-fixed">
   <nav>
     <div class="nav-wrapper">
-      <a href="/" class="brand-logo">Crusoe</a>
-      <ul class="right hide-on-med-and-down">
+      <a href="/" class="nav-logo">Crusoe</a>
+      <ul class="right">
         {{#if currentUser}}
             <li><a href="{{ pathFor "map"}}">Map</a></li>
             <li><a href="{{ pathFor "profile"}}">{{currentUser.username}}</a></li>
