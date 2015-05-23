@@ -339,12 +339,15 @@ blockquote p {
   width: 30%;
 }
 
-blockquote p.long-message {
+blockquote p {
   margin: 0;
+  word-wrap: break-word;
+}
+
+blockquote p.long-message {
   margin-bottom: -60px;
   max-height: 100px;
   overflow: hidden;
-  word-wrap: break-word;
 }
 
 .bottom-fade {

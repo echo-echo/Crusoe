@@ -61,6 +61,11 @@ Template.feed.events({
         complete: function(){
           $("#display-streetview").hide();
           $("#display-photo").show();
+
+          if ( !$('blockquote p').hasClass('short-message') ) {
+            $('blockquote p').addClass('long-message');
+            $('.bottom-fade').show();
+          }
         }
       });
 
@@ -260,11 +265,7 @@ Template.messageModal.events({
   },
 
   "click .read-more": function(){
-    $('blockquote p.long-message').css({
-      'max-height': 'initial',
-      'margin-bottom': 0,
-      'overflow': 'initial'
-    });
+    $('blockquote p.long-message').removeClass('long-message');
     $('.bottom-fade').hide();
   }
 });
