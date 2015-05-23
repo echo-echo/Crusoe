@@ -59,7 +59,7 @@ Template.Map.onRendered(function () {
         } else if ($(window).width() <= 480){
           $('#map').width($(window).width());
         }
-
+ 
         //grabs mapbox layers from our mapbox account.
         L.mapbox.accessToken = "pk.eyJ1Ijoic2tpbm5lcjUyMCIsImEiOiJHOXRJeUlFIn0.ZVhoykCRgo8-_KQl2-x9MQ";
         map = L.mapbox.map('map', 'skinner520.fbb71f90', {
@@ -72,7 +72,7 @@ Template.Map.onRendered(function () {
         map.panTo([userLat, userLong]); //TODO: change this to pan to clicked message location
         map.setZoom(14);
         imageBounds = calcBounds(userLat, userLong, radiusVal);
-        bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
+        bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.9);
         geoJsonLayer = L.geoJson().addTo(map);
   		  window.Crusoe.map = map;
       }
@@ -88,7 +88,7 @@ Template.Map.onRendered(function () {
           marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
           map.removeLayer(bounds);
           imageBounds = calcBounds(local.coords.latitude, local.coords.longitude, 1000);
-          bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.6);
+          bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.9);
           if(Session.get('pan') && Date.now() - lastPan > 3000){
             lastPan = Date.now()
             map.panTo([local.coords.latitude, local.coords.longitude]);
