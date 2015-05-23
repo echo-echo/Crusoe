@@ -25,7 +25,7 @@ Meteor.submitMessage = function(location){
             var context = canvas.getContext('2d')
             canvas.width = 300;
             canvas.height = 300*img.height/img.width;
-            context.drawImage(img, 0, 0, 300, 300*img.height/img.width)  
+            context.drawImage(img, 0, 0, 300, 300*img.height/img.width)
             var resizedURL = canvas.toDataURL()
             console.log(mediaAsDataURL)
             console.log(resizedURL)
@@ -43,7 +43,7 @@ Meteor.submitMessage = function(location){
           var context = canvas.getContext('2d')
           canvas.width = 300;
           canvas.height = 300*img.height/img.width;
-          context.drawImage(img, 0, 0, 300, 300*img.height/img.width)  
+          context.drawImage(img, 0, 0, 300, 300*img.height/img.width)
           var resizedURL = canvas.toDataURL()
           console.log(photo)
           console.log(resizedURL)
@@ -52,7 +52,7 @@ Meteor.submitMessage = function(location){
       }
     } else {
       if (message === '') {
-        alert("Whoops! Make sure you type a message!")
+        Materialize.toast("Whoops, that didn't work! Make sure you type a message!", 3000);
       } else {
         Meteor.call("addMessage", message, location);
       }
