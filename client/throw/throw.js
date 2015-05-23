@@ -55,7 +55,7 @@ Template.throw.onRendered(function () {
      var currPoint = window.Crusoe.map.latLngToLayerPoint([userLat, userLong]);
      var radAng = -1 * (rotation + 90) * (Math.PI/180);
      var newPoint = window.Crusoe.map.layerPointToLatLng([(150 * Math.cos(radAng)) + currPoint['x'], (150 * Math.sin(radAng)) + currPoint['y']]);
-     submitMessage([newPoint['lng'], newPoint['lat']]);
+     Meteor.submitMessage([newPoint['lng'], newPoint['lat']]);
    $('html').css({'overflow': 'scroll'});  
     setTimeout(function(){
    // $('.throw-controls').remove();
