@@ -1,9 +1,35 @@
+var should = chai.should()
+var expect = chai.expect
+
+
 if (!(typeof MochaWeb === 'undefined')){
   MochaWeb.testOnly(function(){
-    describe("a group of tests", function(){
-      it("should respect equality", function(){
-        chai.assert.equal(5,5);
-      });
-    });
+
+    describe('Crusoe window object', function(){
+      it("should really exist", function(){
+       should.exist(window.Crusoe)
+      })
+      it("should have a lastCalled property", function(){
+       should.exist(window.Crusoe.lastCalled)
+      })
+      it("should have mapbox", function(){
+       should.exist(Mapbox)
+      })
+      it("should have google maps", function(){
+       should.exist(GoogleMaps)
+      })
+    })
+
+    describe('Messages', function(){
+      it("should be able to add messages", function(){
+
+      })
+    })
+
+    describe('Users', function(){
+      it("should be able to add messages", function(){
+
+      })
+    })
   });
 }
