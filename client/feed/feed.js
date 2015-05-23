@@ -92,7 +92,7 @@ Template.messageModal.helpers({
 
     if (current){
     	var messageId = current._id
-   		var message = Messages.find({_id:messageId},{fields:{
+   	var message = Messages.find({_id:messageId},{fields:{
         location: 0,
         latWeight1m: 0, 
         lngWeight1m: 0, 
