@@ -52,7 +52,7 @@ Meteor.submitMessage = function(location){
       }
     } else {
       if (message === '') {
-        alert("Whoops! Make sure you type a message!")
+        Materialize.toast("Whoops, that didn't work! Make sure you type a message!", 3000);
       } else {
         Meteor.call("addMessage", message, location);
       }
