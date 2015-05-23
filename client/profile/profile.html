@@ -8,9 +8,9 @@
   {{else}}
     {{>signin}}
   {{/if}}
-
-  {{>confirmDelete}}
+  
   {{>promptDelete}}
+  {{>promptRemoveTag}}
   {{>error}}
 
 </template>
@@ -19,44 +19,52 @@
   <div class="row">
       <div class="col s12">
         <ul class="tabs">
-            <li class="tab col s6"><a href="#myMessages" class="active"><h5 class = "profile-header">My Messages</h5></a></li>
+            <li class="tab col s6"><a href="#userMessages" class="active"><h5 class = "profile-header">My Messages</h5></a></li>
             <li class="tab col s6"><a href="#taggedMessages"><h5 class = "profile-header">Tagged Messages</h5></a></li>
         </ul>
       </div>
 
-      <div id="myMessages" class="col s12">
-        <div class = "user-messages">
-          {{#if currentUser.username}}
-            <h5 class = "profile-header">{{currentUser.username}}'s messages</h5>
-          {{else}}
-            <h5 class = "profile-header">{{currentUser.profile.name}}'s messages</h5>
-          {{/if}}
-            <ul class = "collection">
-              {{#each userCreated}}
-                {{> userMessages}}
-              {{/each}}
-            </ul>
-        </div>
+      <div id="userMessages" class="col s12">
+        {{>userMessages}}
+      </div>
+      <div id="taggedMessages" class="col s12">
+        {{>taggedMessages}}
       </div>
 
-      <div id="taggedMessages" class="col s12">
-        <div class = "saved-messages">
-          {{#if currentUser.username}}
-            <h5 class = "profile-header">{{currentUser.username}}'s messages</h5>
-          {{else}}
-            <h5 class = "profile-header">{{currentUser.profile.name}}'s messages</h5>
-          {{/if}}
-          <ul class = "collection">
-            {{#each taggedMessages}}
-              {{> userMessages}}
-            {{/each}}
-          </ul>
-        </div>
-      </div>
    </div>
 </template>
 
+<template name = "taggedMessages">
+  <div class = "saved-messages">
+    {{#if currentUser.username}}
+      <h5 class = "profile-header">{{currentUser.username}}'s messages</h5>
+    {{else}}
+      <h5 class = "profile-header">{{currentUser.profile.name}}'s messages</h5>
+    {{/if}}
+    <ul class = "collection">
+      {{#each taggedMessages}}
+        {{> profileMessages}}
+      {{/each}}
+    </ul>
+  </div>
+</template>
+
 <template name = "userMessages">
+  <div class = "user-messages">
+    {{#if currentUser.username}}
+      <h5 class = "profile-header">{{currentUser.username}}'s messages</h5>
+    {{else}}
+      <h5 class = "profile-header">{{currentUser.profile.name}}'s messages</h5>
+    {{/if}}
+      <ul class = "collection">
+        {{#each userCreated}}
+          {{> profileMessages}}
+        {{/each}}
+      </ul>
+  </div>
+</template>
+
+<template name = "profileMessages">
   <li class = "profile-list collection-item">
     <span data-livestamp="{{createdAt}}"></span>
     <p>{{origin}}</p>
@@ -70,13 +78,6 @@
   </li>
 </template>
 
-<template name = "confirmDelete">
-  <div id="confirmation" class="modal c-modal modal-box">
-    <a href="#" class="right modal-close">close</a>
-    <h4>Your message has been deleted</h4>
-  </div>
-</template>
-
 <template name = "promptDelete">
   <div id="promptDelete" class="modal c-modal modal-box">
     <div class="modal-content">
@@ -85,6 +86,19 @@
     </div>
     <div class="modal-footer">
       <button id="confirmDeletion" class="btn-flat">Delete</button>
+      <button class="modal-close btn-flat">Cancel</button>
+    </div>
+  </div>
+</template>
+
+<template name = "promptRemoveTag">
+  <div id="promptRemoveTag" class="modal c-modal modal-box">
+    <div class="modal-content">
+      <a href="#" class="right modal-close">close</a>
+      <h4>Are you sure you want to untag this message?</h4>
+    </div>
+    <div class="modal-footer">
+      <button id="confirmUntag" class="btn-flat">Untag</button>
       <button class="modal-close btn-flat">Cancel</button>
     </div>
   </div>
