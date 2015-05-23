@@ -49,7 +49,6 @@ Template.feed.helpers({
 Template.feed.events({
   "click .feedMessage": function(event){
     var message = Blaze.getData(event.currentTarget)
-    console.log("FEED", message)
     if(message.visible){
       Session.set('currentMessage', message);
 
