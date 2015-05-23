@@ -2,6 +2,66 @@ Router.configure({
 	layoutTemplate:'main'
 })
 
+Meteor.submitMessage = function(location){
+  $('.img-upload-preview').remove() //remove preview
+  var message = $('textarea').val();
+  var file = $('input.media-upload')[0].files[0];
+  var photo = Session.get("photo");
+
+    if ( file || photo ) {
+      if ( file ) {
+        // need to convert to format that can be sent to the server and then to S3
+        var fr = new FileReader();
+        fr.readAsDataURL(file);
+        fr.onloadend = function (evt) {
+          var mediaAsDataURL = evt.target.result;
+          var filename = file.name;
+
+          //resize image before uploading to S3
+          var img = document.createElement('img');
+          img.src = mediaAsDataURL
+          img.onload = function(){
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d')
+            canvas.width = 300;
+            canvas.height = 300*img.height/img.width;
+            context.drawImage(img, 0, 0, 300, 300*img.height/img.width)  
+            var resizedURL = canvas.toDataURL()
+            console.log(mediaAsDataURL)
+            console.log(resizedURL)
+            Meteor.call("addMessage", message, location, resizedURL, filename);
+          }
+        };
+      } else {
+        // else, it's a photo the user just took with their camera
+        var filename = Date.now().toString() + ".jpg";
+        console.log("filename client side: ", filename);
+        var img = document.createElement('img');
+        img.src = photo
+        img.onload = function(){
+          var canvas = document.createElement('canvas');
+          var context = canvas.getContext('2d')
+          canvas.width = 300;
+          canvas.height = 300*img.height/img.width;
+          context.drawImage(img, 0, 0, 300, 300*img.height/img.width)  
+          var resizedURL = canvas.toDataURL()
+          console.log(photo)
+          console.log(resizedURL)
+          Meteor.call("addMessage", message, location, resizedURL, filename);
+        }
+      }
+    } else {
+      if (message === '') {
+        alert("Whoops! Make sure you type a message!")
+      } else {
+        Meteor.call("addMessage", message, location);
+      }
+
+    }
+  $('textarea').val('');
+  $('input.media-upload').val('');
+};
+
 Router.map(function(){
   this.route('map', {
     path:'/'
@@ -19,6 +79,7 @@ Router.map(function(){
   });
   this.route('feed')
   this.route('signin')
+  this.route('throw')
 })
 
 Accounts.ui.config({

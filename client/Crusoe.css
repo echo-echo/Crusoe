@@ -14,6 +14,10 @@
 /* ~~~~~~~~~~~~~~~~~~~~~~
        BOTTLE ICONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.throwing {
+  transform-style: preserve-3d;
+  perspective: 900px;
+}
 .close {
   background-image: url("message.png");
   background-size: 100% auto;
@@ -111,7 +115,7 @@ li:hover {
   text-align: center;
 }
 .yield{
-/*  perspective: 800px;*/
+
 }
 
 .map-rotation{
@@ -180,13 +184,52 @@ li:hover {
 .collection{
   margin-top:0px;
 }
-
+.scan-left{
+  width:30%;
+  height:90%;
+  line-height: 75px;
+  border-radius:5px;
+  background-color: rgba(0,100,255,0.5);
+}
+.throw-it{
+  width:20%;
+  height:90%;
+  line-height: 75px;
+  border-radius:5px;
+  background-color: rgba(0,100,255,0.5);
+}
+.scan-right{
+  width:30%;
+  height:90%;
+  line-height: 75px;
+  border-radius:5px;
+  background-color: rgba(0,100,255,0.5);
+}
+.throw-button-col{
+z-index:1200;  
+line-height: 50%;
+height:100px;
+margin-left:auto;
+margin-right:auto;
+position: absolute;
+bottom:0;
+width: 100%;
+text-align: center;
+}
 .throw-controls{
-  display: block; /*these center buttons in div*/
-  margin: 0 auto;
-  text-align: center;
-  position: relative;
-  top: 65%;
+ /* display:none;*/
+height:80px;
+padding-top:0px;
+width:80%;
+/*    border: 0;*/
+/*  height: auto !important;
+  margin: auto !important;*/
+/*  max-width: 100%;
+  padding: 0;*/
+/*  width: auto 9;*/
+/*  position: absolute;*/
+/*  bottom: 0;
+  left-margin: auto;*/
 }
 
 /*
