@@ -1,6 +1,7 @@
 
 Template.throw.onRendered(function () {
   if (!window.Crusoe.map){ Router.go("map",{}) }
+
   var rotate;
   var rotation = 0;
   var leftInt;
@@ -18,7 +19,7 @@ Template.throw.onRendered(function () {
     window.Crusoe.map.touchZoom.disable();
     window.Crusoe.map.doubleClickZoom.disable();
     window.Crusoe.map.scrollWheelZoom.disable();
-    window.Crusoe.map.setZoom(17); 
+    window.Crusoe.map.setZoom(16); 
   $('#autopan').hide();
   $('.mobile-icons').slideToggle(500, 'linear')
   $('.panel').hide(); 
@@ -53,6 +54,23 @@ Template.throw.onRendered(function () {
      var radAng = -1 * (rotation + 90) * (Math.PI/180);
      var newPoint = window.Crusoe.map.layerPointToLatLng([(150 * Math.cos(radAng)) + currPoint['x'], (150 * Math.sin(radAng)) + currPoint['y']]);
      Meteor.submitMessage([newPoint['lng'], newPoint['lat']]);
+
+
+var animIcon = L.divIcon({
+    className:'anim-from',
+    html:'<div class="marker><img src="message-user.png"/></div>',
+    iconSize: [35, 46]
+  }),
+    animIconTo = L.divIcon({
+    className:'anim-to',
+    html:'<div class="marker"><img src="message-user.png"/></div>',
+    iconSize: [35, 46]
+  })
+
+  L.marker([userLat, userLong],{icon:animIcon}).addTo(window.Crusoe.map);
+  L.marker([newPoint['lng'], newPoint['lat']] ,{icon:animIconTo}).addTo(window.Crusoe.map);
+
+
    $('html').css({'overflow': 'scroll'});  
     setTimeout(function(){
    $('.mobile-icons').slideToggle(500, 'linear')
