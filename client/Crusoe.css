@@ -43,17 +43,6 @@
 }
 /*~~~~~~~~~~~~~~~~~~~~~*/
 
-.modal-box{
-	background: white;
-  border-radius: 10px;
-  margin: 30px auto;
-  max-height: 90%;
-  max-width: 60%;
-  min-height: 300px;
-  min-width: 100px;
-  overflow: scroll;
-  padding: 25px;
-}
 /******
  TRASH Icon for Deleting messages in profile
  ******/
@@ -79,10 +68,6 @@ li:hover {
 .nav-wrapper{
   background-color:#213556;
 }
-
-/*
-* Modal styling
-*/
 
 .background {
   background-color: rgba(255, 255, 255, 0.8);
@@ -188,14 +173,68 @@ li:hover {
   top: 65%;
 }
 
-#display-message {
+/*
+* Modal styling
+*/
+
+.modal-box{
+  background: white;
+  border-radius: 10px;
+  margin: 30px auto;
+  max-height: 90%;
+  max-width: 60%;
+  min-height: 300px;
+  min-width: 100px;
+  overflow: scroll;
+  padding: 25px;
+}
+
+.takephoto {
+  display: block;
+}
+
+.camera-popup {
+  margin-top: 10px;
+  position: relative;
+}
+
+.modal-content {
+  font-size: 20px;
+}
+
+.modal-content h6 {
+  font-size: 18px;
+}
+
+.view-msg-container {
+  margin: 0 auto;
+  max-width: 70%;
+}
+
+#display-photo, #display-streetview {
+  background-color: rgb(229, 227, 223);
   height: 300px;
-  width: 500px;
+  text-align: center;
+  width: 100%;
+}
+
+#display-streetview {
+  display: none;
 }
 
 .streetview {
   height: 200px;
   width: 200px;
+}
+
+.message-info {
+  display: inline-block;
+  vertical-align: top;
+  width: 49%;
+}
+
+.toggle-panel {
+  text-align: right;
 }
 
 /*ul{
