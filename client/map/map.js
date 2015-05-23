@@ -25,6 +25,7 @@ Template.Map.onRendered(function () {
   var bounds;
   var userLat;
   var userLong;
+  var throwing = Session.get('throwing');
   var map;
   var geoJsonLayer;
   var imageUrl = '/radius.gif';
@@ -47,13 +48,12 @@ Template.Map.onRendered(function () {
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       if (!map) {
         //changes the width of the map based on window size
-        if ($(window).width() > 480) {
-          $('#map').width($(window).width()-300);
-          $('#map').height($(window).height()-64);
-        } else if ($(window).width() <= 480){
-          $('#map').width($(window).width());
-        }
-
+          if ($(window).width() > 480) {
+            $('#map').width($(window).width()-300);
+          } else if ($(window).width() <= 480){
+            $('#map').width($(window).width());
+          }
+ 
         //grabs mapbox layers from our mapbox account.
         L.mapbox.accessToken = "pk.eyJ1Ijoic2tpbm5lcjUyMCIsImEiOiJHOXRJeUlFIn0.ZVhoykCRgo8-_KQl2-x9MQ";
         map = L.mapbox.map('map', 'skinner520.fbb71f90', {

@@ -19,6 +19,7 @@ Router.map(function(){
   });
   this.route('feed')
   this.route('signin')
+  this.route('throw')
 })
 
 Accounts.ui.config({

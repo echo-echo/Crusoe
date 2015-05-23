@@ -115,8 +115,7 @@ li:hover {
   text-align: center;
 }
 .yield{
-/*transform-style: preserve-3d;  
--webkit-transform-style: preserve-3d;*/
+
 }
 
 .map-rotation{
@@ -208,6 +207,7 @@ width: 100%;
 text-align: center;
 }
 .throw-controls{
+ /* display:none;*/
 height:80px;
 padding-top:0px;
 width:80%;
