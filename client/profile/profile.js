@@ -15,7 +15,6 @@ var submitMessage = function(location){
         fr.onloadend = function (evt) {
           var mediaAsDataURL = evt.target.result;
           var filename = file.name;
-          var resizedURL;
 
           //resize image before uploading to S3         
           var img = document.createElement('img');
@@ -26,7 +25,7 @@ var submitMessage = function(location){
             canvas.width = 300;
             canvas.height = 300*img.height/img.width;
             context.drawImage(img, 0, 0, 300, 300*img.height/img.width)  
-            resizedURL = canvas.toDataURL()
+            var resizedURL = canvas.toDataURL()
             console.log(mediaAsDataURL)
             console.log(resizedURL)
             Meteor.call("addMessage", message, location, resizedURL, filename);
@@ -36,7 +35,19 @@ var submitMessage = function(location){
         // else, it's a photo the user just took with their camera
         var filename = Date.now().toString() + ".jpg";
         console.log("filename client side: ", filename);
-        Meteor.call("addMessage", message, location, photo, filename);
+        var img = document.createElement('img');
+        img.src = photo
+        img.onload = function(){
+          var canvas = document.createElement('canvas');
+          var context = canvas.getContext('2d')
+          canvas.width = 300;
+          canvas.height = 300*img.height/img.width;
+          context.drawImage(img, 0, 0, 300, 300*img.height/img.width)  
+          var resizedURL = canvas.toDataURL()
+          console.log(photo)
+          console.log(resizedURL)
+          Meteor.call("addMessage", message, location, resizedURL, filename);
+        }
       }
     } else {
       Meteor.call("addMessage", message, location);
