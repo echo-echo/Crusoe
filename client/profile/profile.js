@@ -6,27 +6,37 @@ Template.profile.onRendered(function(){
   // $('.modal-trigger').leanModal();
 });
 
-Template.userMessages.events({
+Template.myMessages.events({
   'click #delete' : function(){
     Session.set('toDelete',this._id);
     $('#promptDelete').openModal();
   }
 })
+
+Template.taggedMessages.events({
+  'click #delete' : function(){
+    Session.set('toDelete',this._id);
+    $('#promptRemoveTag').openModal();
+  }
+})
+
 Template.promptDelete.events({
   'click #confirmDeletion' : function(){
     var messageId = Session.get('toDelete')
     $('#promptDelete').closeModal()
-    Meteor.call('removeMessage',messageId, function(err, result){
-      if(err){
-        $('#error').openModal();
-      } else {
-        $('#confirmDelete').openModal();
-      }
-    })
+    Meteor.call('removeMessage',messageId)
   }
 })
 
-Template.profileView.helpers({
+Template.promptRemoveTag.events({
+  'click #confirmUntag' : function(){
+    var messageId = Session.get('toDelete')
+    $('#promptRemoveTag').closeModal()
+    Meteor.call('removeTag',messageId)
+  }
+})
+
+Template.taggedMessages.helpers({
   taggedMessages: function(){
     var messages=[]
     var taggedIds = Meteor.user().tagged
@@ -54,12 +64,15 @@ Template.profileView.helpers({
         lngWeight1wk: 0,
         latWeight1month: 0,
         lngWeight1month: 0}}).fetch()[0]
-        messages.push(message)
 
-        if (message.key){
-          var key = [message._id, message.key]
-          keys.push(key)
+        if (message){
+          messages.push(message)
+          if (message.key){
+            var key = [message._id, message.key]
+            keys.push(key)
+          }
         }
+
       })
     }
 
@@ -82,8 +95,10 @@ Template.profileView.helpers({
 
 
     return Session.get("taggedMessages")
-  },
+  }
+})
 
+Template.myMessages.helpers({
   userCreated: function(){
     var username = Meteor.user().username || Meteor.user().profile.name
     var messages = Messages.find({username:username},{fields:{

@@ -223,6 +223,7 @@ Template.messageModal.events({
   "click .save": function(){
     var messageId = Session.get("currentMessage")._id
     Meteor.call("tagMessage", messageId)
+    Materialize.toast('Message tagged!', 4000) 
   },
 
   "click .like": function(){
