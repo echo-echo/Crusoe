@@ -6,7 +6,7 @@ Template.profile.onRendered(function(){
   // $('.modal-trigger').leanModal();
 });
 
-Template.myMessages.events({
+Template.userMessages.events({
   'click #delete' : function(){
     Session.set('toDelete',this._id);
     $('#promptDelete').openModal();
@@ -98,7 +98,7 @@ Template.taggedMessages.helpers({
   }
 })
 
-Template.myMessages.helpers({
+Template.userMessages.helpers({
   userCreated: function(){
     var username = Meteor.user().username || Meteor.user().profile.name
     var messages = Messages.find({username:username},{fields:{
