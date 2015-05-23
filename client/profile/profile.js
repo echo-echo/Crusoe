@@ -50,7 +50,12 @@ var submitMessage = function(location){
         }
       }
     } else {
-      Meteor.call("addMessage", message, location);
+      if (message === '') {
+        alert("Whoops! Make sure you type a message!")
+      } else {
+        Meteor.call("addMessage", message, location);
+      }
+
     }
   $('textarea').val('');
   $('input.media-upload').val('');
