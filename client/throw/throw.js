@@ -15,10 +15,10 @@ Template.throw.onRendered(function () {
     }); 
   }; 
     window.Crusoe.map.dragging.disable();
-//     // window.Crusoe.map.touchZoom.disable();
+    window.Crusoe.map.touchZoom.disable();
     window.Crusoe.map.doubleClickZoom.disable();
-//     // window.Crusoe.map.scrollWheelZoom.disable();
-  window.Crusoe.map.setZoom(17); 
+    window.Crusoe.map.scrollWheelZoom.disable();
+    window.Crusoe.map.setZoom(17); 
   $('#autopan').hide();
   $('.mobile-icons').slideToggle(500, 'linear')
   $('.panel').hide(); 
@@ -52,6 +52,8 @@ Template.throw.onRendered(function () {
     };  
 
  $('.throw-it').click(function(){
+     clearInterval(rightInt); //clear intervals in case they are left active, mobile bug
+     clearInterval(leftInt);
      var currPoint = window.Crusoe.map.latLngToLayerPoint([userLat, userLong]);
      var radAng = -1 * (rotation + 90) * (Math.PI/180);
      var newPoint = window.Crusoe.map.layerPointToLatLng([(150 * Math.cos(radAng)) + currPoint['x'], (150 * Math.sin(radAng)) + currPoint['y']]);
@@ -68,12 +70,6 @@ Template.throw.onRendered(function () {
      'transform': 'translate3d(0px, 0px, 0px) rotateX(0) rotateZ(0deg) scale(1, 1)', '-webkit-transform': 'translate3d(0px, 0px, 0px) rotateX(0) rotateZ(0deg) scale(1, 1)'
    });
    rotation = 0;
-   // if ($(window).width() < 480) {
-   //   $('#map').css({'overflow': 'hidden', 'margin-left': '0px'});
-   // } else {
-   //   $('#map').css({'overflow': 'hidden', 'margin-left': '300px'});
-   // }
-
    var getPxBounds = window.Crusoe.map.getPixelBounds;
    window.Crusoe.map.getPixelBounds = function () {
      var bounds = getPxBounds.call(this);
@@ -84,14 +80,12 @@ Template.throw.onRendered(function () {
      bounds.max.y=bounds.max.y-400;
      return bounds;
      }; 
-   }, 1400);
+   window.Crusoe.map.dragging.enable();
+   window.Crusoe.map.touchZoom.enable();
+   window.Crusoe.map.doubleClickZoom.enable();
+   window.Crusoe.map.scrollWheelZoom.enable();
+   Router.go("map",{});
+   }, 800);
 
   }); 
-
 })
-
-// Template.throw.events({
-//   // "click .mobile-write": function(event){
-//   //   $("#write").openModal();
-//   // }
-// })

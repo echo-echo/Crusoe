@@ -187,18 +187,28 @@ li:hover {
 .scan-left{
   width:30%;
   height:90%;
-
+  line-height: 150px;
+  border-radius:50px;
+  background-color: rgba(0,100,255,0.5);
 }
 .throw-it{
   width:20%;
   height:90%;
+  line-height: 130px;
+  border-radius:200px;
+  background-color: rgba(0,100,255,0.5);
 }
 .scan-right{
   width:30%;
   height:90%;
+  line-height: 150px;
+  border-radius:50px;
+  background-color: rgba(0,100,255,0.5);
 }
 .throw-button-col{
-height:80px;
+z-index:1200;  
+line-height: 50%;
+height:180px;
 margin-left:auto;
 margin-right:auto;
 position: absolute;
