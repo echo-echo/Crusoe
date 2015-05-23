@@ -51,7 +51,15 @@ Template.feed.events({
     var message = Blaze.getData(event.currentTarget)
     if(message.visible){
       Session.set('currentMessage', message);
-      $("#map-message-modal").openModal();
+
+      $("#map-message-modal").openModal({
+        complete: function(){
+          console.log("worked in where it's supposed to")
+          $("#display-streetview").hide();
+          $("#display-photo").show();
+        }
+      });
+
       Meteor.call('openMessage', message._id);
     } else {
       Session.set('currentMessage', message);
@@ -82,9 +90,7 @@ Template.feed.events({
 Template.messageModal.helpers({
   message: function(){
     var message = Session.get('currentMessage');
-    console.log("outside")
     if((Date.now() - window.Crusoe.lastCalled) > 1000){
-      console.log("inside")
       window.Crusoe.lastCalled= Date.now();
 
       // if a message is found and if it has an AWS lookup key (it has an img)
@@ -101,7 +107,6 @@ Template.messageModal.helpers({
         // prevents Meteor from calling AWS multiple times via the getMedia method
         if ( window.Crusoe.img && window.Crusoe.img.messageId === messageId ) {
           var result = window.Crusoe.img.img;
-          console.log('changing image')
           $('#display-photo').css({
             'background': 'url( ' + result + ') no-repeat',
             'background-size': '100% auto'
@@ -116,7 +121,7 @@ Template.messageModal.helpers({
               console.log("key: ", key);
   						throw new Error;
   					}
-            console.log('setting image')
+
   					$('#display-photo').css({
   						'background': 'url( ' + result[0][1] + ') no-repeat',
   						'background-size': '100% auto'
@@ -135,7 +140,7 @@ Template.messageModal.helpers({
     return message;
   },
   isUser : function(){
-  	return !!Meteor.user() && Session.get('currentMessage').visible
+    if(Session.get('currentMessage')) return !!Meteor.user() && Session.get('currentMessage').visible
   }
 });
 
@@ -156,29 +161,21 @@ Template.messageModal.events({
     var lng = message.location.coordinates[0];
     var coords = new google.maps.LatLng(lat, lng);
     if ( $('#display-photo').length ) {
-      $('#display-photo').toggle();
+      $('#display-photo').hide();
     }
-    $('#display-streetview').toggle();
+
+    $('#display-streetview').show();
+    /// NOT SURE WHY BUT $('#display-streetview') isn't returning anything here. 
+    // $('#display-streetview') //=> []
 
     var panorama = new google.maps.StreetViewPanorama($('#display-streetview')[0], {
       position: coords
     });
   },
 
-  "click .streetview": function(){
-    var message = Session.get("currentMessage");
-    var lat = message.location.coordinates[1];
-    var lng = message.location.coordinates[0];
-    var coords = new google.maps.LatLng(lat, lng);
-    if ( $('#display-photo').length ) {
-      $('#display-photo').hide();
-    }
-
-    $('#display-streetview').show();
-
-    var panorama = new google.maps.StreetViewPanorama($('#display-streetview')[0], {
-      position: coords
-    });
+  "click .photoview": function(){
+    $('#display-streetview').hide();
+    $('#display-photo').show();
   }
 });
 

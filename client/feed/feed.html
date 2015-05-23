@@ -41,11 +41,11 @@
           {{#if message.key}}
             <div id="display-photo"></div>
           {{/if}}
-          <div id="display-streetview"></div>
-
+         
         {{else}}
         <h4>Message is too far away to view.</h4>
         {{/if}}
+        <div id="display-streetview"></div>
 
         <div class="message-info">
           <h6 data-livestamp="{{message.description}}"></h6>
@@ -54,6 +54,7 @@
         </div>
 
         <div class="message-info toggle-panel">
+          <i class="mdi-editor-insert-photo photoview"></i>
           <i class="mdi-action-launch streetview"></i>
         </div>
       </div>

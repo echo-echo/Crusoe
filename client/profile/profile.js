@@ -48,7 +48,7 @@ var submitMessage = function(location){
 //use below to open materialize modal
 Template.profile.onRendered(function(){
   $('ul.tabs').tabs();
-  $('.modal-trigger').leanModal();
+  // $('.modal-trigger').leanModal();
 });
 
 Template.userMessages.events({

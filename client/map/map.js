@@ -13,10 +13,10 @@ Meteor.startup(function(){
       $('#map').width($(window).width()-300);
     }
   });
-
 });
 
 Template.Map.onRendered(function () {
+
   var marker;
   var radiusVal = 1000; //ft
   var bounds;
@@ -194,7 +194,12 @@ Template.Map.onRendered(function () {
             Meteor.call('openMessage', message._id)
             lastClick=Date.now()
           }
-          $('#map-message-modal').openModal();
+          $('#map-message-modal').openModal({
+            complete: function(){
+              $("#display-streetview").hide();
+              $("#display-photo").show();
+            }
+          });
         } //end date now
 
       });
