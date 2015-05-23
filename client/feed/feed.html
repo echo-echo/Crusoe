@@ -31,7 +31,7 @@
 </template>
 
 <template name="messageModal">
-  <div id="map-message-modal" class="modal modal-box c-modal">
+  <div id="map-message-modal" class="modal c-modal">
     <div class="modal-content">
       <a href="#" class="right modal-close">close</a>
       <div class="view-msg-container">
@@ -74,12 +74,12 @@
 
 <template name="writeMessage">
   <!-- Modal Structure -->
-  <div id="write" class="modal modal-box c-modal">
+  <div id="write" class="modal c-modal">
     <div class="modal-content">
-      <h4>Write Message</h4>
-      <textarea></textarea>
-      <i class="small mdi-image-camera-alt takephoto"></i>
-      <input type="file" class="media-upload">
+      <h5>Write Message:</h5>
+      <textarea placeholder="compose your message here" autofocus wrap="soft"></textarea>
+      <i class="small mdi-image-camera-alt takephoto"></i><i class="small mdi-file-file-upload" id="upload"></i>
+      <input id="media-upload" class="media-upload" type="file" />
     </div>
     <div class="modal-footer">
     <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat throw">Throw Message</a>

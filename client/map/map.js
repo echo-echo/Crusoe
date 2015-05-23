@@ -4,10 +4,13 @@ Meteor.startup(function(){
 
   Mapbox.load();
   GoogleMaps.load();
-//~~~~~~~~~~~~~~~~~~~~
-// calculates map width based on page width
-//~~~~~~~~~~~~~~~~~~~~
 
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//     App event listeners
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// on window resize, resize the map.
   $(window).resize(function(evt) {
     if ($(window).width() > 480) {
       $('#map').width($(window).width()-300);

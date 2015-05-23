@@ -153,7 +153,17 @@ li:hover {
 }
 
 .takephoto {
-  display: block;
+  float:left;
+  margin:3px;
+}
+#upload{
+  float:left;
+  margin:3px;
+}
+#media-upload{
+ width: 0px;
+ height: 0px;
+ overflow: hidden;
 }
 
 .camera-popup {
@@ -188,6 +198,15 @@ li:hover {
   overflow: scroll;
   padding: 25px;
 }
+.c-modal{
+  border-radius: 4px;
+  margin: 3px auto;
+  max-height: 90%;
+  max-width: 60%;
+  min-width: 100px;
+  overflow: scroll;
+  padding: 8px;
+}
 
 .takephoto {
   display: block;
@@ -204,10 +223,11 @@ li:hover {
 
 .modal-content {
   font-size: 20px;
+  padding:0 !important;
 }
 
 .modal-content h6 {
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .view-msg-container {
