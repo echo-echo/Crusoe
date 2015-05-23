@@ -20,14 +20,8 @@ Template.throw.onRendered(function () {
     window.Crusoe.map.scrollWheelZoom.disable();
     window.Crusoe.map.setZoom(17); 
   $('#autopan').hide();
-  $('.mobile-icons').slideToggle(500, 'linear')
   $('.panel').hide(); 
-  $('.nav-wrapper').slideToggle(500, 'linear')
-  $('nav').slideToggle(500, 'linear')
-//   //conditionally set map css for large or small, only difference is 'margin-left'
-
   $('#map').css({'overflow': 'visible', 'margin-left': '150px'});
-
   $('#map').css({ 
     'transform': 'translate3d(0px, 0px, 0px) rotateX(65deg) scale(1.5, 1.5)', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) scale(1.5, 1.5)', 
     'transition': '3s', '-webkit-transition': '3s'
@@ -60,12 +54,9 @@ Template.throw.onRendered(function () {
      Meteor.submitMessage([newPoint['lng'], newPoint['lat']]);
    $('html').css({'overflow': 'scroll'});  
     setTimeout(function(){
-   // $('.throw-controls').remove();
    $('.mobile-icons').slideToggle(500, 'linear')
    $('.panel').slideToggle(500, 'linear')
    $('.panel').css({'display': 'inline'});
-   $('.nav-wrapper').slideToggle(500, 'linear')
-   $('nav').slideToggle(500, 'linear')
    $('#map').css({ 
      'transform': 'translate3d(0px, 0px, 0px) rotateX(0) rotateZ(0deg) scale(1, 1)', '-webkit-transform': 'translate3d(0px, 0px, 0px) rotateX(0) rotateZ(0deg) scale(1, 1)'
    });
