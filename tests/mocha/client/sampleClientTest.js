@@ -22,7 +22,7 @@ if (!(typeof MochaWeb === 'undefined')){
 
     describe('Messages', function(){
       it("should be able to add messages", function(){
-        expect(Meteor.call('addMessage', "test message", [0,0])).to.be.a('function')
+
       })
     })
 
