@@ -198,6 +198,10 @@ li:hover {
   position: relative;
 }
 
+.camera-popup .photo-preview {
+  width: 100%;
+}
+
 .modal-content {
   font-size: 20px;
 }
