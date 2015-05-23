@@ -14,7 +14,13 @@ Meteor.startup(function(){
   $(window).resize(function(evt) {
     if ($(window).width() > 480) {
       $('#map').width($(window).width()-300);
+      $('#map').height($(window).height()-64);
+    } else if ($(window).width() <= 480){
+      $('#map').width($(window).width());
+      //changes map height on resize for mobile
+      $('#map').height($(window).height());
     }
+
   });
 });
 
