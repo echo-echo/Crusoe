@@ -89,21 +89,13 @@ Template.main.rendered = function () {
 
 Template.main.events({
   "click #signout" : function(){
+    var user = Meteor.user().username || Meteor.user().profile.name
     Meteor.logout(function(err){
       if(err){
         console.log("there was an error logging out.")
         throw err
       } else {
-
-        Meteor.setTimeout(function(){
-          $('#modal-signout-confirmation').openModal()
-        },500);
-
-        Meteor.setTimeout(function(){
-          $('#modal-signout-confirmation').closeModal()
-        }, 2000);
-
-        console.log("You've been logged out")
+        Materialize.toast("Goodbye, "+user+"!", 1000) 
       }
     });
   },

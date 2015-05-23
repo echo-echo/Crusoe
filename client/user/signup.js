@@ -15,21 +15,12 @@ Template.signup.events({
 
        $('#modal-signup').closeModal();
 
-      Meteor.setTimeout(function(){
-          $('#modal-confirmation').openModal();
-       },500);
-
-       Meteor.setTimeout(function(){
-         $('#modal-confirmation').closeModal();
-       },2000);
+        Materialize.toast("Welcome, "+username+"!", 1000)
 
        Router.go('map')
 
      } else {
-       $('#modal-warning').openModal();
-       Meteor.setTimeout(function(){
-         $('#modal-warning').closeModal()
-       },1000);
+        Materialize.toast("Some of your information is incorrect!", 1000)
 
      }
     return false;

@@ -7,18 +7,10 @@ Template.signin.events({
     console.log(username,password)
     Meteor.loginWithPassword(username, password, function(err){
       if(err){
-        $('#modal-warning').openModal();
-        Meteor.setTimeout(function(){
-          $('#modal-warning').closeModal();
-        },1000);
+        Materialize.toast("Some of your information is incorrect!", 1000)
       } else {
         $('#modal-signin').closeModal();
-        Meteor.setTimeout(function(){
-          $('#modal-confirmation').openModal();
-        },500);
-        Meteor.setTimeout(function(){
-          $('#modal-confirmation').closeModal();
-        },2000);
+        Materialize.toast("Hello, "+username+"!", 1000);
         Router.go('map')
       }
     })
@@ -31,12 +23,8 @@ Template.signin.events({
         console.log(err.reason)
       } else {
         $('#modal-signin').closeModal();
-        Meteor.setTimeout(function(){
-          $('#modal-confirmation').openModal();
-          },500);
-        Meteor.setTimeout(function(){
-          $('#modal-confirmation').closeModal();
-        },2000);
+        var user = Meteor.user().profile.name
+        Materialize.toast("Hello, "+user+"!", 1000)
         Router.go('map')
       }
     })
