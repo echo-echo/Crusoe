@@ -132,28 +132,3 @@ Template.profileView.helpers({
     return Session.get("userMessages")
   }
 });
-
-Template.writeMessage.events({
-  "click .throw": function () {
-  },
-
-  "click .submit": function () {
-    var longitude = Number(localStorage.getItem("userLong"));
-    var latitude = Number(localStorage.getItem("userLat"));
-    var location=[longitude,latitude];
-    Meteor.submitMessage(location);
-  },
-
-  "click .takephoto": function() {
-    $('input.media-upload').val('');
-
-    MeteorCamera.getPicture({}, function (err, data) {
-      if ( err ) {
-        console.log(err);
-        throw new Error;
-      }
-
-      Session.set("photo", data);
-    })
-  }
-});
