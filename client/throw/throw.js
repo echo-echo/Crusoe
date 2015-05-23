@@ -20,6 +20,7 @@ Template.throw.onRendered(function () {
     window.Crusoe.map.scrollWheelZoom.disable();
     window.Crusoe.map.setZoom(17); 
   $('#autopan').hide();
+  $('.mobile-icons').slideToggle(500, 'linear')
   $('.panel').hide(); 
   $('#map').css({'overflow': 'visible', 'margin-left': '150px'});
   $('#map').css({ 
