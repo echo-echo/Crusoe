@@ -331,11 +331,12 @@ blockquote p {
 .message-info {
   display: inline-block;
   vertical-align: top;
-  width: 49%;
+  width: 69%;
 }
 
 .toggle-panel {
   text-align: right;
+  width: 30%;
 }
 
 /*ul{
