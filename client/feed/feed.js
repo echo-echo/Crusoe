@@ -113,9 +113,9 @@ Template.messageModal.helpers({
         latWeight1month: 0,
         lngWeight1month: 0}}).fetch()[0]
 
-   		if (message){
-	    	message.visible = current.visible
-   		}
+   	if (message){
+	  message.visible = current.visible
+   	}
     }
 
     if((Date.now() - window.Crusoe.lastCalled) > 1000){
@@ -180,7 +180,7 @@ Template.messageModal.events({
   },
 
   "click .like": function(){
-  	var messageId = Session.get("currentMessage")._id
+    var messageId = Session.get("currentMessage")._id
     Meteor.call("likeMessage", messageId)
   },
 
