@@ -24,13 +24,10 @@ var submitMessage = function(location){
             var context = canvas.getContext('2d')
             canvas.width = 300;
             canvas.height = 300*img.height/img.width;
-<<<<<<< HEAD
+
             context.drawImage(img, 0, 0, 300, 300*img.height/img.width)
             var resizedURL = canvas.toDataURL()
-=======
-            context.drawImage(img, 0, 0, 300, 300*img.height/img.width)
-            resizedURL = canvas.toDataURL()
->>>>>>> 4bcb2b13984a6ed297f29479b05bb7efbcedde7a
+
             console.log(mediaAsDataURL)
             console.log(resizedURL)
             Meteor.call("addMessage", message, location, resizedURL, filename);
