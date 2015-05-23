@@ -192,8 +192,6 @@ Template.profileView.helpers({
         Session.set("userMessages", messages)
       }
     })
-
-
     return Session.get("userMessages")
   }
 });

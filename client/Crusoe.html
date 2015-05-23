@@ -10,7 +10,13 @@
     <ul class="right hide-on-med-and-down">
       {{#if currentUser}}
           <li><a href="{{ pathFor "map"}}">Map</a></li>
+          {{#if currentUser.username}}
           <li><a href="{{ pathFor "profile"}}">{{currentUser.username}}</a></li>
+          {{else }}
+            {{#if currentUser.profile.name}}
+              <li><a href="{{ pathFor "profile"}}">{{currentUser.profile.name}}</a></li>
+            {{/if}}
+          {{/if}}
           <li><a id="signout" href="/">Sign Out</a></li>
       {{else}}
           <li><a id="signin" href="#">Sign In</a></li>
