@@ -16,7 +16,7 @@ var submitMessage = function(location){
           var mediaAsDataURL = evt.target.result;
           var filename = file.name;
 
-          //resize image before uploading to S3         
+          //resize image before uploading to S3
           var img = document.createElement('img');
           img.src = mediaAsDataURL
           img.onload = function(){
@@ -50,7 +50,12 @@ var submitMessage = function(location){
         }
       }
     } else {
-      Meteor.call("addMessage", message, location);
+      if (message === '') {
+        alert("Whoops! Make sure you type a message!")
+      } else {
+        Meteor.call("addMessage", message, location);
+      }
+
     }
   $('textarea').val('');
   $('input.media-upload').val('');
@@ -92,9 +97,9 @@ Template.profileView.helpers({
       taggedIds.forEach(function(tagId){
         var message = Messages.find({_id:tagId},{fields:{
         location: 0,
-        latWeight1m: 0, 
-        lngWeight1m: 0, 
-        latWeight15m: 0, 
+        latWeight1m: 0,
+        lngWeight1m: 0,
+        latWeight15m: 0,
         lngWeight15m: 0,
         latWeight1hr: 0,
         lngWeight1hr: 0,
@@ -144,9 +149,9 @@ Template.profileView.helpers({
     var username = Meteor.user().username || Meteor.user().profile.name
     var messages = Messages.find({username:username},{fields:{
         location: 0,
-        latWeight1m: 0, 
-        lngWeight1m: 0, 
-        latWeight15m: 0, 
+        latWeight1m: 0,
+        lngWeight1m: 0,
+        latWeight15m: 0,
         lngWeight15m: 0,
         latWeight1hr: 0,
         lngWeight1hr: 0,
@@ -206,15 +211,15 @@ Template.writeMessage.events({
     var zoomCall = function(){ window.Crusoe.map.once('moveend', function(){ window.Crusoe.map.panTo([userLat, userLong]) }); }
     zoomCall();
     var transformMap = function(){
-      $('#map').css({ 
+      $('#map').css({
         'transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)', 'transition': '.1s', '-webkit-transition': '.1s', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(65deg) rotateZ(' + rotation + 'deg)'
-      }); 
-    }; 
+      });
+    };
     // window.Crusoe.map.dragging.disable();
     // window.Crusoe.map.touchZoom.disable();
     // window.Crusoe.map.doubleClickZoom.disable();
     // window.Crusoe.map.scrollWheelZoom.disable();
-    window.Crusoe.map.setZoom(17); 
+    window.Crusoe.map.setZoom(17);
   //jquery function to append throw-control buttons to the body, to both body and mobileNav
     $('body').first().append('<div class="throw-controls"></div>');
     $('.mobileNav').append('<div class="throw-controls"></div>');
@@ -229,8 +234,8 @@ Template.writeMessage.events({
   } else {
     $('#map').css({'overflow': 'visible', 'margin-left': '150px'});
   }
-  $('#map').css({ 
-    'transform': 'translate3d(0px, 0px, 0px)rotateX(65deg)', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(65deg)', 
+  $('#map').css({
+    'transform': 'translate3d(0px, 0px, 0px)rotateX(65deg)', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(65deg)',
     'transition': '3s', '-webkit-transition': '3s'
   });
   //append throw controls to map:
@@ -252,7 +257,7 @@ Template.writeMessage.events({
           bounds.max.x=bounds.max.x+1000;
           bounds.max.y=bounds.max.y+1000;
           return bounds;
-      };  
+      };
     //read value of 'rotate', change rotation variable, and call transform map to set Z rotation to rotation variable:
     // setInterval(function(){
     //   if (rotate==='left') { rotation = (rotation + 4) % 360; transformMap() }
@@ -265,7 +270,7 @@ Template.writeMessage.events({
        var radAng = -1 * (rotation + 90) * (Math.PI/180);
        var newPoint = window.Crusoe.map.layerPointToLatLng([(150 * Math.cos(radAng)) + currPoint['x'], (150 * Math.sin(radAng)) + currPoint['y']]);
        submitMessage([newPoint['lng'], newPoint['lat']]);
-     $('html').css({'overflow': 'scroll'});  
+     $('html').css({'overflow': 'scroll'});
       setTimeout(function(){
      $('.throw-controls').remove();
      $('.mobile-icons').slideToggle(500, 'linear')
@@ -273,7 +278,7 @@ Template.writeMessage.events({
      $('.panel').css({'display': 'inline'});
      $('.nav-wrapper').slideToggle(500, 'linear')
      $('nav').slideToggle(500, 'linear')
-     $('#map').css({ 
+     $('#map').css({
        'transform': 'translate3d(0px, 0px, 0px) rotateX(0) rotateZ(0deg)', '-webkit-transform': 'translate3d(0px, 0px, 0px) rotateX(0) rotateZ(0deg)'
      });
      rotation = 0;
@@ -292,10 +297,10 @@ Template.writeMessage.events({
        bounds.max.x=bounds.max.x-1000;
        bounds.max.y=bounds.max.y-1000;
        return bounds;
-       }; 
+       };
      }, 1400);
 
-    }); 
+    });
   },
 
   "click .submit": function () {
