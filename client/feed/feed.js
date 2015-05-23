@@ -214,8 +214,13 @@ Template.messageModal.helpers({
     return message;
   },
 
-  isUser : function(){
+  isUser: function(){
     if(Session.get('currentMessage')) return !!Meteor.user() && Session.get('currentMessage').visible
+  },
+
+  isLongMessage: function(){
+    var message = Session.get('currentMessage');
+    return message.text.length > 200;
   }
 });
 
@@ -255,7 +260,11 @@ Template.messageModal.events({
   },
 
   "click .read-more": function(){
-    $('blockquote p').css('max-height', '');
+    $('blockquote p.long-message').css({
+      'max-height': 'initial',
+      'margin-bottom': 0,
+      'overflow': 'initial'
+    });
     $('.bottom-fade').hide();
   }
 });

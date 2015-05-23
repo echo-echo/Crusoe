@@ -37,12 +37,17 @@
       <div class="view-msg-container">
         {{#if message.visible}}
 
-          <blockquote>
-            <p>{{message.text}}</p>
-            <div class="bottom-fade">
-              <a href="#" class="read-more">+ Read More</a>
-            </div>
-          </blockquote>
+            <blockquote>
+              {{#if isLongMessage}}
+                <p class="long-message">{{message.text}}</p>
+                <div class="bottom-fade">
+                  <a href="#" class="read-more">+ Read More</a>
+                </div>
+              {{else}}
+                <p class="short-message">{{message.text}}</p>
+              {{/if}}
+            </blockquote>
+
           {{#if message.key}}
             <div id="display-photo"></div>
           {{/if}}
