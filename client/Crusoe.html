@@ -4,20 +4,22 @@
   <meta name="viewport" content="width=device-width">
 </head>
 
-<nav>
-  <div class="nav-wrapper">
-    <a href="/" class="brand-logo">Crusoe</a>
-    <ul class="right hide-on-med-and-down">
-      {{#if currentUser}}
-          <li><a href="{{ pathFor "map"}}">Map</a></li>
-          <li><a href="{{ pathFor "profile"}}">{{currentUser.username}}</a></li>
-          <li><a id="signout" href="/">Sign Out</a></li>
-      {{else}}
-          <li><a id="signin" href="#">Sign In</a></li>
-      {{/if}}
-    </ul>
-  </div>
-</nav>
+<div class="navbar-fixed">
+  <nav>
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo">Crusoe</a>
+      <ul class="right hide-on-med-and-down">
+        {{#if currentUser}}
+            <li><a href="{{ pathFor "map"}}">Map</a></li>
+            <li><a href="{{ pathFor "profile"}}">{{currentUser.username}}</a></li>
+            <li><a id="signout" href="/">Sign Out</a></li>
+        {{else}}
+            <li><a id="signin" href="#">Sign In</a></li>
+        {{/if}}
+      </ul>
+    </div>
+  </nav>
+</div>
 
 <body>
 	<div class="yield">{{>yield}}</div>
