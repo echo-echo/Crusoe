@@ -257,6 +257,34 @@ width:80%;
   padding: 8px;
 }
 
+blockquote {
+  border: none;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  margin-bottom: 60px;
+  padding-left: 0;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+
+blockquote::before, blockquote::after {
+  font-size: 40px;
+  font-weight: bold;
+  color: rgb(36, 71, 132);
+}
+
+blockquote::before {
+  content: open-quote;
+}
+
+blockquote::after {
+  content: close-quote;
+  float: right;
+}
+
+blockquote p {
+  margin: 0;
+  text-align: center;
+}
+
 .takephoto {
   display: block;
 }

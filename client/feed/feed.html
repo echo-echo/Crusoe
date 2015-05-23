@@ -37,7 +37,9 @@
       <div class="view-msg-container">
         {{#if message.visible}}
 
-          <p>{{message.text}}</p>
+          <blockquote>
+            <p>{{message.text}}</p>
+          </blockquote>
           {{#if message.key}}
             <div id="display-photo"></div>
           {{/if}}

@@ -171,7 +171,7 @@ Template.messageModal.helpers({
       // adds loading gif
       if ( message && message.key ) {
         $('#display-photo').css({
-          'background': 'url("loading.gif") no-repeat'
+          'background': 'url("loading.gif") no-repeat center'
         });
 
         var messageId = message._id;
