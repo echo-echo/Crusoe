@@ -252,6 +252,11 @@ Template.messageModal.events({
   "click .photoview": function(){
     $('#display-streetview').hide();
     $('#display-photo').show();
+  },
+
+  "click .read-more": function(){
+    $('blockquote p').css('max-height', '');
+    $('.bottom-fade').hide();
   }
 });
 

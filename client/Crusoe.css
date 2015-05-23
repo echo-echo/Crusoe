@@ -339,6 +339,30 @@ blockquote p {
   width: 30%;
 }
 
+blockquote p {
+  margin: 0;
+  margin-bottom: -60px;
+  max-height: 100px;
+  overflow: hidden;
+}
+
+.bottom-fade {
+  background:     background: -webkit-linear-gradient(rgba(255,255,255,0), rgba(255,0,0,1)); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1)); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1)); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1)); /* Standard syntax (must be last) */
+  height: 65px;
+  position: relative;
+  width: 100%;
+  z-index: 99;
+}
+
+.read-more {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
 /*ul{
   padding-left: 23px;
 }*/
