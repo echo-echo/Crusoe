@@ -49,6 +49,7 @@ Template.Map.onRendered(function () {
         //changes the width of the map based on window size
         if ($(window).width() > 480) {
           $('#map').width($(window).width()-300);
+          $('#map').height($(window).height()-64);
         } else if ($(window).width() <= 480){
           $('#map').width($(window).width());
         }
