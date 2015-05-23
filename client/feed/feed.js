@@ -49,6 +49,7 @@ Template.feed.helpers({
 Template.feed.events({
   "click .feedMessage": function(event){
     var message = Blaze.getData(event.currentTarget)
+    console.log("FEED", message)
     if(message.visible){
       Session.set('currentMessage', message);
 
@@ -62,7 +63,6 @@ Template.feed.events({
 
       Meteor.call('openMessage', message._id);
     } else {
-      Session.set('currentMessage', message);
       var lng = message.location.coordinates[0];
       var lat = message.location.coordinates[1];
       window.Crusoe.map.panTo([lat,lng]);
@@ -89,7 +89,36 @@ Template.feed.events({
 
 Template.messageModal.helpers({
   message: function(){
-    var message = Session.get('currentMessage');
+    var current = Session.get('currentMessage');
+
+    if (current){
+    	var messageId = current._id
+   		var message = Messages.find({_id:messageId},{fields:{
+        location: 0,
+        latWeight1m: 0, 
+        lngWeight1m: 0, 
+        latWeight15m: 0, 
+        lngWeight15m: 0,
+        latWeight1hr: 0,
+        lngWeight1hr: 0,
+        latWeight6hr: 0,
+        lngWeight6hr: 0,
+        latWeight12hr: 0,
+        lngWeight12hr: 0,
+        latWeight1day: 0,
+        lngWeight1day: 0,
+        latWeight3day: 0,
+        lngWeight3day: 0,
+        latWeight1wk: 0,
+        lngWeight1wk: 0,
+        latWeight1month: 0,
+        lngWeight1month: 0}}).fetch()[0]
+
+   		if (message){
+	    	message.visible = current.visible
+   		}
+    }
+
     if((Date.now() - window.Crusoe.lastCalled) > 1000){
       window.Crusoe.lastCalled= Date.now();
 
@@ -139,6 +168,7 @@ Template.messageModal.helpers({
 
     return message;
   },
+
   isUser : function(){
     if(Session.get('currentMessage')) return !!Meteor.user() && Session.get('currentMessage').visible
   }
@@ -151,7 +181,7 @@ Template.messageModal.events({
   },
 
   "click .like": function(){
-    var messageId = Session.get("currentMessage")._id
+  	var messageId = Session.get("currentMessage")._id
     Meteor.call("likeMessage", messageId)
   },
 
