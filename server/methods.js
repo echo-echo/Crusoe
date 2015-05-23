@@ -114,6 +114,9 @@ getMedia: function(keys){
         console.log(err);
       }
     });
+  },
+  removeTag: function(messageId){
+    Meteor.users.update({_id:this.userId}, {$pull:{tagged:messageId}})
   }
 })
 
