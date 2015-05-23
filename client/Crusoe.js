@@ -54,10 +54,6 @@ Template.main.events({
 
   "click #signin" : function(){
    $('#modal-signin').openModal();
-  },
-
-  "click .dropdown-button":function(){
-    $(".dropdown-button").dropdown();
   }
 })
 
