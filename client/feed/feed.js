@@ -76,26 +76,32 @@ Template.feed.events({
     $("#write").openModal({
       ready : function(){
         $("#upload").click(function () {
-          console.log('media clicked')
-            $("#media-upload").trigger('click');
+           if(Date.now() - window.Crusoe.uploadCalled > 1000) {
+             $("#media-upload").trigger('click');
+             console.log('media upload called')
+             window.Crusoe.uploadCalled = Date.now()
+           }
         });
 
 
-      }
+        $("#media-upload")[0].addEventListener("change", function(){
+          if ( $('input.media-upload')[0].files.length > 0 ) {
+            var file = $('input.media-upload')[0].files,
+                img = document.getElementsByClassName("img-upload-preview")[0] || document.createElement("img"),
+                preview = $('#write');
+            img.classList.add("img-upload-preview");
+            img.file = file;
+            preview.append(img);
+            var reader = new FileReader();
+            reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
+            reader.readAsDataURL(file[0]);
+          }
+        })
+
+      } // end read
     });
-    document.getElementsByClassName("media-upload")[0].addEventListener("change", function(){
-      if ( $('input.media-upload')[0].files.length > 0 ) {
-        var file = $('input.media-upload')[0].files,
-            img = document.getElementsByClassName("img-upload-preview")[0] || document.createElement("img"),
-            preview = $('#write');
-        img.classList.add("img-upload-preview");
-        img.file = file;
-        preview.append(img);
-        var reader = new FileReader();
-        reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
-        reader.readAsDataURL(file[0]);
-      }
-    })
+
+
   }
 });
 
@@ -140,9 +146,9 @@ Template.messageModal.helpers({
     	var messageId = current._id
    	var message = Messages.find({_id:messageId},{fields:{
         location: 0,
-        latWeight1m: 0, 
-        lngWeight1m: 0, 
-        latWeight15m: 0, 
+        latWeight1m: 0,
+        lngWeight1m: 0,
+        latWeight15m: 0,
         lngWeight15m: 0,
         latWeight1hr: 0,
         lngWeight1hr: 0,
@@ -223,7 +229,7 @@ Template.messageModal.events({
   "click .save": function(){
     var messageId = Session.get("currentMessage")._id
     Meteor.call("tagMessage", messageId)
-    Materialize.toast('Message tagged!', 1000) 
+    Materialize.toast('Message tagged!', 1000)
   },
 
   "click .like": function(){
