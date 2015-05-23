@@ -24,6 +24,7 @@ Template.promptDelete.events({
   'click #confirmDeletion' : function(){
     var messageId = Session.get('toDelete')
     $('#promptDelete').closeModal()
+    Materialize.toast("Message deleted.", 3000)
     Meteor.call('removeMessage',messageId)
   }
 })
