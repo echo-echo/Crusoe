@@ -297,11 +297,12 @@ var convertProx = function(dist){
 ///////////////////////////////////////////////////////////////
 // Helper for previews when uploading files or taking photos
 var generatePreview = function(file) {
+  debugger;
   var img = $(".img-upload-preview")[0] || $("<img></img>").addClass("img-upload-preview")[0];
   img.file = file;
   $('#write').append(img);
 
-  if ( typeof file === Blob ) {
+  if ( file[0] instanceof Blob ) {
     var reader = new FileReader();
     reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
     reader.readAsDataURL(file[0]);
