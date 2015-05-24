@@ -26,16 +26,16 @@ Template.feed.helpers({
       messages[i].proximityString = convertProx(proximity)
       messages[i].proximity = Math.round(proximity);
 
-	    if (proximity<1000){
-	    	messages[i].visible = true;
+      if (proximity<1000){
+        messages[i].visible = true;
         messages[i].proximity = proximity;
-		    result.visible.push(messages[i])
-	    } else{
-	    	messages[i].visible = false;
+        result.visible.push(messages[i])
+      } else{
+        messages[i].visible = false;
         messages[i].proximity = proximity;
-	    	result.hidden.push(messages[i])
-	    }
-		}
+        result.hidden.push(messages[i])
+      }
+    }
 
 
     result.visible.sort(function(a, b) {
@@ -84,23 +84,20 @@ Template.feed.events({
           console.log('media clicked')
             $("#media-upload").trigger('click');
         });
+      }});
 
-
-      }
-    });
-    document.getElementsByClassName("media-upload")[0].addEventListener("change", function(){
+    $(".media-upload").on("change", function(){
       if ( $('input.media-upload')[0].files.length > 0 ) {
         var file = $('input.media-upload')[0].files,
-            img = document.getElementsByClassName("img-upload-preview")[0] || document.createElement("img"),
-            preview = $('#write');
-        img.classList.add("img-upload-preview");
+            img = $(".img-upload-preview")[0] || $("<img></img>").addClass("img-upload-preview");
+
         img.file = file;
-        preview.append(img);
+        $('#write').append(img);
         var reader = new FileReader();
         reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
         reader.readAsDataURL(file[0]);
       }
-    })
+    });
   }
 });
 
@@ -142,8 +139,8 @@ Template.messageModal.helpers({
     var current = Session.get('currentMessage');
 
     if (current){
-    	var messageId = current._id
-   	var message = Messages.find({_id:messageId},{fields:{
+      var messageId = current._id
+      var message = Messages.find({_id:messageId},{fields:{
         location: 0,
         latWeight1m: 0, 
         lngWeight1m: 0, 
@@ -162,11 +159,10 @@ Template.messageModal.helpers({
         latWeight1wk: 0,
         lngWeight1wk: 0,
         latWeight1month: 0,
-        lngWeight1month: 0}}).fetch()[0]
+        lngWeight1month: 0}
+      }).fetch()[0];
 
-   	if (message){
-	  message.visible = current.visible
-   	}
+      if (message) message.visible = current.visible;
     }
 
     if((Date.now() - window.Crusoe.lastCalled) > 1000){
@@ -191,28 +187,28 @@ Template.messageModal.helpers({
             'background-size': '100% auto'
           });
 
-  			} else {
-  				var key = [[message._id, message.key]]
-  				// get the blob? from S3 and attach it as a property here
-  				Meteor.call("getMedia", key, function (err, result) {
-  					if ( err ) {
-  						console.log( err );
+        } else {
+          var key = [[message._id, message.key]]
+          // get the blob? from S3 and attach it as a property here
+          Meteor.call("getMedia", key, function (err, result) {
+            if ( err ) {
+              console.log( err );
               console.log("key: ", key);
-  						throw new Error;
-  					}
+              throw new Error;
+            }
 
-  					$('#display-photo').css({
-  						'background': 'url( ' + result[0][1] + ') no-repeat',
-  						'background-size': '100% auto'
-  					});
+            $('#display-photo').css({
+              'background': 'url( ' + result[0][1] + ') no-repeat',
+              'background-size': '100% auto'
+            });
 
-  					var img = {
-  						messageId: messageId,
-  						img: result[0][1]
-  					}
-  					window.Crusoe.img = img;
-  				});
-  			}
+            var img = {
+              messageId: messageId,
+              img: result[0][1]
+            }
+            window.Crusoe.img = img;
+          });
+        }
       }
     }//END DEBOUCE IF
 
