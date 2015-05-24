@@ -80,6 +80,9 @@ Template.feed.events({
   "click .write": function(){
     $("#write").openModal({
       ready : function(){
+        // this is necessary bc duplicate event listeners
+        // are added each time a modal is opened
+        $("#upload").unbind('click');
         $("#upload").click(function () {
           $(".media-upload").trigger('click');
         });
@@ -297,7 +300,6 @@ var convertProx = function(dist){
 ///////////////////////////////////////////////////////////////
 // Helper for previews when uploading files or taking photos
 var generatePreview = function(file) {
-  debugger;
   var img = $(".img-upload-preview")[0] || $("<img></img>").addClass("img-upload-preview")[0];
   img.file = file;
   $('#write').append(img);
