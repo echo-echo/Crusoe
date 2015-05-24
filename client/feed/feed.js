@@ -82,14 +82,14 @@ Template.feed.events({
       ready : function(){
         $("#upload").click(function () {
           console.log('media clicked')
-            $("#media-upload").trigger('click');
+            $(".media-upload").trigger('click');
         });
       }});
 
     $(".media-upload").on("change", function(){
-      if ( $('input.media-upload')[0].files.length > 0 ) {
-        var file = $('input.media-upload')[0].files,
-            img = $(".img-upload-preview")[0] || $("<img></img>").addClass("img-upload-preview");
+      if ( $('.media-upload')[0].files.length > 0 ) {
+        var file = $('.media-upload')[0].files,
+            img = $(".img-upload-preview")[0] || $("<img></img>").addClass("img-upload-preview")[0];
 
         img.file = file;
         $('#write').append(img);
