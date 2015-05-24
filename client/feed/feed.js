@@ -81,21 +81,14 @@ Template.feed.events({
     $("#write").openModal({
       ready : function(){
         $("#upload").click(function () {
-          console.log('media clicked')
-            $(".media-upload").trigger('click');
+          $(".media-upload").trigger('click');
         });
       }});
 
     $(".media-upload").on("change", function(){
       if ( $('.media-upload')[0].files.length > 0 ) {
-        var file = $('.media-upload')[0].files,
-            img = $(".img-upload-preview")[0] || $("<img></img>").addClass("img-upload-preview")[0];
-
-        img.file = file;
-        $('#write').append(img);
-        var reader = new FileReader();
-        reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
-        reader.readAsDataURL(file[0]);
+        var file = $('.media-upload')[0].files;
+        generatePreview(file);
       }
     });
   }
@@ -125,6 +118,7 @@ Template.feed.events({
         throw new Error;
       }
 
+      generatePreview(data);
       Session.set("photo", data);
     })
   }
@@ -193,7 +187,6 @@ Template.messageModal.helpers({
           Meteor.call("getMedia", key, function (err, result) {
             if ( err ) {
               console.log( err );
-              console.log("key: ", key);
               throw new Error;
             }
 
@@ -247,8 +240,6 @@ Template.messageModal.events({
     }
 
     $('#display-streetview').show();
-    /// NOT SURE WHY BUT $('#display-streetview') isn't returning anything here.
-    // $('#display-streetview') //=> []
 
     var panorama = new google.maps.StreetViewPanorama($('#display-streetview')[0], {
       position: coords
@@ -302,3 +293,19 @@ var convertProx = function(dist){
     return dist.toString()+ " ft"
   }
 }
+
+///////////////////////////////////////////////////////////////
+// Helper for previews when uploading files or taking photos
+var generatePreview = function(file) {
+  var img = $(".img-upload-preview")[0] || $("<img></img>").addClass("img-upload-preview")[0];
+  img.file = file;
+  $('#write').append(img);
+
+  if ( typeof file === Blob ) {
+    var reader = new FileReader();
+    reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
+    reader.readAsDataURL(file[0]);
+  } else {
+    img.src = file;
+  }
+};
