@@ -187,7 +187,7 @@ Template.messageModal.helpers({
           var result = window.Crusoe.img.img;
           $('#display-photo').css({
             'background': 'url( ' + result + ') no-repeat',
-            'background-size': '100% auto'
+            'background-size': 'auto 100%'
           });
 
         } else {
@@ -201,7 +201,7 @@ Template.messageModal.helpers({
 
             $('#display-photo').css({
               'background': 'url( ' + result[0][1] + ') no-repeat',
-              'background-size': '100% auto'
+              'background-size': 'auto 100%'
             });
 
             var img = {
