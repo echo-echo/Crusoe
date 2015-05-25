@@ -25,7 +25,6 @@ Meteor.startup(function(){
 });
 
 Template.Map.onRendered(function () {
-
   var marker;
   var radiusVal = 1000; //ft
   var bounds;
