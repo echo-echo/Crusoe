@@ -257,6 +257,34 @@ width:80%;
   padding: 8px;
 }
 
+blockquote {
+  border: none;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  margin-bottom: 60px;
+  padding-left: 0;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+
+blockquote::before, blockquote::after {
+  font-size: 40px;
+  font-weight: bold;
+  color: rgb(36, 71, 132);
+}
+
+blockquote::before {
+  content: open-quote;
+}
+
+blockquote::after {
+  content: close-quote;
+  float: right;
+}
+
+blockquote p {
+  margin: 0;
+  text-align: center;
+}
+
 .takephoto {
   display: block;
 }
@@ -303,11 +331,40 @@ width:80%;
 .message-info {
   display: inline-block;
   vertical-align: top;
-  width: 49%;
+  width: 69%;
 }
 
 .toggle-panel {
   text-align: right;
+  width: 30%;
+}
+
+blockquote p {
+  margin: 0;
+  word-wrap: break-word;
+}
+
+blockquote p.long-message {
+  margin-bottom: -60px;
+  max-height: 100px;
+  overflow: hidden;
+}
+
+.bottom-fade {
+  background:     background: -webkit-linear-gradient(rgba(255,255,255,0), rgba(255,0,0,1)); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1)); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1)); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1)); /* Standard syntax (must be last) */
+  height: 70px;
+  position: relative;
+  width: 100%;
+  z-index: 99;
+}
+
+.read-more {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 /*ul{

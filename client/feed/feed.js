@@ -61,6 +61,11 @@ Template.feed.events({
         complete: function(){
           $("#display-streetview").hide();
           $("#display-photo").show();
+
+          if ( !$('blockquote p').hasClass('short-message') ) {
+            $('blockquote p').addClass('long-message');
+            $('.bottom-fade').show();
+          }
         }
       });
 
@@ -171,7 +176,7 @@ Template.messageModal.helpers({
       // adds loading gif
       if ( message && message.key ) {
         $('#display-photo').css({
-          'background': 'url("loading.gif") no-repeat'
+          'background': 'url("loading.gif") no-repeat center'
         });
 
         var messageId = message._id;
@@ -214,8 +219,13 @@ Template.messageModal.helpers({
     return message;
   },
 
-  isUser : function(){
+  isUser: function(){
     if(Session.get('currentMessage')) return !!Meteor.user() && Session.get('currentMessage').visible
+  },
+
+  isLongMessage: function(){
+    var message = Session.get('currentMessage');
+    return message.text.length > 200;
   }
 });
 
@@ -252,6 +262,11 @@ Template.messageModal.events({
   "click .photoview": function(){
     $('#display-streetview').hide();
     $('#display-photo').show();
+  },
+
+  "click .read-more": function(){
+    $('blockquote p.long-message').removeClass('long-message');
+    $('.bottom-fade').hide();
   }
 });
 

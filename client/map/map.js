@@ -208,6 +208,10 @@ Template.Map.onRendered(function () {
             complete: function(){
               $("#display-streetview").hide();
               $("#display-photo").show();
+              if ( !$('blockquote p').hasClass('short-message') ) {
+                $('blockquote p').addClass('long-message');
+                $('.bottom-fade').show();
+              }
             }
           });
         } //end date now
