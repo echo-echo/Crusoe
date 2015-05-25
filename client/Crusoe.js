@@ -27,15 +27,12 @@ Meteor.submitMessage = function(location){
             canvas.height = 300*img.height/img.width;
             context.drawImage(img, 0, 0, 300, 300*img.height/img.width)
             var resizedURL = canvas.toDataURL()
-            console.log(mediaAsDataURL)
-            console.log(resizedURL)
             Meteor.call("addMessage", message, location, resizedURL, filename);
           }
         };
       } else {
-        // else, it's a photo the user just took with their camera
+        // else, it's a photo the user took with their camera
         var filename = Date.now().toString() + ".jpg";
-        console.log("filename client side: ", filename);
         var img = document.createElement('img');
         img.src = photo
         img.onload = function(){
@@ -45,8 +42,6 @@ Meteor.submitMessage = function(location){
           canvas.height = 300*img.height/img.width;
           context.drawImage(img, 0, 0, 300, 300*img.height/img.width)
           var resizedURL = canvas.toDataURL()
-          console.log(photo)
-          console.log(resizedURL)
           Meteor.call("addMessage", message, location, resizedURL, filename);
         }
       }

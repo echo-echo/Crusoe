@@ -26,16 +26,16 @@ Template.feed.helpers({
       messages[i].proximityString = convertProx(proximity)
       messages[i].proximity = Math.round(proximity);
 
-	    if (proximity<1000){
-	    	messages[i].visible = true;
+      if (proximity<1000){
+        messages[i].visible = true;
         messages[i].proximity = proximity;
-		    result.visible.push(messages[i])
-	    } else{
-	    	messages[i].visible = false;
+        result.visible.push(messages[i])
+      } else{
+        messages[i].visible = false;
         messages[i].proximity = proximity;
-	    	result.hidden.push(messages[i])
-	    }
-		}
+        result.hidden.push(messages[i])
+      }
+    }
 
 
     result.visible.sort(function(a, b) {
@@ -80,27 +80,20 @@ Template.feed.events({
   "click .write": function(){
     $("#write").openModal({
       ready : function(){
+        // this is necessary bc duplicate event listeners
+        // are added each time a modal is opened
+        $("#upload").unbind('click');
         $("#upload").click(function () {
-          console.log('media clicked')
-            $("#media-upload").trigger('click');
+          $(".media-upload").trigger('click');
         });
+      }});
 
-
+    $(".media-upload").on("change", function(){
+      if ( $('.media-upload')[0].files.length > 0 ) {
+        var file = $('.media-upload')[0].files;
+        generatePreview(file);
       }
     });
-    document.getElementsByClassName("media-upload")[0].addEventListener("change", function(){
-      if ( $('input.media-upload')[0].files.length > 0 ) {
-        var file = $('input.media-upload')[0].files,
-            img = document.getElementsByClassName("img-upload-preview")[0] || document.createElement("img"),
-            preview = $('#write');
-        img.classList.add("img-upload-preview");
-        img.file = file;
-        preview.append(img);
-        var reader = new FileReader();
-        reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
-        reader.readAsDataURL(file[0]);
-      }
-    })
   }
 });
 
@@ -128,6 +121,7 @@ Template.feed.events({
         throw new Error;
       }
 
+      generatePreview(data);
       Session.set("photo", data);
     })
   }
@@ -142,8 +136,8 @@ Template.messageModal.helpers({
     var current = Session.get('currentMessage');
 
     if (current){
-    	var messageId = current._id
-   	var message = Messages.find({_id:messageId},{fields:{
+      var messageId = current._id
+      var message = Messages.find({_id:messageId},{fields:{
         location: 0,
         latWeight1m: 0, 
         lngWeight1m: 0, 
@@ -162,11 +156,10 @@ Template.messageModal.helpers({
         latWeight1wk: 0,
         lngWeight1wk: 0,
         latWeight1month: 0,
-        lngWeight1month: 0}}).fetch()[0]
+        lngWeight1month: 0}
+      }).fetch()[0];
 
-   	if (message){
-	  message.visible = current.visible
-   	}
+      if (message) message.visible = current.visible;
     }
 
     if((Date.now() - window.Crusoe.lastCalled) > 1000){
@@ -191,28 +184,27 @@ Template.messageModal.helpers({
             'background-size': '100% auto'
           });
 
-  			} else {
-  				var key = [[message._id, message.key]]
-  				// get the blob? from S3 and attach it as a property here
-  				Meteor.call("getMedia", key, function (err, result) {
-  					if ( err ) {
-  						console.log( err );
-              console.log("key: ", key);
-  						throw new Error;
-  					}
+        } else {
+          var key = [[message._id, message.key]]
+          // get the blob? from S3 and attach it as a property here
+          Meteor.call("getMedia", key, function (err, result) {
+            if ( err ) {
+              console.log( err );
+              throw new Error;
+            }
 
-  					$('#display-photo').css({
-  						'background': 'url( ' + result[0][1] + ') no-repeat',
-  						'background-size': '100% auto'
-  					});
+            $('#display-photo').css({
+              'background': 'url( ' + result[0][1] + ') no-repeat',
+              'background-size': '100% auto'
+            });
 
-  					var img = {
-  						messageId: messageId,
-  						img: result[0][1]
-  					}
-  					window.Crusoe.img = img;
-  				});
-  			}
+            var img = {
+              messageId: messageId,
+              img: result[0][1]
+            }
+            window.Crusoe.img = img;
+          });
+        }
       }
     }//END DEBOUCE IF
 
@@ -251,8 +243,6 @@ Template.messageModal.events({
     }
 
     $('#display-streetview').show();
-    /// NOT SURE WHY BUT $('#display-streetview') isn't returning anything here.
-    // $('#display-streetview') //=> []
 
     var panorama = new google.maps.StreetViewPanorama($('#display-streetview')[0], {
       position: coords
@@ -306,3 +296,19 @@ var convertProx = function(dist){
     return dist.toString()+ " ft"
   }
 }
+
+///////////////////////////////////////////////////////////////
+// Helper for previews when uploading files or taking photos
+var generatePreview = function(file) {
+  var img = $(".img-upload-preview")[0] || $("<img></img>").addClass("img-upload-preview")[0];
+  img.file = file;
+  $('#write').append(img);
+
+  if ( file[0] instanceof Blob ) {
+    var reader = new FileReader();
+    reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
+    reader.readAsDataURL(file[0]);
+  } else {
+    img.src = file;
+  }
+};
