@@ -109,12 +109,14 @@ Template.feed.events({
 
  Template.writeMessage.events({
   "click .throw": function () {
+    Session.set('messageToSend', $('textarea').val())
   },
 
   "click .submit": function () {
     var longitude = Number(localStorage.getItem("userLong"));
     var latitude = Number(localStorage.getItem("userLat"));
     var location=[longitude,latitude];
+    Session.set('messageToSend', $('textarea').val())
     Meteor.submitMessage(location);
   },
 
