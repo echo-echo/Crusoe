@@ -207,6 +207,9 @@ textarea {
   border-radius:5px;
   background-color: rgba(0,100,255,0.5);
 }
+.throw-it:hover {
+  background-color:rgba(0,0,0,0.5);
+}
 .scan-right{
   width:30%;
   height:90%;
@@ -244,6 +247,10 @@ width:80%;
 /*
 * Modal styling
 */
+.throw-anim{
+  transform: translate3d(0px,0px,0px);
+  transition: .5s;
+  transform-style:preserve-3d;
 
 .c-modal{
   border-radius: 4px;
