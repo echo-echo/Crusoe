@@ -177,7 +177,8 @@ Template.messageModal.helpers({
       // adds loading gif
       if ( message && message.key ) {
         $('#display-photo').css({
-          'background': 'url("loading.gif") no-repeat center'
+          'background': 'url("loading.gif") no-repeat center',
+          'background-position': 'center'
         });
 
         var messageId = message._id;
@@ -189,7 +190,8 @@ Template.messageModal.helpers({
           var result = window.Crusoe.img.img;
           $('#display-photo').css({
             'background': 'url( ' + result + ') no-repeat',
-            'background-size': 'auto 100%'
+            'background-size': 'auto 100%',
+            'background-position': 'center'
           });
 
         } else {
@@ -203,7 +205,8 @@ Template.messageModal.helpers({
 
             $('#display-photo').css({
               'background': 'url( ' + result[0][1] + ') no-repeat',
-              'background-size': 'auto 100%'
+              'background-size': 'auto 100%',
+              'background-position': 'center'
             });
 
             var img = {
