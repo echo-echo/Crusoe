@@ -31,9 +31,12 @@
 </template>
 
 <template name="messageModal">
-  <div id="map-message-modal" class="modal c-modal">
+  <div id="map-message-modal" class="modal c-modal modal-fixed-footer modal-fixed-header">
+    <div class="modal-header">
+      <a href="#" class="right modal-close" id="map-modal-close">close</a>
+    </div>
+
     <div class="modal-content">
-      <a href="#" class="right modal-close">X</a>
       <div class="view-msg-container">
         {{#if message.visible}}
           {{#if message.text.length}}
@@ -59,10 +62,6 @@
         <h4>Message is too far away to view.</h4>
         {{/if}}
         <div id="display-streetview"></div>
-        <div class="message-info toggle-panel">
-          <i class="mdi-editor-insert-photo photoview"></i>
-          <i class="mdi-image-nature-people streetview"></i>
-        </div>
 
         <div class="message-info">
           <h6 data-livestamp="{{message.description}}"></h6>
@@ -70,17 +69,23 @@
           <h6>Opens: {{message.opens}}</h6>
         </div>
 
+        <div class="toggle-panel">
+          <i class="mdi-editor-insert-photo photoview"></i>
+          <i class="mdi-image-nature-people streetview"></i>
+        </div>
+
       </div>
     </div>
+
     {{#if isUser }}
-    <div class="modal-footer">
-      <button class ="save waves-effect btn-flat">
-        <i class ="mdi-content-add-box"> tag message</i>
-      </button>
-      <button class ="like waves-effect btn-flat">
-        <i class ="mdi-action-thumb-up"> {{message.likes.length}}</i>
-      </button>
-    </div>
+      <div class="modal-footer">
+        <button class ="save waves-effect btn-flat">
+          <i class ="mdi-content-add-box">tag</i>
+        </button>
+        <button class ="like waves-effect btn-flat">
+          <i class ="mdi-action-thumb-up">{{message.likes.length}}</i>
+        </button>
+      </div>
     {{/if}}
   </div>
 </template>
@@ -97,8 +102,8 @@
       <input id="media-upload" class="media-upload" type="file" />
     </div>
     <div class="modal-footer">
-      <a href="{{ pathFor "throw"}}" class="modal-action modal-close waves-effect waves-green btn-flat throw" >Throw Message</a>
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat submit">Drop Message</a>
+      <a href="{{ pathFor "throw"}}" class="modal-action modal-close waves-effect waves-green btn-flat throw">Throw</a>
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat submit">Drop</a>
     </div>
   </div>
 </template>

@@ -167,7 +167,10 @@ Template.messageModal.helpers({
         lngWeight1month: 0}
       }).fetch()[0];
 
-      if (message) message.visible = current.visible;
+      if (message){
+        message.visible = current.visible;
+        message.description = current.description;
+      } 
     }
 
     if((Date.now() - window.Crusoe.lastCalled) > 1000){
@@ -189,9 +192,8 @@ Template.messageModal.helpers({
         if ( window.Crusoe.img && window.Crusoe.img.messageId === messageId ) {
           var result = window.Crusoe.img.img;
           $('#display-photo').css({
-            'background': 'url( ' + result + ') no-repeat',
-            'background-size': 'auto 100%',
-            'background-position': 'center'
+            'background': 'url( ' + result + ') center no-repeat',
+            'background-size': 'auto 100%'
           });
 
         } else {
@@ -204,9 +206,8 @@ Template.messageModal.helpers({
             }
 
             $('#display-photo').css({
-              'background': 'url( ' + result[0][1] + ') no-repeat',
-              'background-size': 'auto 100%',
-              'background-position': 'center'
+              'background': 'url( ' + result[0][1] + ') center no-repeat',
+              'background-size': 'auto 100%'
             });
 
             var img = {
@@ -289,6 +290,10 @@ Template.messageModal.events({
   "click .read-more": function(){
     $('blockquote p.long-message').removeClass('long-message');
     $('.bottom-fade').hide();
+  },
+
+  "click #map-modal-close": function(){
+    $('#map-message-modal').closeModal();
   }
 });
 
