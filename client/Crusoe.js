@@ -7,6 +7,7 @@ Meteor.submitMessage = function(location){
   var message = Session.get('messageToSend')
   var file = $('input.media-upload')[0].files[0];
   var photo = Session.get("photo");
+  Session.set('photo', null);
 
     if ( file || photo ) {
       if ( file ) {
