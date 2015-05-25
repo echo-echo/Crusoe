@@ -1,3 +1,6 @@
+var should = chai.should()
+var expect = chai.expect
+
 if (!(typeof MochaWeb === 'undefined')){
   MochaWeb.testOnly(function(){
     describe("Server initialization", function(){
