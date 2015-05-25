@@ -56,7 +56,7 @@ Template.throw.onRendered(function () {
       return bounds;
     };  
  $('.throw-it').mousedown(function(){ 
-  throwInt = setInterval(function(){ distance = Math.min(distance += 10, 500) ; $('.throw-it').css({'background-color': 'rgba(' + (distance/2) + ',100,' + (distance/4) + ',0.5)'}) }, 100);
+  throwInt = setInterval(function(){ distance = Math.min(distance += 10, 900) ; $('.throw-it').css({'background-color': 'rgba(' + (distance/4) + ',' + (distance%255) + ',' + (distance/16) + ',0.5)'}) }, 100);
  });   
  $('.throw-it').mouseup(function(){
      clearInterval(throwInt);
