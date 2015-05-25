@@ -293,7 +293,6 @@ Template.messageModal.events({
   },
 
   "click #map-modal-close": function(){
-    console.log('i was clicked woo')
     $('#map-message-modal').closeModal();
   }
 });
