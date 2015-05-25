@@ -187,7 +187,7 @@ Template.messageModal.helpers({
           var result = window.Crusoe.img.img;
           $('#display-photo').css({
             'background': 'url( ' + result + ') no-repeat',
-            'background-size': '100% auto'
+            'background-size': 'auto 100%'
           });
 
         } else {
@@ -201,7 +201,7 @@ Template.messageModal.helpers({
 
             $('#display-photo').css({
               'background': 'url( ' + result[0][1] + ') no-repeat',
-              'background-size': '100% auto'
+              'background-size': 'auto 100%'
             });
 
             var img = {
@@ -248,7 +248,7 @@ Template.messageModal.events({
     var coords = new google.maps.LatLng(lat, lng);
 
     //check to see if there is a StreetView for that location
-    sv.getPanoramaByLocation(coords, 10, function(data, status) {
+    sv.getPanoramaByLocation(coords, 50, function(data, status) {
         if (status == 'OK') {
             //google has a streetview image for this locatio, so attach it to the streetview div
             var panoramaOptions = {
