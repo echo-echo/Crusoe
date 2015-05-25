@@ -65,7 +65,6 @@ Template.throw.onRendered(function () {
      $('.throw-button-col').fadeToggle()
      var currPoint = window.Crusoe.map.latLngToLayerPoint([userLat, userLong]);
      var radAng = -1 * (rotation + 90) * (Math.PI/180);
-     console.log(distance);
      var newPoint = window.Crusoe.map.layerPointToLatLng([(distance * Math.cos(radAng)) + currPoint['x'], (distance * Math.sin(radAng)) + currPoint['y']]);
       
       var animIcon = L.divIcon({
