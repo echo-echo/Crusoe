@@ -8,7 +8,7 @@
   {{else}}
     {{>signin}}
   {{/if}}
-  
+
   {{>promptDelete}}
   {{>promptRemoveTag}}
   {{>error}}
@@ -79,12 +79,13 @@
 </template>
 
 <template name = "promptDelete">
-  <div id="promptDelete" class="modal c-modal modal-box">
+  <div id="promptDelete" class="modal c-modal">
     <div class="modal-content">
-      <a href="#" class="right modal-close">close</a>
-      <h4>Are you sure you want to delete this message?</h4>
+      <a href="#" class="right modal-close">X</a>
+      <h4>Warning!</h4>
+      <p>Are you sure you want to delete this message?</p>
     </div>
-    <div class="modal-footer">
+    <div class="modal-fixed-footer">
       <button id="confirmDeletion" class="btn-flat">Delete</button>
       <button class="modal-close btn-flat">Cancel</button>
     </div>
@@ -92,12 +93,13 @@
 </template>
 
 <template name = "promptRemoveTag">
-  <div id="promptRemoveTag" class="modal c-modal modal-box">
+  <div id="promptRemoveTag" class="modal c-modal">
     <div class="modal-content">
-      <a href="#" class="right modal-close">close</a>
-      <h4>Are you sure you want to untag this message?</h4>
+      <a href="#" class="right modal-close">X</a>
+      <h4>Warning!</h4>
+      <p>Are you sure you want to untag this message?</p>
     </div>
-    <div class="modal-footer">
+    <div class="modal-fixed-footer">
       <button id="confirmUntag" class="btn-flat">Untag</button>
       <button class="modal-close btn-flat">Cancel</button>
     </div>
@@ -105,8 +107,9 @@
 </template>
 
 <template name = "error">
-  <div id="error" class="modal c-modal modal-box">
-    <a href="#" class="right modal-close">close</a>
-    <h4>There was an error with your request. Message was not deleted</h4>
+  <div id="error" class="modal c-modal">
+    <a href="#" class="right modal-close">X</a>
+    <h4>Warning!</h4>
+    <p>There was an error with your request. Message was not deleted</p>
   </div>
 </template>

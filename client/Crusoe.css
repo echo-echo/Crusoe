@@ -236,17 +236,6 @@ width:80%;
 * Modal styling
 */
 
-.modal-box{
-  background: white;
-  border-radius: 10px;
-  margin: 30px auto;
-  max-height: 90%;
-  max-width: 60%;
-  min-height: 300px;
-  min-width: 100px;
-  overflow: scroll;
-  padding: 25px;
-}
 .c-modal{
   border-radius: 4px;
   margin: 3px auto;
