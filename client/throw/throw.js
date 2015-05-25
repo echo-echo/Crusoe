@@ -50,35 +50,40 @@ Template.throw.onRendered(function () {
  $('.throw-it').click(function(){
      clearInterval(rightInt); //clear intervals in case they are left active, mobile bug
      clearInterval(leftInt);
+     $('.throw-button-col').fadeToggle()
      var currPoint = window.Crusoe.map.latLngToLayerPoint([userLat, userLong]);
      var radAng = -1 * (rotation + 90) * (Math.PI/180);
-     var newPoint = window.Crusoe.map.layerPointToLatLng([(150 * Math.cos(radAng)) + currPoint['x'], (150 * Math.sin(radAng)) + currPoint['y']]);
-     Meteor.submitMessage([newPoint['lng'], newPoint['lat']]);
+     var newPoint = window.Crusoe.map.layerPointToLatLng([(200 * Math.cos(radAng)) + currPoint['x'], (150 * Math.sin(radAng)) + currPoint['y']]);
 
-
-var animIcon = L.divIcon({
-    className:'anim-from',
-    html:'<div class="marker><img src="message-user.png"/></div>',
-    iconSize: [35, 46]
-  }),
-    animIconTo = L.divIcon({
-    className:'anim-to',
-    html:'<div class="marker"><img src="message-user.png"/></div>',
-    iconSize: [35, 46]
-  })
+      var animIcon = L.divIcon({
+          className:'anim-from',
+          html:'<div class="marker><img src=""/></div>',
+          iconSize: [35, 46]
+        }),
+          animIconTo = L.divIcon({
+          className:'anim-to',
+          html:'<div class="marker"><img src=""/></div>',
+          iconSize: [35, 46]
+        });
 
   L.marker([userLat, userLong],{icon:animIcon}).addTo(window.Crusoe.map);
-  L.marker([newPoint['lng'], newPoint['lat']] ,{icon:animIconTo}).addTo(window.Crusoe.map);
-
-
+  L.marker([newPoint['lat'], newPoint['lng']] ,{icon:animIconTo}).addTo(window.Crusoe.map);
+  var animTo = $('.anim-to').offset();
+  var animFrom = $('.anim-from').offset();
+$('yield').css({'transform-style': 'preserve-3d'});  
+$('body').append('<img src="message-user.png" class="throw-anim" style="top:' + animFrom['top'] + 'px; left:' + animFrom['left'] + 'px;position:absolute; width:40px;">');
+// $('body').append('<img src="message-user.png" class="throw-anim" style="top:' + animTo['top'] + 'px; left:' + animTo['left'] + 'px;position:absolute; width:40px;">');
+// debugger;
+  // $('.throw-anim').animate({ left: [animTo['left'] ,'linear'], top: animTo['top']}, 500, function() {});
+  setTimeout(function(){ $('.throw-anim').css({ 'transform': 'rotateX(360deg)', 'left': animTo['left'], 'top': animTo['top']  });}, 50);
    $('html').css({'overflow': 'scroll'});  
     setTimeout(function(){
    $('.mobile-icons').slideToggle(500, 'linear')
    $('.panel').slideToggle(500, 'linear')
    $('.panel').css({'display': 'inline'});
-   $('#map').css({ 
-     'transform': 'translate3d(0px, 0px, 0px) rotateX(0) rotateZ(0deg) scale(1, 1)', '-webkit-transform': 'translate3d(0px, 0px, 0px) rotateX(0) rotateZ(0deg) scale(1, 1)'
-   });
+   // $('#map').css({ 
+   //   'transform': 'translate3d(0px, 0px, 0px) rotateX(0) rotateZ(0deg) scale(1, 1)', '-webkit-transform': 'translate3d(0px, 0px, 0px) rotateX(0) rotateZ(0deg) scale(1, 1)'
+   // });
    rotation = 0;
    var getPxBounds = window.Crusoe.map.getPixelBounds;
    window.Crusoe.map.getPixelBounds = function () {
@@ -90,12 +95,14 @@ var animIcon = L.divIcon({
      bounds.max.y=bounds.max.y-400;
      return bounds;
      }; 
+
    window.Crusoe.map.dragging.enable();
    window.Crusoe.map.touchZoom.enable();
    window.Crusoe.map.doubleClickZoom.enable();
    window.Crusoe.map.scrollWheelZoom.enable();
+   Meteor.submitMessage([newPoint['lng'], newPoint['lat']]);  
+   $('.throw-anim').remove();
    Router.go("map",{});
-   }, 800);
-
+   }, 2000);
   }); 
-})
+});
