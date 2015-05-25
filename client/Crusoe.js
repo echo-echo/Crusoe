@@ -4,7 +4,7 @@ Router.configure({
 
 Meteor.submitMessage = function(location){
   $('.img-upload-preview').remove() //remove preview
-  var message = $('textarea').val();
+  var message = Session.get('messageToSend')
   var file = $('input.media-upload')[0].files[0];
   var photo = Session.get("photo");
 
@@ -95,7 +95,7 @@ Template.main.events({
         console.log("there was an error logging out.")
         throw err
       } else {
-        Materialize.toast("Goodbye, "+user+"!", 1000) 
+        Materialize.toast("Goodbye, "+user+"!", 1000)
       }
     });
   },
