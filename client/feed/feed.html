@@ -80,10 +80,10 @@
     {{#if isUser }}
       <div class="modal-footer">
         <button class ="save waves-effect btn-flat">
-          <i class ="mdi-content-add-box"> tag message</i>
+          <i class ="mdi-content-add-box">tag</i>
         </button>
         <button class ="like waves-effect btn-flat">
-          <i class ="mdi-action-thumb-up"> {{message.likes.length}}</i>
+          <i class ="mdi-action-thumb-up">{{message.likes.length}}</i>
         </button>
       </div>
     {{/if}}
@@ -102,8 +102,8 @@
       <input id="media-upload" class="media-upload" type="file" />
     </div>
     <div class="modal-footer">
-      <a href="{{ pathFor "throw"}}" class="modal-action modal-close waves-effect waves-green btn-flat throw" >Throw Message</a>
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat submit">Drop Message</a>
+      <a href="{{ pathFor "throw"}}" class="modal-action modal-close waves-effect waves-green btn-flat throw">Throw</a>
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat submit">Drop</a>
     </div>
   </div>
 </template>

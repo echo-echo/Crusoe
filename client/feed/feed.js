@@ -167,7 +167,10 @@ Template.messageModal.helpers({
         lngWeight1month: 0}
       }).fetch()[0];
 
-      if (message) message.visible = current.visible;
+      if (message){
+        message.visible = current.visible;
+        message.description = current.description;
+      } 
     }
 
     if((Date.now() - window.Crusoe.lastCalled) > 1000){

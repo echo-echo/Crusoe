@@ -245,7 +245,6 @@ width:80%;
   border-radius: 4px;
   margin: 3px auto;
   max-height: 90%;
-  max-width: 60%;
   min-width: 100px;
   overflow: scroll;
   padding: 8px;
@@ -305,7 +304,7 @@ blockquote p {
 }
 
 .modal-close {
-  padding-right: 20px;
+  padding-right: 30px;
   padding-top: 10px;
 }
 
