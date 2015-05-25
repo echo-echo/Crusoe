@@ -206,7 +206,7 @@ li:hover {
   background-color: rgba(0,100,255,0.5);
 }
 .throw-button-col{
-z-index:1200;  
+z-index:1200;
 line-height: 50%;
 height:100px;
 margin-left:auto;
@@ -328,6 +328,11 @@ blockquote p {
   width: 200px;
 }
 
+.photoview, .streetview{
+  cursor:pointer;
+}
+
+
 .message-info {
   display: inline-block;
   vertical-align: top;
@@ -335,8 +340,7 @@ blockquote p {
 }
 
 .toggle-panel {
-  text-align: right;
-  width: 30%;
+  text-align: left;
 }
 
 blockquote p {

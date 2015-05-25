@@ -33,9 +33,10 @@
 <template name="messageModal">
   <div id="map-message-modal" class="modal c-modal">
     <div class="modal-content">
-      <a href="#" class="right modal-close">close</a>
+      <a href="#" class="right modal-close">X</a>
       <div class="view-msg-container">
         {{#if message.visible}}
+          {{#if message.text.length}}
 
             <blockquote>
               {{#if isLongMessage}}
@@ -47,10 +48,12 @@
                 <p class="short-message">{{message.text}}</p>
               {{/if}}
             </blockquote>
+          {{/if}}
 
           {{#if message.key}}
             <div id="display-photo"></div>
           {{/if}}
+
 
         {{else}}
         <h4>Message is too far away to view.</h4>
@@ -62,11 +65,11 @@
           <h6>Origin: {{message.origin}}</h6>
           <h6>Opens: {{message.opens}}</h6>
         </div>
-
         <div class="message-info toggle-panel">
           <i class="mdi-editor-insert-photo photoview"></i>
-          <i class="mdi-action-launch streetview"></i>
+          <i class="mdi-image-nature-people streetview"></i>
         </div>
+
       </div>
     </div>
     {{#if isUser }}
@@ -86,6 +89,7 @@
   <!-- Modal Structure -->
   <div id="write" class="modal c-modal">
     <div class="modal-content">
+      <a href="#" class="right modal-close">X</a>
       <h5>Write Message:</h5>
       <textarea placeholder="compose your message here" autofocus wrap="soft"></textarea>
       <i class="small mdi-image-camera-alt takephoto"></i>
