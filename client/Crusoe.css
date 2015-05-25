@@ -244,6 +244,10 @@ width:80%;
 /*
 * Modal styling
 */
+.throw-anim{
+  transform: translate3d(0px,0px,0px);
+  transition: .5s;
+  transform-style:preserve-3d;
 
 .c-modal{
   border-radius: 4px;
