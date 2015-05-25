@@ -36,6 +36,7 @@
       <a href="#" class="right modal-close">close</a>
       <div class="view-msg-container">
         {{#if message.visible}}
+          {{#if message.text.length}}
 
             <blockquote>
               {{#if isLongMessage}}
@@ -47,10 +48,12 @@
                 <p class="short-message">{{message.text}}</p>
               {{/if}}
             </blockquote>
+          {{/if}}
 
           {{#if message.key}}
             <div id="display-photo"></div>
           {{/if}}
+
 
         {{else}}
         <h4>Message is too far away to view.</h4>
