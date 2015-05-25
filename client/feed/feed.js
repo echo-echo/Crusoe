@@ -289,6 +289,11 @@ Template.messageModal.events({
   "click .read-more": function(){
     $('blockquote p.long-message').removeClass('long-message');
     $('.bottom-fade').hide();
+  },
+
+  "click #map-modal-close": function(){
+    console.log('i was clicked woo')
+    $('#map-message-modal').closeModal();
   }
 });
 

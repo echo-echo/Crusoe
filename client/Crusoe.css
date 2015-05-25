@@ -294,16 +294,24 @@ blockquote p {
 
 .modal-content {
   font-size: 20px;
+  margin-top: 30px;
   padding:0 !important;
+  overflow-y: scroll;
 }
 
 .modal-content h6 {
   font-size: 14px;
 }
 
+.modal-close {
+  padding-right: 20px;
+  padding-top: 10px;
+}
+
 .view-msg-container {
   margin: 0 auto;
   max-width: 70%;
+  padding-bottom: 100px;
 }
 
 #display-photo, #display-streetview {
