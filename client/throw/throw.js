@@ -18,11 +18,11 @@ Template.throw.onRendered(function () {
       'transform': 'translate3d(0px, 0px, 0px)rotateX(' + xTilt + 'deg) rotateZ(' + rotation + 'deg) scale(' + scale + ',' + scale + ')', 'transition': '.1s', '-webkit-transition': '.1s', '-webkit-transform': 'translate3d(0px, 0px, 0px)rotateX(' + xTilt + 'deg) rotateZ(' + rotation + 'deg) scale(' + scale + ',' + scale + ')'
     }); 
   }; 
-    window.Crusoe.map.dragging.disable();
-    window.Crusoe.map.touchZoom.disable();
-    window.Crusoe.map.doubleClickZoom.disable();
-    window.Crusoe.map.scrollWheelZoom.disable();
-    window.Crusoe.map.setZoom(16); 
+  window.Crusoe.map.dragging.disable();
+  window.Crusoe.map.touchZoom.disable();
+  window.Crusoe.map.doubleClickZoom.disable();
+  window.Crusoe.map.scrollWheelZoom.disable();
+  window.Crusoe.map.setZoom(16); 
 
   $('#autopan').hide();
   $('.mobile-icons').slideToggle(500, 'linear')
@@ -83,14 +83,14 @@ Template.throw.onRendered(function () {
   L.marker([newPoint['lat'], newPoint['lng']] ,{icon:animIconTo}).addTo(window.Crusoe.map);
   var animTo = $('.anim-to').offset();
   var animFrom = $('.anim-from').offset();
-$('yield').css({'transform-style': 'preserve-3d'});  
-$('body').append('<img src="message-user.png" class="throw-anim" style="top:' + animFrom['top'] + 'px; left:' + animFrom['left'] + 'px;position:absolute; width:40px;">');
+  $('yield').css({'transform-style': 'preserve-3d'});
+  $('body').append('<img src="message-user.png" class="throw-anim" style="top:' + animFrom['top'] + 'px; left:' + animFrom['left'] + 'px;position:absolute; width:40px;">');
   setTimeout(function(){ $('.throw-anim').css({ 'transform': 'rotateX(360deg)', 'left': animTo['left'], 'top': animTo['top']  });}, 50);
-   $('html').css({'overflow': 'scroll'});
-    setTimeout(function(){
-   $('.mobile-icons').slideToggle(500, 'linear')
-   $('.panel').slideToggle(500, 'linear')
-   $('.panel').css({'display': 'inline'});
+    $('html').css({'overflow': 'scroll'});
+  setTimeout(function(){
+    $('.mobile-icons').slideToggle(500, 'linear')
+    $('.panel').slideToggle(500, 'linear');
+    $('.panel').css({'display': 'inline'});
    // $('#map').css({ 
    //   'transform': 'translate3d(0px, 0px, 0px) rotateX(0) rotateZ(0deg) scale(1, 1)', '-webkit-transform': 'translate3d(0px, 0px, 0px) rotateX(0) rotateZ(0deg) scale(1, 1)'
    // });
