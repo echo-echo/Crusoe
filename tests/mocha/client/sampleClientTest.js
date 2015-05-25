@@ -22,17 +22,5 @@ if (!(typeof MochaWeb === 'undefined')){
        should.exist(GoogleMaps)
       })
     })
-
-    describe('Messages', function(){
-      it("should be able to add messages", function(){
-
-      })
-    })
-
-    describe('Users', function(){
-      it("should be able to add messages", function(){
-
-      })
-    })
   });
 }
