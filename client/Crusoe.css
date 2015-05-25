@@ -328,6 +328,11 @@ blockquote p {
   width: 200px;
 }
 
+.photoview, .streetview{
+  cursor:pointer;
+}
+
+
 .message-info {
   display: inline-block;
   vertical-align: top;
