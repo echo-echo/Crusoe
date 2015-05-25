@@ -248,7 +248,7 @@ Template.messageModal.events({
     var coords = new google.maps.LatLng(lat, lng);
 
     //check to see if there is a StreetView for that location
-    sv.getPanoramaByLocation(coords, 10, function(data, status) {
+    sv.getPanoramaByLocation(coords, 50, function(data, status) {
         if (status == 'OK') {
             //google has a streetview image for this locatio, so attach it to the streetview div
             var panoramaOptions = {
