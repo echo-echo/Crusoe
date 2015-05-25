@@ -207,6 +207,9 @@ textarea {
   border-radius:5px;
   background-color: rgba(0,100,255,0.5);
 }
+.throw-it:hover {
+  background-color:rgba(0,0,0,0.5);
+}
 .scan-right{
   width:30%;
   height:90%;
