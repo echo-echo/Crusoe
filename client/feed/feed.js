@@ -189,9 +189,8 @@ Template.messageModal.helpers({
         if ( window.Crusoe.img && window.Crusoe.img.messageId === messageId ) {
           var result = window.Crusoe.img.img;
           $('#display-photo').css({
-            'background': 'url( ' + result + ') no-repeat',
-            'background-size': 'auto 100%',
-            'background-position': 'center'
+            'background': 'url( ' + result + ') center no-repeat',
+            'background-size': 'auto 100%'
           });
 
         } else {
@@ -204,9 +203,8 @@ Template.messageModal.helpers({
             }
 
             $('#display-photo').css({
-              'background': 'url( ' + result[0][1] + ') no-repeat',
-              'background-size': 'auto 100%',
-              'background-position': 'center'
+              'background': 'url( ' + result[0][1] + ') center no-repeat',
+              'background-size': 'auto 100%'
             });
 
             var img = {
