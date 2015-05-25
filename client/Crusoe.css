@@ -162,6 +162,10 @@ textarea {
   border-radius: 8px;
 }
 
+#write{
+  padding:2%;
+}
+
 .img-upload-preview {
   height: 250px;
   width: auto;
