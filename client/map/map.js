@@ -25,7 +25,6 @@ Meteor.startup(function(){
 });
 
 Template.Map.onRendered(function () {
-
   var marker;
   var radiusVal = 1000; //ft
   var bounds;
@@ -72,7 +71,7 @@ Template.Map.onRendered(function () {
         map.panTo([userLat, userLong]); //TODO: change this to pan to clicked message location
         map.setZoom(14);
         imageBounds = calcBounds(userLat, userLong, radiusVal);
-        bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.9);
+        bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.8);
         geoJsonLayer = L.geoJson().addTo(map);
   		  window.Crusoe.map = map;
       }
@@ -88,7 +87,7 @@ Template.Map.onRendered(function () {
           marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
           map.removeLayer(bounds);
           imageBounds = calcBounds(local.coords.latitude, local.coords.longitude, 1000);
-          bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.9);
+          bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.8);
           if(Session.get('pan') && Date.now() - lastPan > 3000){
             lastPan = Date.now()
             map.panTo([local.coords.latitude, local.coords.longitude]);
