@@ -139,9 +139,9 @@ Template.messageModal.helpers({
       var messageId = current._id
       var message = Messages.find({_id:messageId},{fields:{
         location: 0,
-        latWeight1m: 0, 
-        lngWeight1m: 0, 
-        latWeight15m: 0, 
+        latWeight1m: 0,
+        lngWeight1m: 0,
+        latWeight15m: 0,
         lngWeight15m: 0,
         latWeight1hr: 0,
         lngWeight1hr: 0,
@@ -225,7 +225,7 @@ Template.messageModal.events({
   "click .save": function(){
     var messageId = Session.get("currentMessage")._id
     Meteor.call("tagMessage", messageId)
-    Materialize.toast('Message tagged!', 1000) 
+    Materialize.toast('Message tagged!', 1000)
   },
 
   "click .like": function(){
@@ -234,24 +234,45 @@ Template.messageModal.events({
   },
 
   "click .streetview": function(){
+
+    var sv = new google.maps.StreetViewService();
     var message = Session.get("currentMessage");
     var lat = message.location.coordinates[1];
     var lng = message.location.coordinates[0];
     var coords = new google.maps.LatLng(lat, lng);
-    if ( $('#display-photo').length ) {
-      $('#display-photo').hide();
-    }
 
-    $('#display-streetview').show();
+    //check to see if there is a StreetView for that location
+    sv.getPanoramaByLocation(coords, 10, function(data, status) {
+        if (status == 'OK') {
+            //google has a streetview image for this locatio, so attach it to the streetview div
+            var panoramaOptions = {
+                position: coords,
+                panControl: false,
+                zoomControl: false,
+                addressControl: false,
+                linksControl:false
+              }
 
-    var panorama = new google.maps.StreetViewPanorama($('#display-streetview')[0], {
-      position: coords
+            if ( $('#display-photo').length ) {
+              $('#display-photo').hide();
+            }
+
+            $('#display-streetview').show();
+            var panorama = new google.maps.StreetViewPanorama($('#display-streetview')[0], panoramaOptions);
+
+        } else{
+            Materialize.toast("There is no streetview image for this location", 3000)
+        }
     });
   },
 
   "click .photoview": function(){
-    $('#display-streetview').hide();
-    $('#display-photo').show();
+    if(Session.get('currentMessage').key){
+      $('#display-streetview').hide();
+      $('#display-photo').show();
+    } else {
+      Materialize.toast("No photo information available.", 3000);
+    }
   },
 
   "click .read-more": function(){
