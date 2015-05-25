@@ -89,7 +89,6 @@ Template.feed.events({
 
       },
       complete: function(){
-        Session.set('photo', null);
         $('textarea').val('');
       }
     });
@@ -170,7 +169,7 @@ Template.messageModal.helpers({
       if (message){
         message.visible = current.visible;
         message.description = current.description;
-      } 
+      }
     }
 
     if((Date.now() - window.Crusoe.lastCalled) > 1000){
