@@ -85,8 +85,14 @@ Template.feed.events({
         $("#upload").unbind('click');
         $("#upload").click(function () {
           $(".media-upload").trigger('click');
-        });
-      }});
+        })
+
+      },
+      complete: function(){
+        Session.set('photo', null);
+        $('textarea').val('');
+      }
+    });
 
     $(".media-upload").on("change", function(){
       if ( $('.media-upload')[0].files.length > 0 ) {
