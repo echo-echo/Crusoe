@@ -118,6 +118,11 @@ li:hover {
 
 }
 
+textarea {
+  padding: 1%;
+  height: 5rem;
+}
+
 .map-rotation{
 }
 
