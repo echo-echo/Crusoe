@@ -37,6 +37,7 @@ Template.promptRemoveTag.events({
   }
 })
 
+//Gets the appropriate tagged messages.
 Template.taggedMessages.helpers({
   taggedMessages: function(){
     var messages=[]

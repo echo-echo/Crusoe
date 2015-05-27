@@ -8,7 +8,7 @@ Crusoe is a location based messaging app where users can read messages in their 
 ![Screenshot of Crusoe](http://i.imgur.com/DAHs00U.png)
 
 #Getting Started
-To get started: fork, clone or download the repo. Then, in terminal run `Meteor`. This will launch the app on localhost:3000.
+To get started: fork, clone or download the repo. Then, in terminal run `Meteor`. This will launch the app on localhost:3000. In order for the picture functionality to work, you will need to fill out the `key.template.js` file in the server folder.
 
 # Stack
 * MongoDB

@@ -5,7 +5,7 @@ Meteor.subscribe("messages");
 
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- *         FEED HELPERS / EVENTS
+ *           FEED HELPERS
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 Template.feed.helpers({
@@ -50,6 +50,10 @@ Template.feed.helpers({
     return result
   }
 })
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *         FEED EVENTS
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 Template.feed.events({
   "click .feedMessage": function(event){
@@ -144,6 +148,7 @@ Template.messageModal.helpers({
 
     if (current){
       var messageId = current._id
+      //eliminates unnecesary fields from the message object
       var message = Messages.find({_id:messageId},{fields:{
         location: 0,
         latWeight1m: 0,
@@ -172,6 +177,8 @@ Template.messageModal.helpers({
       }
     }
 
+    //message needs to be debounced. For some reason
+    //clicking a message calls this function multiple times.
     if((Date.now() - window.Crusoe.lastCalled) > 1000){
       window.Crusoe.lastCalled= Date.now();
 
