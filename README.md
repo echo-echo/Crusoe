@@ -5,7 +5,7 @@
 
 Crusoe is a location based messaging app where users can read messages in their area and create messages that wander around as if the world was one big ocean.
 
-![Screenshot of Crusoe](http://i.imgur.com/DAHs00U.png)
+![Screenshot of Crusoe](http://i.imgur.com/n6ttbvG.jpg)
 
 #Getting Started
 To get started: fork, clone or download the repo. Then, in terminal run `Meteor`. This will launch the app on localhost:3000.
