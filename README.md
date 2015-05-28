@@ -1,14 +1,13 @@
 # Crusoe
 *The modern message in a bottle*
 
-![Message in a bottle](http://img3.goodfon.su/original/1440x900/4/db/nastroeniya-butylka-pismo.jpg)
-
 Crusoe is a location based messaging app where users can read messages in their area and create messages that wander around as if the world was one big ocean.
 
 ![Screenshot of Crusoe](http://i.imgur.com/n6ttbvG.jpg)
 
+
 #Getting Started
-To get started: fork, clone or download the repo. Then, in terminal run `Meteor`. This will launch the app on localhost:3000.
+To get started: fork, clone or download the repo. Then, in terminal run `Meteor`. This will launch the app on localhost:3000. In order for the picture functionality to work, you will need to fill out the `key.template.js` file in the server folder. You will need to rename this file to `keys.js`
 
 # Stack
 * MongoDB

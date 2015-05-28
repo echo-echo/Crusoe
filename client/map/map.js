@@ -1,5 +1,6 @@
 Meteor.startup(function(){
   window.Crusoe = {};
+  //used for debouncing
   window.Crusoe.lastCalled = Date.now();
 
   Mapbox.load();
@@ -24,6 +25,9 @@ Meteor.startup(function(){
   });
 });
 
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *         Map initializer
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 Template.Map.onRendered(function () {
   var marker;
   var radiusVal = 1000; //ft
@@ -36,6 +40,12 @@ Template.Map.onRendered(function () {
   var lastPan = Date.now();
   var lastClick = Date.now();
   Session.set('pan', true);
+
+ /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * This autorun reruns every time one of its Session variables
+ * changes. Or if anything is changed client or server side.
+ * This will update all the message properties.
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
   Tracker.autorun(function () {
     if (Mapbox.loaded()) {
