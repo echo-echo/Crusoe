@@ -30,7 +30,7 @@ Meteor.startup(function(){
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 Template.Map.onRendered(function () {
   var marker;
-  var radiusVal = 1000; //ft
+  var radiusVal = 5000; //ft
   var bounds;
   var userLat;
   var userLong;
@@ -96,7 +96,7 @@ Template.Map.onRendered(function () {
           localStorage.setItem("userLong", local.coords.longitude);
           marker.setLatLng([local.coords.latitude, local.coords.longitude]).update();
           map.removeLayer(bounds);
-          imageBounds = calcBounds(local.coords.latitude, local.coords.longitude, 1000);
+          imageBounds = calcBounds(local.coords.latitude, local.coords.longitude, radiusVal);
           bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.8);
           if(Session.get('pan') && Date.now() - lastPan > 3000){
             lastPan = Date.now()
@@ -268,14 +268,28 @@ var deg2rad = function(deg) {
 };
 
 var calcBounds = function(userLat, userLong, radius) { //calc bounds for view, radius in feet
-  var lat0 = (userLat - ((radius/1000) * 0.0027565));
-  var lat1 = (userLat + ((radius/1000) * 0.0027565));
-  var lonKmPerDeg = (0.11132 * Math.cos(userLat)); //get km per .001 deg lon...
-  ///(0.3048 km per 1000ft) so...
-  var lonDiff = (0.3048 / lonKmPerDeg);
-  var lon0 = (userLong - (((radius/1000) * .0005) * lonDiff));
-  var lon1 = (userLong + (((radius/1000) * .0005) * lonDiff));
-  return [[lat0, lon0], [lat1, lon1]];
+
+  //formula for feet in 1 Degree of Longitude
+  //Length of 1 degree of Longitude = cosine (latitude) * length of degree (miles) at equator
+  var oneDegreeInFt = Math.cos(Math.PI/180 * userLat) * (69.172 * 5280)
+  var lonOffset = radius / oneDegreeInFt
+  var newLong0 = userLong + lonOffset
+  var newLong1 = userLong - lonOffset
+
+  var latOffset = radius / 363708.98
+  var newLat0 = userLat + latOffset
+  var newLat1 = userLat - latOffset
+
+  return [[newLat1, newLong1], [newLat0, newLong0]]
+
+  // var lat0 = (userLat - ((radius/1000) * 0.0027565));
+  // var lat1 = (userLat + ((radius/1000) * 0.0027565));
+  // var lonKmPerDeg = (0.11132 * Math.cos(userLat)); //get km per .001 deg lon...
+  // ///(0.3048 km per 1000ft) so...
+  // var lonDiff = (0.3048 / lonKmPerDeg);
+  // var lon0 = (userLong - (((radius/1000) * .0005) * lonDiff));
+  // var lon1 = (userLong + (((radius/1000) * .0005) * lonDiff));
+  // return [[lat0, lon0], [lat1, lon1]];
 }
 //~~~~~~~~~~~~~~~~~~~~~~~
 /*
