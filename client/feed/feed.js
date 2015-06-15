@@ -26,7 +26,7 @@ Template.feed.helpers({
       messages[i].proximityString = convertProx(proximity)
       messages[i].proximity = Math.round(proximity);
 
-      if (proximity<1000){
+      if (proximity<5000){
         messages[i].visible = true;
         messages[i].proximity = proximity;
         result.visible.push(messages[i])
