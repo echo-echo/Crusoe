@@ -276,20 +276,12 @@ var calcBounds = function(userLat, userLong, radius) { //calc bounds for view, r
   var newLong0 = userLong + lonOffset
   var newLong1 = userLong - lonOffset
 
+  //Latitudes have a negligable offset.
   var latOffset = radius / 363708.98
   var newLat0 = userLat + latOffset
   var newLat1 = userLat - latOffset
 
   return [[newLat1, newLong1], [newLat0, newLong0]]
-
-  // var lat0 = (userLat - ((radius/1000) * 0.0027565));
-  // var lat1 = (userLat + ((radius/1000) * 0.0027565));
-  // var lonKmPerDeg = (0.11132 * Math.cos(userLat)); //get km per .001 deg lon...
-  // ///(0.3048 km per 1000ft) so...
-  // var lonDiff = (0.3048 / lonKmPerDeg);
-  // var lon0 = (userLong - (((radius/1000) * .0005) * lonDiff));
-  // var lon1 = (userLong + (((radius/1000) * .0005) * lonDiff));
-  // return [[lat0, lon0], [lat1, lon1]];
 }
 //~~~~~~~~~~~~~~~~~~~~~~~
 /*
