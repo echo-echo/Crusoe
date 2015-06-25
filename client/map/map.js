@@ -75,7 +75,8 @@ Template.Map.onRendered(function () {
           attributionControl: false,
           zoomControl :false
         });
-
+        // L.control.zoom({position: 'bottomleft'});
+        new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
         //initializes marker, users location, user radius, and pans map to the user's location
         marker = L.marker([userLat, userLong]).addTo(map);
         map.panTo([userLat, userLong]); //TODO: change this to pan to clicked message location

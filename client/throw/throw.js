@@ -51,10 +51,10 @@ Template.throw.onRendered(function () {
     window.Crusoe.map.getPixelBounds = function () {
       var bounds = getPxBounds.call(this);
       // ... extend the bounds
-      bounds.min.x=bounds.min.x-400;
-      bounds.min.y=bounds.min.y-400;
-      bounds.max.x=bounds.max.x+400;
-      bounds.max.y=bounds.max.y+400;
+      bounds.min.x=bounds.min.x-800;
+      bounds.min.y=bounds.min.y-800;
+      bounds.max.x=bounds.max.x+800;
+      bounds.max.y=bounds.max.y+800;
       return bounds;
     };
  $('.throw-it').mousedown(function(){

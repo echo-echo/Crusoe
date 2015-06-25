@@ -266,7 +266,7 @@ Template.messageModal.events({
             var panoramaOptions = {
                 position: coords,
                 panControl: false,
-                zoomControl: false,
+                // zoomControl: false,
                 addressControl: false,
                 linksControl:false
               }
