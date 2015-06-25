@@ -57,11 +57,31 @@ Template.throw.onRendered(function () {
 
 }, 3000);
 
-  $('.scan-left').mousedown(function(){ rotation = (rotation + 4) % 360; transformMap(); leftInt = setInterval(function(){ rotation = (rotation + 4) % 360; transformMap(); }, 100) });
-  $('.scan-left').mouseup(function(){ clearInterval(leftInt) });
+  $('.scan-left').mousedown(function(){
+    if (!leftInt) {
+      rotation = (rotation + 4) % 360; transformMap(); 
+      leftInt = setInterval(function(){ rotation = (rotation + 4) % 360; 
+      transformMap(); }, 100) 
+    } else {
+      clearInterval(leftInt);
+      leftInt = false;
+    }  
+  });
 
-  $('.scan-right').mousedown(function(){ rotation = (rotation - 4) % 360; transformMap(); rightInt = setInterval(function(){ rotation = (rotation - 4) % 360; transformMap(); }, 100) });
-  $('.scan-right').mouseup(function(){ clearInterval(rightInt)});
+    $('.scan-right').mousedown(function(){
+    if (!rightInt) {
+      rotation = (rotation - 4) % 360; transformMap(); 
+      rightInt = setInterval(function(){ rotation = (rotation - 4) % 360; 
+      transformMap(); }, 100) 
+    } else {
+      clearInterval(rightInt);
+      rightInt = false;
+    }  
+  });
+  // $('.scan-left').mouseup(function(){ clearInterval(leftInt) });
+
+  // $('.scan-right').mousedown(function(){ rotation = (rotation - 4) % 360; transformMap(); rightInt = setInterval(function(){ rotation = (rotation - 4) % 360; transformMap(); }, 100) });
+  // $('.scan-right').mouseup(function(){ clearInterval(rightInt)});
 
     var getPxBounds = window.Crusoe.map.getPixelBounds;
     window.Crusoe.map.getPixelBounds = function () {
@@ -74,9 +94,12 @@ Template.throw.onRendered(function () {
       return bounds;
     };
  $('.throw-it').mousedown(function(){
-  throwInt = setInterval(function(){ distance = Math.min(distance += 10, 500) ; $('.throw-it').css({'background-color': 'rgba(' + (distance/2) + ',100,' + (distance/4) + ',0.5)'}) }, 100);
- });
- $('.throw-it').mouseup(function(){
+   if (!throwInt) {
+     throwInt = setInterval(function(){ distance = Math.min(distance += 10, 500) ; $('.throw-it').css({'background-color': 'rgba(' + (distance/2) + ',100,' + (distance/4) + ',0.5)'}) }, 100);
+   } else {
+
+
+ // $('.throw-it').mouseup(function(){
      clearInterval(throwInt);
      clearInterval(rightInt); //clear intervals in case they are left active, mobile bug
      clearInterval(leftInt);
@@ -131,5 +154,7 @@ Template.throw.onRendered(function () {
    distance = 0;
    Router.go("map",{});
    }, 2000);
-  });
+  // });
+    }
+ });
 });
