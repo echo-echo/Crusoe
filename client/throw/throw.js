@@ -25,9 +25,10 @@ Template.throw.onRendered(function () {
   window.Crusoe.map.doubleClickZoom.disable();
   window.Crusoe.map.scrollWheelZoom.disable();
   window.Crusoe.map.setZoom(16);
+  $('.leaflet-marker-pane').children()[0].remove();
 
   $('#autopan').hide();
-  $('.mobile-icons').slideToggle(500, 'linear')
+  $('.mobile-icons').slideToggle(500, 'linear');
   if ($(window).width() < 480) {
     $('#map').css({'overflow': 'visible','position': 'fixed', 'margin-left': '150px'});
   } else {
@@ -40,6 +41,21 @@ Template.throw.onRendered(function () {
   });
   }
   $('.page-wrapper').css({'overflow': 'hidden'});
+
+ setTimeout(function(){
+  //add user Icon that will not rotate:
+  var userPlace = L.divIcon({
+    className:'user-icon-loc',
+    html:'<div class="user-marker"><img src=""/></div>',
+    iconSize: [35, 46]
+  });
+  L.marker([userLat, userLong],{icon:userPlace}).addTo(window.Crusoe.map);
+
+  //  // var currentUserPoint = window.Crusoe.map.latLngToLayerPoint([userLat, userLong]);
+  var userPointOffset = $('.user-marker').offset();
+  $('body').append('<img src="map-marker-icon-red.png" class="user-static-icon" style="top:' + (userPointOffset['top'] - 46) + 'px; left:' + userPointOffset['left'] + 'px;position:absolute; width:60px;">');
+
+}, 3000);
 
   $('.scan-left').mousedown(function(){ rotation = (rotation + 4) % 360; transformMap(); leftInt = setInterval(function(){ rotation = (rotation + 4) % 360; transformMap(); }, 100) });
   $('.scan-left').mouseup(function(){ clearInterval(leftInt) });
@@ -71,7 +87,7 @@ Template.throw.onRendered(function () {
 
       var animIcon = L.divIcon({
           className:'anim-from',
-          html:'<div class="marker><img src=""/></div>',
+          html:'<div class="marker"><img src=""/></div>',
           iconSize: [35, 46]
         }),
           animIconTo = L.divIcon({
@@ -109,6 +125,7 @@ Template.throw.onRendered(function () {
    window.Crusoe.map.touchZoom.enable();
    window.Crusoe.map.doubleClickZoom.enable();
    window.Crusoe.map.scrollWheelZoom.enable();
+   $('.user-static-icon').remove();
    Meteor.submitMessage([newPoint['lng'], newPoint['lat']]);
    $('.throw-anim').remove();
    distance = 0;
