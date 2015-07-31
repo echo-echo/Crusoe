@@ -3,7 +3,9 @@ Meteor.startup(function(){
   //used for debouncing
   window.Crusoe.lastCalled = Date.now();
 
-  Mapbox.load();
+  Mapbox.load({
+        plugins: ['markercluster']
+    });
   GoogleMaps.load();
 
 
@@ -83,9 +85,9 @@ Template.Map.onRendered(function () {
         map.setZoom(14);
         imageBounds = calcBounds(userLat, userLong, radiusVal);
         bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.8);
-
-        geoJsonLayer = new L.MarkerClusterGroup({ spiderfyOnMaxZoom: false, showCoverageOnHover: false, zoomToBoundsOnClick: false });
-        // geoJsonLayer = L.geoJson().addTo(map);
+        clusterLayer = new L.MarkerClusterGroup().addTo(map);
+// console.log('ahh');
+        geoJsonLayer = L.geoJson().addTo(map);
   		  window.Crusoe.map = map;
       }
 
@@ -127,16 +129,16 @@ Template.Map.onRendered(function () {
       });
 
       // Adds the classname of the icon to the messages as we add them to the map.
-      geoJsonLayer.on('layeradd', function (e) {
-        var marker = e.layer,
-        feature = marker.feature;
-        //sets each marker to a divIcon, html can be specified
-        marker.setIcon(L.divIcon({
-          className: marker.feature.properties.icon.iconUrl,
-          html: '',
-          iconSize: [35,35]
-        }));
-      });
+      // geoJsonLayer.on('layeradd', function (e) {
+      //   var marker = e.layer,
+      //   feature = marker.feature;
+      //   //sets each marker to a divIcon, html can be specified
+      //   marker.setIcon(L.divIcon({
+      //     className: marker.feature.properties.icon.iconUrl,
+      //     html: '',
+      //     iconSize: [35,35]
+      //   }));
+      // });
 
       // for each message that we have gotten from the server (object)
       allMess.forEach(function(object){
@@ -144,7 +146,6 @@ Template.Map.onRendered(function () {
         // we grab the new coordinates for the message
         var newMsgLat = object.location.coordinates[1];
         var newMsgLng = object.location.coordinates[0];
-
 
         // we check to see if the message is popular or if it belongs to the user
         // and set the appropriate variables for assign icons later.
@@ -191,7 +192,8 @@ Template.Map.onRendered(function () {
                         "properties": getProperties(object, newMessageInRange, isUsers, isPopular)
                       }
 
-             geoJsonLayer.addData(obj);
+             // geoJsonLayer.addData(obj);  
+             clusterLayer.addLayer(geoJsonLayer.addData(obj));
             // geoJsonLayer.getLayer(marker._leaflet_id).setIcon(getIcon(true, newMessageInRange, isUsers, isPopular))
           }//end else
       });

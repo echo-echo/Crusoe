@@ -9,7 +9,7 @@ accounts-ui
 accounts-password
 iron:router
 materialize:materialize
-pauloborges:mapbox@2.1.4_3
+pauloborges:mapbox@2.1.5
 mdg:geolocation
 mike:mocha
 percolate:synced-cron
