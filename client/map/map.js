@@ -85,8 +85,7 @@ Template.Map.onRendered(function () {
         map.setZoom(14);
         imageBounds = calcBounds(userLat, userLong, radiusVal);
         bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.8);
-        clusterLayer = new L.MarkerClusterGroup().addTo(map);
-// console.log('ahh');
+        clusterLayer = new L.MarkerClusterGroup({maxClusterRadius: 30, singleMarkerMode: true}).addTo(map);
         geoJsonLayer = L.geoJson().addTo(map);
   		  window.Crusoe.map = map;
       }
@@ -129,16 +128,16 @@ Template.Map.onRendered(function () {
       });
 
       // Adds the classname of the icon to the messages as we add them to the map.
-      // geoJsonLayer.on('layeradd', function (e) {
-      //   var marker = e.layer,
-      //   feature = marker.feature;
-      //   //sets each marker to a divIcon, html can be specified
-      //   marker.setIcon(L.divIcon({
-      //     className: marker.feature.properties.icon.iconUrl,
-      //     html: '',
-      //     iconSize: [35,35]
-      //   }));
-      // });
+      geoJsonLayer.on('layeradd', function (e) {
+        var marker = e.layer,
+        feature = marker.feature;
+        //sets each marker to a divIcon, html can be specified
+        marker.setIcon(L.divIcon({
+          className: marker.feature.properties.icon.iconUrl,
+          html: '',
+          iconSize: [35,35]
+        }));
+      });
 
       // for each message that we have gotten from the server (object)
       allMess.forEach(function(object){
