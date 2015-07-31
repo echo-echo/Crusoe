@@ -85,8 +85,8 @@ Template.Map.onRendered(function () {
         map.setZoom(14);
         imageBounds = calcBounds(userLat, userLong, radiusVal);
         bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.8);
-        clusterLayer = new L.MarkerClusterGroup({maxClusterRadius: 30, singleMarkerMode: true}).addTo(map);
-        geoJsonLayer = L.geoJson().addTo(map);
+        clusterLayer = new L.MarkerClusterGroup({maxClusterRadius: 120, singleMarkerMode: false}).addTo(map);
+        geoJsonLayer = L.geoJson();
   		  window.Crusoe.map = map;
       }
 
@@ -192,7 +192,7 @@ Template.Map.onRendered(function () {
                       }
 
              // geoJsonLayer.addData(obj);  
-             clusterLayer.addLayer(geoJsonLayer.addData(obj));
+             clusterLayer.addLayer(geoJsonLayer.addData(obj)).addTo(map);
             // geoJsonLayer.getLayer(marker._leaflet_id).setIcon(getIcon(true, newMessageInRange, isUsers, isPopular))
           }//end else
       });
