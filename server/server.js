@@ -77,7 +77,7 @@ SyncedCron.add({
         msg.latWeight1wk +
         msg.latWeight1month +
         (+latWind || 0)
-        ) * 0.0003;
+        ) * 0.00003;
       var lngChange = (
         Math.random() - 0.5 +
         msg.lngWeight1m +
@@ -90,7 +90,7 @@ SyncedCron.add({
         msg.lngWeight1wk +
         msg.lngWeight1month +
         (+lngWind || 0)
-        ) * 0.0003;
+        ) * 0.00003;
       var newLng = msg.location.coordinates[0] += lngChange;
       var newLat = msg.location.coordinates[1] += latChange;
 

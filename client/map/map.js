@@ -85,7 +85,7 @@ Template.Map.onRendered(function () {
         map.setZoom(14);
         imageBounds = calcBounds(userLat, userLong, radiusVal);
         bounds = L.imageOverlay(imageUrl, imageBounds).addTo(map).setOpacity(0.8);
-        clusterLayer = new L.MarkerClusterGroup({maxClusterRadius: 120, disableClusteringAtZoom: 13}).addTo(map);
+        clusterLayer = new L.MarkerClusterGroup({maxClusterRadius: 120}).addTo(map);
         geoJsonLayer = L.geoJson();
   		  window.Crusoe.map = map;
       }
